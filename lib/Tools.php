@@ -138,7 +138,7 @@ class Tools
         $argv = $c->readPHPArgv();
         array_shift($argv);
         if (empty($argv)) {
-            exit("Missing arguments");
+            self::_printUsage();
         }
 
         $options = $c->getopt2($argv, '', array('apps=', 'config=', 'debug', 'group=', 'hordegit=', 'mode=', 'webdir=', 'org='));
@@ -185,11 +185,32 @@ class Tools
             require dirname(__FILE__) . '/../bin/conf.php';
         }
         if (empty($options[1])) {
-            exit("Missing action");
+            self::_printUsage();
         }
         $params['action'] = array_pop($options[1]);
 
         return $params;
+    }
+
+    /**
+     * @todo  - More detail, more options....
+     */
+    protected static function _printUsage()
+    {
+     echo <<<USAGE
+Usage: horde-git-tools [OPTION] COMMAND
+
+Optional options:
+  --config      Location of configuration file to load.
+  --debug       Output debug indormation.
+
+Available commands:
+    list        List available repositories on remote.
+    clone       Creates a full clone of all repositories on remote.
+    link        Links repositories into web directory.
+
+USAGE;
+    exit;
     }
 
 }

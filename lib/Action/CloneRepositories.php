@@ -29,11 +29,6 @@ class CloneRepositories extends Base
     /**
      * Clones the specified package/repository.
      *
-     *  $this->_params:
-     *    - git_base:  The location of the local "base" directory containing
-     *                 all checkouts.
-     *    - org:       If checking out from Github, the organization name.
-     *
      * @param  string  $package  The repository name.
      * @param  boolean $app      If repository is an application, set to true.
      */

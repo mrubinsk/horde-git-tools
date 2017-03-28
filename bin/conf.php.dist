@@ -22,6 +22,12 @@ $params = array(
     // Ignore the following repositories
     'ignore' => array('horde'),
 
+    // A renaming map. Renames repository names to a new "web" name.
+    'map' => array('base' => 'horde'),
+
+    // Set to true to copy the structure instead of linking.
+    'copy' => false,
+
     // @todo. Currently we use a lowercased repo name to indicate an app. Should
     // we require a provided list, or something else...?
 );

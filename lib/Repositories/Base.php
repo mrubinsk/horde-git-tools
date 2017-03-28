@@ -26,6 +26,11 @@ abstract class Base
 {
     protected $_repositories;
 
+    public function __construct(array $params)
+    {
+        $this->_params = $params;
+    }
+
     public function __get($property)
     {
         switch ($property) {

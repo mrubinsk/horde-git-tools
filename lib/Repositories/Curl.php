@@ -155,12 +155,14 @@ class Curl extends Base
      *
      * @param  array $results  An array of objects representing available
      *                         repositories.
-     * @param  array $params   Parameters. @todo - provide an ignore list?
-     * @return [type]          [description]
+     * @param  array $params   Parameters.
      */
     protected function _parseRepositories($results, $params = array())
     {
         foreach ($results as $repo) {
+            if (!empty($this->_params['ignore']) && in_array($repo->name, $this->_params['ignore']) !== false) {
+                continue;
+            }
             $this->_repositories[$repo->name] = $repo;
         }
     }

@@ -90,7 +90,7 @@ class Tools
      */
     protected static function _getRepositories(array $params)
     {
-        $curl = new Repositories\Curl();
+        $curl = new Repositories\Curl($params);
         $curl->load(array('org' => $params['org'], 'user-agent' => self::USERAGENT));
 
         return $curl;
@@ -141,7 +141,7 @@ class Tools
             self::_printUsage();
         }
 
-        $options = $c->getopt2($argv, '', array('apps=', 'config=', 'debug', 'group=', 'hordegit=', 'mode=', 'webdir=', 'org='));
+        $options = $c->getopt2($argv, '', array('apps=', 'config=', 'debug', 'group=', 'hordegit=', 'mode=', 'webdir=', 'org=', 'ignore='));
         if ($options instanceof PEAR_Error) {
             exit("Invalid arguments.\n");
         }
@@ -179,6 +179,11 @@ class Tools
 
                 case '--org':
                     $params['org'] = $val[1];
+                    break;
+
+                case '--ignore':
+                    $params['ignore'] = explode(',', $val[1]);
+                    break;
                 }
             }
         } else {

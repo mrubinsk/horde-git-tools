@@ -76,11 +76,11 @@ class LinkApps extends Base
     protected function _linkApp($app, $horde_git, $web_dir)
     {
         print "LINKING " . $app . "\n";
-        if (!symlink($horde_git . '/' . $app, $web_dir . '/' . $app)) {
+        if (!symlink($horde_git . '/applications/' . $app, $web_dir . '/' . $app)) {
             echo 'Cannot link ' . $web_dir . '/' . $app . ' to '
-                . $horde_git . '/' . $app . "\n";
+                . $horde_git . '/applications/' . $app . "\n";
         }
-        file_put_contents($horde_git . '/' . $app . '/config/horde.local.php', '<?php define(\'HORDE_BASE\', \'' . $web_dir . '\');');
+        file_put_contents($horde_git . '/applications/' . $app . '/config/horde.local.php', '<?php define(\'HORDE_BASE\', \'' . $web_dir . '\');');
     }
 
 }

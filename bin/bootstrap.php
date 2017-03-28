@@ -30,6 +30,7 @@ require_once $base_dir . '/../lib/Action/LinkApps.php';
 require_once $base_dir . '/../lib/Action/EmptyLinkedDirectory.php';
 require_once $base_dir . '/../lib/Action/LinkHorde.php';
 require_once $base_dir . '/../lib/Action/LinkFramework.php';
+require_once $base_dir . '/../lib/Action/Status.php';
 require_once $base_dir . '/../lib/Pear/Package/Parse.php';
 
 require_once 'Console/Getopt.php';

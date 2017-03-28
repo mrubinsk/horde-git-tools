@@ -42,7 +42,21 @@ class Tools
         case 'list':
             self::_doList($params);
             break;
+        case 'status':
+            self::_doStatus($params);
+            break;
         }
+    }
+
+    /**
+     * Report git status of all repositories.
+     *
+     * @param  array $params  Configuration parameters.
+     */
+    protected static function _doStatus(array $params)
+    {
+        $action = new Action\Status($params);
+        $action->run();
     }
 
     /**
@@ -216,6 +230,7 @@ Available commands:
     list        List available repositories on remote.
     clone       Creates a full clone of all repositories on remote.
     link        Links repositories into web directory.
+    status      List the local git status of all repositories.
 
 USAGE;
     exit;

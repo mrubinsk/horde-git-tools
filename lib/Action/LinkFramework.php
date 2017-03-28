@@ -33,6 +33,7 @@ class LinkFramework extends Base
     {
         $horde_git = rtrim(ltrim($this->_params['git_base']), '/ ');
         $web_dir = rtrim(ltrim($this->_params['web_dir']), '/ ');
+        $this->_linkFramework($horde_git, $web_dir);
     }
 
     /**

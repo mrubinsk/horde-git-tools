@@ -136,24 +136,24 @@ class LinkFramework extends Base
                 }
 
                 if (!is_null($dest)) {
-                    if (!$dryrun && file_exists($dest)) {
+                    if (file_exists($dest)) {
                         @unlink($dest);
-                    } elseif (!$dryrun && !file_exists(dirname($dest))) {
+                    } elseif (!file_exists(dirname($dest))) {
                         @mkdir(dirname($dest), 0777, true);
                     }
 
-                    if ($copy) {
+                    if (!empty($this->_params['copy'])) {
                         if ($this->_params['debug']) {
                             print 'COPY: ' . $orig . ' -> ' . $dest . "\n";
                         }
-                        if (!$dryrun && !copy($orig, $dest)) {
+                        if (!copy($orig, $dest)) {
                             $cli->message('Could not link ' . $orig . '.', 'cli.error');
                         }
                     } else {
                         if ($this->_params['debug']) {
                             print 'SYMLINK: ' . $orig . ' -> ' . $dest . "\n";
                         }
-                        if (!$dryrun && !symlink($orig, $dest)) {
+                        if (!symlink($orig, $dest)) {
                             $cli->message('Could not link ' . $orig . '.', 'cli.error');
                         }
                     }

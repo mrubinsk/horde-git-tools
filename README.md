@@ -3,9 +3,9 @@ POC/WIP toolchain for dealing with the new split horde repos.
 
 Thoughts/todo:
 
-- Implement a Autoloader or is this overkill?
+- ~~Implement a Autoloader or is this overkill?~~Using composer for pulling in dependencies and for autoloading
 
-- Developer checkout (are we switching to use ONLY github now?)
+- Developer checkout (~~are we switching to use ONLY github now?~~we are switching to use ONLY github now)
 
 - Recursive update from Git.
 

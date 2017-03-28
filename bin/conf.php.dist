@@ -1,0 +1,24 @@
+<?php
+$params = array(
+    // Debug output
+    'debug' => false,
+
+    // List of applications to create symlinks for. Empty array will link all.
+    'apps' => array(),
+
+    // Base directory of git checkouts.
+    'git_base' => '/usr/local/horde_git',
+
+    // Web-accessible base directory.
+    'web_dir' => '/var/www/horde_web',
+
+    // Github organization to use for repositories
+    'org' => 'horde-split-test',
+
+    // Group name and mode to use for the static directory.
+    'static_group' => 'www',
+    'static_mode' => 0775,
+
+    // @todo. Currently we use a lowercased repo name to indicate an app. Should
+    // we require a provided list, or something else...?
+);

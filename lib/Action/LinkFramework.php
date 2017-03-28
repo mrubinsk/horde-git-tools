@@ -162,4 +162,15 @@ class LinkFramework extends Base
         }
     }
 
+    public function fatal($error)
+    {
+        if ($error instanceof \Exception) {
+            $trace = $error;
+        } else {
+            $trace = debug_backtrace();
+        }
+
+        var_dump($trace);
+    }
+
 }

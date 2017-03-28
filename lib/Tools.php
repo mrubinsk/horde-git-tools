@@ -141,7 +141,7 @@ class Tools
             self::_printUsage();
         }
 
-        $options = $c->getopt2($argv, '', array('apps=', 'config=', 'debug', 'group=', 'hordegit=', 'mode=', 'webdir=', 'org=', 'ignore='));
+        $options = $c->getopt2($argv, '', array('apps=', 'config=', 'debug', 'group=', 'hordegit=', 'mode=', 'webdir=', 'org=', 'ignore=', 'copy'));
         if ($options instanceof PEAR_Error) {
             exit("Invalid arguments.\n");
         }
@@ -184,6 +184,9 @@ class Tools
                 case '--ignore':
                     $params['ignore'] = explode(',', $val[1]);
                     break;
+
+                case '--copy':
+                    $params['copy'] = true;
                 }
             }
         } else {

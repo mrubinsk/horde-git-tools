@@ -42,6 +42,13 @@ class CloneRepositories extends Base
             mkdir($this->_params['git_base'], self::MODE, true);
         }
 
+        // Check for any renaming
+        if (!empty($this->_params['map'][$package])) {
+            $package_webname = $this->_params['map'][$package];
+        } else {
+            $package_webname = $package;
+        }
+
         // Is this a developer checkout or anon?
         if (!empty($this->_user)) {
             // Do a developer checkout.
@@ -49,7 +56,7 @@ class CloneRepositories extends Base
         } else {
             // Anon.
             $source = self::HTTPS_GITURL . '/' . $this->_params['org'] . '/' . $package . '.git';
-            $target = $this->_params['git_base'] . '/' . ($app ? 'applications/' : '') . $package;
+            $target = $this->_params['git_base'] . '/' . ($app ? 'applications/' : '') . $package_webname;
             passthru("git clone $source $target");
         }
     }

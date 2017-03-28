@@ -72,6 +72,11 @@ class LinkFramework extends Base
         // some variables, etc.
         $cli = Horde_Cli::init();
 
+        // Need to override the error handler Horde_Cli uses, since we can't
+        // assume we have a functioning autoloader at this point and
+        // Horde_Cli::fatal() relies on one.
+        set_exception_handler(array($this, 'fatal'));
+
         $cli->message('Source directory: ' . $horde_git);
         $cli->message('Framework destination directory: ' . $destDir);
         $cli->message('Horde directory: ' . $web_dir);

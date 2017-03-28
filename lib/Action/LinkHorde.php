@@ -48,7 +48,7 @@ class LinkHorde extends Base
         $horde_git .= '/applications';
 
         file_put_contents($horde_git . '/horde/config/horde.local.php', "<?php if (!defined('HORDE_BASE')) define('HORDE_BASE', '$web_dir'); ini_set('include_path', '{$web_dir}/libs' . PATH_SEPARATOR . ini_get('include_path'));");
-        foreach (new DirectoryIterator($horde_git . '/horde') as $it) {
+        foreach (new \DirectoryIterator($horde_git . '/horde') as $it) {
             if ($it->isDot()) {
                 continue;
             }
@@ -58,7 +58,7 @@ class LinkHorde extends Base
                         print 'CREATING DIRECTORY: ' . $web_dir . '/' . $it . "\n";
                     }
                     mkdir($web_dir . '/' . $it);
-                    foreach (new DirectoryIterator($horde_git . '/horde/' . $it) as $sub) {
+                    foreach (new \DirectoryIterator($horde_git . '/horde/' . $it) as $sub) {
                         if ($sub->isDot()) {
                             continue;
                         }

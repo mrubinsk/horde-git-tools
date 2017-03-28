@@ -1,6 +1,8 @@
 <?php
 
 namespace Horde\GitTools\PEAR\Package;
+use PEAR_Config;
+use PEAR_PackageFile;
 
 class Parse
 {
@@ -31,7 +33,7 @@ class Parse
         $pkgs = array();
 
         foreach ($srcDirs as $dir) {
-            $di = new DirectoryIterator($dir);
+            $di = new \DirectoryIterator($dir);
             foreach ($di as $val) {
                 $pathname = $val->getPathname();
                 if ($val->isDir() &&

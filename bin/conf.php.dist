@@ -19,6 +19,9 @@ $params = array(
     'static_group' => 'www',
     'static_mode' => 0775,
 
+    // Ignore the following repositories
+    'ignore' => array('horde'),
+
     // @todo. Currently we use a lowercased repo name to indicate an app. Should
     // we require a provided list, or something else...?
 );

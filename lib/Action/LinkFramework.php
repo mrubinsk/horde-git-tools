@@ -80,9 +80,9 @@ class LinkFramework extends Base
         $cli->message('Source directory: ' . $horde_git);
         $cli->message('Framework destination directory: ' . $destDir);
         $cli->message('Horde directory: ' . $web_dir);
-        $cli->message('Create symbolic links: ' . ($this->_params['copy'] ? 'NO' : 'Yes'));
+        $cli->message('Create symbolic links: ' . (!empty($this->_params['copy']) ? 'NO' : 'Yes'));
 
-        $pkg_ob = new Horde\GitTools\PEAR\Pacakge\Parse();
+        $pkg_ob = new \Horde\GitTools\PEAR\Package\Parse();
         $pkgs = $pkg_ob->getPackages(array($horde_git));
 
         $cli->writeLn();

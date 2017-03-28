@@ -92,7 +92,7 @@ class LinkHorde extends Base
             echo 'Creating static directory...';
             mkdir($web_dir . '/static', $this->_params['static_mode']);
         }
-        if ($static_group) {
+        if (!empty($this->_params['static_group'])) {
             chgrp($web_dir . '/static', $this->_params['static_group']);
         }
     }

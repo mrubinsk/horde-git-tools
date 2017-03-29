@@ -28,7 +28,7 @@
         "php": ">=5.5.0",
         "pear-pear.horde.org/Horde_Exception": ">=2.0.0,<=3.0.0alpha1",
         "pear-pear.horde.org/Horde_Translation": ">=2.2.2,<=3.0.0alpha1",
-        "pear-pear.horde.org/Horde_Cli": ">=2.0.0,<=3.0.0alpha1",
+        "pear-pear.horde.org/Horde_Cli": ">=2.1.0,<=3.0.0alpha1",
         "pear-pear.horde.org/Horde_Argv": ">=2.0.0,<=3.0.0alpha1"
     },
     "autoload": {

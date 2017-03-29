@@ -45,7 +45,7 @@ class LinkApps extends Base
      */
     protected function _linkApps($horde_git, $web_dir)
     {
-        print "\nLINKING applications to web directory " . $web_dir . "\n";
+        $this->_cli->message('LINKING applications to web directory ' . $web_dir);
         if (count($this->_params['apps'])) {
             foreach ($this->_apps as $app) {
                 if ($app == 'horde') {
@@ -75,10 +75,10 @@ class LinkApps extends Base
      */
     protected function _linkApp($app, $horde_git, $web_dir)
     {
-        print "LINKING " . $app . "\n";
+        print 'LINKING ' . $app . "\n";
         if (!symlink($horde_git . '/applications/' . $app, $web_dir . '/' . $app)) {
-            echo 'Cannot link ' . $web_dir . '/' . $app . ' to '
-                . $horde_git . '/applications/' . $app . "\n";
+            $this->_cli->message('Cannot link ' . $web_dir . '/' . $app . ' to '
+                . $horde_git . '/applications/' . $app, 'cli.error');
         }
         file_put_contents($horde_git . '/applications/' . $app . '/config/horde.local.php', '<?php define(\'HORDE_BASE\', \'' . $web_dir . '\');');
     }

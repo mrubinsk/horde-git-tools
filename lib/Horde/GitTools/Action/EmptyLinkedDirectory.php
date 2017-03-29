@@ -40,11 +40,11 @@ class EmptyLinkedDirectory extends Base
      */
     protected function _emptyWebDir($web_dir)
     {
-        print "EMPTYING old web directory " . $web_dir . "\n";
+        $this->_cli->message("EMPTYING old web directory $web_dir");
         try {
             $it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($web_dir), \RecursiveIteratorIterator::CHILD_FIRST);
         } catch (\UnexpectedValueException $e) {
-            print "Old web directory not found. Creating it.";
+            $this->_cli->message('Old web directory not found. Creating it.');
             mkdir($web_dir);
             $it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($web_dir), \RecursiveIteratorIterator::CHILD_FIRST);
         }
@@ -52,17 +52,17 @@ class EmptyLinkedDirectory extends Base
             if (!$it->isDot()) {
                 if ($it->isLink()) {
                     if ($this->_params['debug']) {
-                        print "DELETING LINK: " . $it->key() . "\n";
+                        $this->_cli->message('DELETING LINK: ' . $it->key());
                     }
                     unlink($it->key());
                 } elseif ($it->isDir()) {
                     if ($this->_params['debug']) {
-                        print "DELETING DIR: " . $it->key() . "\n";
+                        $this->_cli->message('DELETING DIR: ' . $it->key());
                     }
                     rmdir($it->key());
                 } elseif ($it->isFile()) {
                     if ($this->_params['debug']) {
-                        print "DELETING FILE: " . $it->key() . "\n";
+                        $this->_cli->message('DELETING FILE: ' . $it->key());
                     }
                     unlink($it->key());
                 }

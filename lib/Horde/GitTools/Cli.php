@@ -83,20 +83,24 @@ class Cli
         list($options, $arguments) = $parser->parseArgs();
         if (empty($arguments)) {
             $parser->printHelp();
+            exit;
         }
 
         $params = array();
         if (empty($options['config'])) {
-            include dirname(__FILE__) . '/../../../bin/conf.php';
+             require dirname(__FILE__) . '/../../../bin/conf.php';
         } else {
             require $options['config'];
         }
         // $options is not a true array so we can't array_merge.
         foreach ($options as $key => $value) {
-            $params[$key] = $value;
+            if (!empty($value)) {
+                $params[$key] = $value;
+            }
         }
         if (empty($params['git_base'])) {
             $parser->printHelp();
+            exit;
         }
         switch (array_pop($arguments)) {
         case 'clone':

@@ -86,10 +86,10 @@ class LinkHorde extends Base
         }
         // Check settings of static cache directory.
         if (file_exists($web_dir . '/static')) {
-            echo 'Setting static directory permissions...';
+            $this->_cli->message('Setting static directory permissions...');
             chmod($web_dir . '/static', $this->_params['static_mode']);
         } else {
-            echo 'Creating static directory...';
+            $this->_cli->message('Creating static directory...');
             mkdir($web_dir . '/static', $this->_params['static_mode']);
         }
         if (!empty($this->_params['static_group'])) {

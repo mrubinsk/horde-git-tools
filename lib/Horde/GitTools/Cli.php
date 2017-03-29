@@ -13,6 +13,10 @@
 
 namespace Horde\GitTools;
 
+use Horde_Argv_Parser;
+use Horde_Argv_Option;
+use Horde_Cli;
+
 /**
  * Summary
  *
@@ -21,18 +25,80 @@ namespace Horde\GitTools;
  * @license   http://www.horde.org/licenses/lgpl LGPL
  * @package   GitTools
  */
-class Tools
+class Cli
 {
-    const USERAGENT = 'horde-git-tools';
+    const USERAGENT = 'Horde/GitTools';
 
     /**
      * Entry point
      */
     public static function main()
     {
-        $params = self::_parseOptions();
 
-        switch ($params['action']) {
+        $parser = new Horde_Argv_Parser(
+            array('usage' => "%prog [OPTIONS] COMMAND\n
+\tAvailable commands:
+\t\tlist        List available repositories on remote.
+\t\tclone       Creates a full clone of all repositories on remote.
+\t\tlink        Links repositories into web directory.
+\t\tstatus      List the local git status of all repositories.")
+        );
+
+        $parser->addOptions(
+            array(
+                new Horde_Argv_Option(
+                    '-c',
+                    '--config',
+                    array(
+                        'action' => 'store',
+                        'help'   => 'Path to configuration file.',
+                    )
+                ),
+                new Horde_Argv_Option(
+                    '-a',
+                    '--apps',
+                    array(
+                        'action' => 'store',
+                        'help'   => 'Comma delimted list of applications to link.',
+                    )
+                ),
+                new Horde_Argv_Option(
+                    '',
+                    '--git_base',
+                    array(
+                        'action' => 'store',
+                        'help'   => 'Path the base directory containing git checkouts.',
+                    )
+                ),
+                new Horde_Argv_Option(
+                    '-d',
+                    '--debug',
+                    array(
+                        'action' => 'store_true',
+                        'help'   => 'Enable debug output.',
+                    )
+                )
+            )
+        );
+        list($options, $arguments) = $parser->parseArgs();
+        if (empty($arguments)) {
+            $parser->printHelp();
+        }
+
+        $params = array();
+        if (empty($options['config'])) {
+            include dirname(__FILE__) . '/../../../bin/conf.php';
+        } else {
+            require $options['config'];
+        }
+        // $options is not a true array so we can't array_merge.
+        foreach ($options as $key => $value) {
+            $params[$key] = $value;
+        }
+        if (empty($params['git_base'])) {
+            $parser->printHelp();
+        }
+        switch (array_pop($arguments)) {
         case 'clone':
             self::_doClone($params);
             break;
@@ -135,105 +201,6 @@ class Tools
     protected static function _isApplication($package_name)
     {
         return strtoupper($package_name[0]) != $package_name[0];
-    }
-
-    /**
-     * Parse the console options.
-     *
-     * @return array  Returns an array of configuration parameters.
-     */
-    protected static function _parseOptions()
-    {
-        $params = array(
-            'action' => false
-        );
-
-        $c = new \Console_Getopt();
-        $argv = $c->readPHPArgv();
-        array_shift($argv);
-        if (empty($argv)) {
-            self::_printUsage();
-        }
-
-        $options = $c->getopt2($argv, '', array('apps=', 'config=', 'debug', 'group=', 'hordegit=', 'mode=', 'webdir=', 'org=', 'ignore=', 'copy'));
-        if ($options instanceof PEAR_Error) {
-            exit("Invalid arguments.\n");
-        }
-
-        if (!empty($options[0])) {
-            foreach ($options[0] as $val) {
-                switch ($val[0]) {
-                case '--apps':
-                    $params['apps'] = explode(',', $val[1]);
-                    break;
-
-                case '--config':
-                    require_once $val[1];
-                    break;
-
-                case '--debug':
-                    $params['debug'] = (bool)$val[1];
-                    break;
-
-                case '--group':
-                    $params['static_group'] = $val[1];
-                    break;
-
-                case '--hordegit':
-                    $params['horde_git'] = $val[1];
-                    break;
-
-                case '--mode':
-                    $params['static_mode'] = $val[1];
-                    break;
-
-                case '--webdir':
-                    $params['web_dir'] = $val[1];
-                    break;
-
-                case '--org':
-                    $params['org'] = $val[1];
-                    break;
-
-                case '--ignore':
-                    $params['ignore'] = explode(',', $val[1]);
-                    break;
-
-                case '--copy':
-                    $params['copy'] = true;
-                }
-            }
-        } else {
-            require dirname(__FILE__) . '/../bin/conf.php';
-        }
-        if (empty($options[1])) {
-            self::_printUsage();
-        }
-        $params['action'] = array_pop($options[1]);
-
-        return $params;
-    }
-
-    /**
-     * @todo  - More detail, more options....
-     */
-    protected static function _printUsage()
-    {
-     echo <<<USAGE
-Usage: horde-git-tools [OPTION] COMMAND
-
-Optional options:
-  --config      Location of configuration file to load.
-  --debug       Output debug indormation.
-
-Available commands:
-    list        List available repositories on remote.
-    clone       Creates a full clone of all repositories on remote.
-    link        Links repositories into web directory.
-    status      List the local git status of all repositories.
-
-USAGE;
-    exit;
     }
 
 }

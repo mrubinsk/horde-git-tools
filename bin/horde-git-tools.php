@@ -19,8 +19,8 @@
  * @license   http://www.horde.org/licenses/lgpl LGPL
  * @package   GitTools
  */
-require_once dirname(__FILE__) . '/bootstrap.php';
-\Horde\GitTools\Tools::main();
+require_once dirname(__FILE__) . '/../vendor/autoload.php';
+\Horde\GitTools\Cli::main();
 
 
 

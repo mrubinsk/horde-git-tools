@@ -1,0 +1,37 @@
+{
+    "name": "horde/horde-gittools",
+    "description": "Utility for installing and managing Horde checkouts.",
+    "type": "library",
+    "homepage": "https://pear.horde.org",
+    "license": "LGPL",
+    "authors": [
+        {
+            "name": "Michael J Rubinsky",
+            "email": "mrubinsk@horde.org",
+            "role": "lead"
+        },
+        {
+            "name": "Jan Schneider",
+            "email": "jan@horde.org",
+            "role": "lead"
+        }
+    ],
+    "version": "1.0.0alpha1",
+    "time": "2017-03-29",
+    "repositories": [
+        {
+            "type": "pear",
+            "url": "https://pear.horde.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "pear-pear.horde.org/Horde_Exception": ">=2.0.0,<=3.0.0alpha1",
+        "pear-pear.horde.org/Horde_Translation": ">=2.2.2,<=3.0.0alpha1",
+        "pear-pear.horde.org/Horde_Cli": ">=2.0.0,<=3.0.0alpha1",
+        "pear-pear.horde.org/Horde_Argv": ">=2.0.0,<=3.0.0alpha1"
+    },
+    "autoload": {
+        "psr-4": {"Horde\\GitTools\\": "lib/Horde/GitTools"}
+    }
+}

@@ -26,11 +26,18 @@ abstract class Base
 {
     protected $_repositories;
     protected $_cli;
+    protected $_cache = false;
+    protected $_lifetime;
 
-    public function __construct(array $params)
+    public function __construct(array $params, $cache = false, $lifetime = 600)
     {
         $this->_params = $params;
         $this->_cli = Horde_Cli::init();
+
+        if (!empty($cache)) {
+            $this->_cache = $cache;
+            $this->_lifetime = $lifetime;
+        }
     }
 
     public function __get($property)

@@ -30,7 +30,8 @@
         "pear-pear.horde.org/Horde_Translation": ">=2.2.2,<=3.0.0alpha1",
         "pear-pear.horde.org/Horde_Cli": ">=2.1.0,<=3.0.0alpha1",
         "pear-pear.horde.org/Horde_Argv": ">=2.0.0,<=3.0.0alpha1",
-        "pear-pear.horde.org/Horde_Http": ">=2.0.0,<=3.0.0alpha1"
+        "pear-pear.horde.org/Horde_Http": ">=2.0.0,<=3.0.0alpha1",
+        "pear-pear.horde.org/Horde_Cache": ">=2.0.0,<=3.0.0alpha1"
     },
     "autoload": {
         "psr-4": {"Horde\\GitTools\\": "lib/Horde/GitTools"}

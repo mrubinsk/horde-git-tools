@@ -41,21 +41,30 @@ class Http extends Base
         if (empty($url)) {
             $url = 'https://api.github.com/orgs/' . $git['org'] . '/repos';
         }
-        $this->_cli->message('Listing repositories from ' . $url);
-        $http_client = new Horde_Http_Client();
-        $response = $http_client->get($url);
+        $key = md5(serialize($git) . $url);
+        if (!empty($this->_cache) && $this->_cache->exists($key, $this->_params['lifetime'])) {
+            $this->_cli->message('Using cached data for ' . $url);
+            $response = unserialize($this->_cache->get($key, $this->_params['lifetime']));
+        }  else {
+            $this->_cli->message('Listing repositories from ' . $url);
+            $http_client = new Horde_Http_Client();
+            $response = $http_client->get($url);
+            if ($this->_cache) {
+                $this->_cache->set($key, serialize($response));
+            }
+        }
+        $rate_reset = $response->headers['x-ratelimit-reset'];
+        $rate_remaining = $response->headers['x-ratelimit-remaining'];
         if ($response->code != 200) {
             $body = json_decode($response->getBody());
             if (!empty($body->message)) {
-                $message = $body->message;
-                if (!empty($response->headers['x-ratelimit-reset'])) {
-                    $message .= "\n You can retry at: " . date('r', $response->headers['x-ratelimit-reset']);
-                }
+                $message = $body->message . "\n You can retry at: " . date('r', $response->headers['x-ratelimit-reset']);
                 throw new Exception($message);
             } else {
                 throw new Exception();
             }
         }
+        $this->_cli->message('You have ' . $rate_remaining . ' GitHub API requests left until ' . date('r', $response->headers['x-ratelimit-reset']));
         $this->_parseRepositories(json_decode($response->getBody()));
 
         // Pagination

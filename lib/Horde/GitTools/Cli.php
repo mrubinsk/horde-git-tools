@@ -15,6 +15,8 @@ namespace Horde\GitTools;
 
 use Horde_Argv_Parser;
 use Horde_Argv_Option;
+use Horde_Cache;
+use Horde_Cache_Storage_File;
 use Horde_Cli;
 
 /**
@@ -174,7 +176,11 @@ class Cli
      */
     protected static function _getRepositories(array $params)
     {
-        $curl = new Repositories\Http($params);
+        if (!empty($params['cache'])) {
+            $storage = new Horde_Cache_Storage_File();
+            $cache = new Horde_Cache($storage);
+        }
+        $curl = new Repositories\Http($params, $cache);
         $curl->load(array('org' => $params['org'], 'user-agent' => self::USERAGENT));
 
         return $curl;
@@ -187,9 +193,15 @@ class Cli
      */
     protected static function _doList($params)
     {
+        $cli = Horde_Cli::init();
         $curl = self::_getRepositories($params);
-        foreach (array_keys($curl->repositories) as $repo_name) {
-            echo $repo_name . "\n";
+        foreach ($curl->repositories as $repo_name => $repo) {
+            if (!empty($params['debug'])) {
+                $cli->header($repo_name);
+                print_r($repo);
+            } else {
+                echo $repo_name . "\n";
+            }
         }
     }
 

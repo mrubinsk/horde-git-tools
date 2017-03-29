@@ -174,7 +174,7 @@ class Cli
      */
     protected static function _getRepositories(array $params)
     {
-        $curl = new Repositories\Curl($params);
+        $curl = new Repositories\Http($params);
         $curl->load(array('org' => $params['org'], 'user-agent' => self::USERAGENT));
 
         return $curl;

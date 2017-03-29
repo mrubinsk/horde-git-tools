@@ -13,51 +13,55 @@
 
 namespace Horde\GitTools\Repositories;
 
+use Horde_Http_Client;
+use Horde\GitTools\Exception;
+
 /**
  * Responsible for requesting and parsing a list of available repositories
- * from a GitHub organization using the curl PHP extension.
+ * from a GitHub organization using the Horde_Http client.
  *
  * @author    Michael J Rubinsky <mrubinsk@horde.org>
  * @copyright 2017 Horde LLC
  * @license   http://www.horde.org/licenses/lgpl LGPL
  * @package   GitTools
  */
-class Curl extends Base
+class Http extends Base
 {
-    const TIMEOUT = 5;
-
     /**
      * Loads the list of available repositories on the Github remote.
      *
-     * @param  array  $git  Parameters for the request:
-     *   - org: The name of the GitHub organization, e.g., 'horde'.
-     *   - user-agent: The string to use as the user-agent.
-     *   - @todo: an ignore list? Proxy settings?
+     * @param array  $git  Configuration parameters.
      * @param string $url  If specified, use this URL. Otherwise, generate the
      *                     URL to query. Used for pagination.
+     *
+     * @throws  \Horde\GitTools\Exception
      */
     public function load(array $git, $url = '')
     {
         if (empty($url)) {
             $url = 'https://api.github.com/orgs/' . $git['org'] . '/repos';
         }
-
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_HEADER, true);
-        curl_setopt($curl, CURLOPT_USERAGENT, $git['user-agent']);
-        curl_setopt($curl, CURLOPT_TIMEOUT, self::TIMEOUT);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
-        curl_setopt($curl, CURLOPT_MAXREDIRS, 0);
-
-        $this->_parseRepositories(
-            json_decode($this->_getResponseBody(curl_exec($curl)))
-        );
+        $this->_cli->message('Listing repositories from ' . $url);
+        $http_client = new Horde_Http_Client();
+        $response = $http_client->get($url);
+        if ($response->code != 200) {
+            $body = json_decode($response->getBody());
+            if (!empty($body->message)) {
+                $message = $body->message;
+                var_dump($response->headers);
+                if (!empty($response->headers['x-ratelimit-reset'])) {
+                    $message .= "\n You can retry at: " . date('r', $response->headers['x-ratelimit-reset']);
+                }
+                throw new Exception($message);
+            } else {
+                throw new Exception();
+            }
+        }
+        $this->_parseRepositories(json_decode($response->getBody()));
 
         // Pagination
-        if (!empty($this->_headers['link'])) {
-            $links = $this->_parseLinks($this->_headers['link']);
+        if (!empty($response->headers['link'])) {
+            $links = $this->_parseLinks($response->headers['link']);
             if (!empty($links['next'])) {
                 $this->load($git, $links['next']);
             }

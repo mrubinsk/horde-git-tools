@@ -12,7 +12,7 @@
  */
 
 namespace Horde\GitTools\Repositories;
-
+use Horde_Cli;
 /**
  * Base class for requesting and parsing a list of available repositories from a
  * GitHub organization.
@@ -25,10 +25,12 @@ namespace Horde\GitTools\Repositories;
 abstract class Base
 {
     protected $_repositories;
+    protected $_cli;
 
     public function __construct(array $params)
     {
         $this->_params = $params;
+        $this->_cli = Horde_Cli::init();
     }
 
     public function __get($property)

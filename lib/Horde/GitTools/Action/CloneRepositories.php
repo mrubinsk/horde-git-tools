@@ -50,14 +50,17 @@ class CloneRepositories extends Base
         }
 
         // Is this a developer checkout or anon?
-        if (!empty($this->_user)) {
+        $target = $this->_params['git_base'] . '/' . ($app ? 'applications/' : '') . $package_webname;
+        $this->_cli->message('Cloning ' . $package_webname . ' into ' . $target);
+        if (!empty($this->_params['git_ssh'])) {
             // Do a developer checkout.
-            // @todo
+            $source = $this->_params['git_ssh'] . '/' . $this->_params['org'] . '/' . $package . '.git';
         } else {
-            // Anon.
             $source = self::HTTPS_GITURL . '/' . $this->_params['org'] . '/' . $package . '.git';
-            $target = $this->_params['git_base'] . '/' . ($app ? 'applications/' : '') . $package_webname;
-            passthru("git clone $source $target");
+        }
+        exec("(git clone $source $target > /dev/null) 3>&1 1>&2 2>&3", $results);
+        if (!empty($this->_params['debug'])) {
+            print implode("\n", $results);
         }
     }
 }

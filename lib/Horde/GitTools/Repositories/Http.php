@@ -48,7 +48,6 @@ class Http extends Base
             $body = json_decode($response->getBody());
             if (!empty($body->message)) {
                 $message = $body->message;
-                var_dump($response->headers);
                 if (!empty($response->headers['x-ratelimit-reset'])) {
                     $message .= "\n You can retry at: " . date('r', $response->headers['x-ratelimit-reset']);
                 }

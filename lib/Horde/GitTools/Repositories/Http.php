@@ -21,6 +21,7 @@ use Horde\GitTools\Exception;
  * from a GitHub organization using the Horde_Http client.
  *
  * @author    Michael J Rubinsky <mrubinsk@horde.org>
+ * @category  Horde
  * @copyright 2017 Horde LLC
  * @license   http://www.horde.org/licenses/lgpl LGPL
  * @package   GitTools

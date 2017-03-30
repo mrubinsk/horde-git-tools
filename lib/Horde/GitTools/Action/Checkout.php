@@ -20,6 +20,7 @@ use Horde\GitTools\Exception;
  * Attempts to recursively checkout out a branch.
  *
  * @author    Michael J Rubinsky <mrubinsk@horde.org>
+ * @category  Horde
  * @copyright 2017 Horde LLC
  * @license   http://www.horde.org/licenses/lgpl LGPL
  * @package   GitTools

@@ -57,21 +57,21 @@ class Checkout extends Base
         }
 
         // Ensure the base directory exists.
-        if (!file_exists($this->_params['git_base']) . '/applications') {
-            throw new Exception("Applications checkout directory does not exist.");
-        }
-
-        foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
-            if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
-                Cli::$cli->message('Switching ' . $it->getFilename() . ' to branch: ' . $branch);
-                $output = $this->_callGit("checkout $branch", $it->getPathname());
-                $results = $this->_callGit('branch', $it->getPathname());
-                if (in_array('* ' . $branch, explode("\n", $results[0])) !== false) {
-                    $success[] = $it->getFilename();
-                } else {
-                    $failures[] = $it->getFilename() . ': ' . $output[1];
+        if (file_exists($this->_params['git_base'] . '/applications')) {
+            foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
+                if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
+                    Cli::$cli->message('Switching ' . $it->getFilename() . ' to branch: ' . $branch);
+                    $output = $this->_callGit("checkout $branch", $it->getPathname());
+                    $results = $this->_callGit('branch', $it->getPathname());
+                    if (in_array('* ' . $branch, explode("\n", $results[0])) !== false) {
+                        $success[] = $it->getFilename();
+                    } else {
+                        $failures[] = $it->getFilename() . ': ' . $output[1];
+                    }
                 }
             }
+        } else {
+            Cli::$cli->message('Could not find the applications checkout directory', 'cli.error');
         }
 
         if (!empty($success)) {

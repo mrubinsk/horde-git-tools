@@ -160,7 +160,7 @@ class Cli
      */
     protected static function _doStatus(array $params)
     {
-        $action = new Action\Status($params);
+        $action = new Action\Git\Status($params);
         $action->run();
     }
 
@@ -172,16 +172,16 @@ class Cli
     protected static function _doLink(array $params)
     {
         // First, empty directory.
-        $action = new Action\EmptyLinkedDirectory($params);
+        $action = new Action\Dev\EmptyLinkedDirectory($params);
         $action->run();
 
-        $action = new Action\LinkHorde($params);
+        $action = new Action\Dev\LinkHorde($params);
         $action->run();
 
-        $action = new Action\LinkApps($params);
+        $action = new Action\Dev\LinkApps($params);
         $action->run();
 
-        $action = new Action\LinkFramework($params);
+        $action = new Action\Dev\LinkFramework($params);
         $action->run();
     }
 
@@ -194,7 +194,7 @@ class Cli
     {
         $curl = self::_getRepositories($params);
 
-        $action = new Action\CloneRepositories($params);
+        $action = new Action\Git\CloneRepositories($params);
         foreach ($curl->repositories as $package) {
             $action->run($package->name, self::_isApplication($package->name));;
         }
@@ -244,7 +244,7 @@ class Cli
      */
     protected static function _doCheckout(array $params)
     {
-        $action = new Action\Checkout($params);
+        $action = new Action\Git\heckout($params);
         $action->run($params['branch']);
     }
 
@@ -255,7 +255,7 @@ class Cli
      */
     protected static function _doPull(array $params)
     {
-        $action = new Action\Pull($params);
+        $action = new Action\Git\Pull($params);
         $action->run();
     }
 

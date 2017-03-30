@@ -11,7 +11,7 @@
  * @package  GitTools
  */
 
-namespace Horde\GitTools\Action;
+namespace Horde\GitTools\Action\Git;
 
 use Horde\GitTools\Cli;
 use Horde\GitTools\Exception;
@@ -25,7 +25,7 @@ use Horde\GitTools\Exception;
  * @license   http://www.horde.org/licenses/lgpl LGPL
  * @package   GitTools
  */
-class Checkout extends Base
+class Git\Checkout extends \Horde\GitTools\Action\Base
 {
     /**
      * Clones the specified package/repository.

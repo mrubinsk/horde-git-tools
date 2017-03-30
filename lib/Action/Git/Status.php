@@ -11,7 +11,7 @@
  * @package  GitTools
  */
 
-namespace Horde\GitTools\Action;
+namespace Horde\GitTools\Action\Git;
 
 use Horde\GitTools\Cli;
 
@@ -24,7 +24,7 @@ use Horde\GitTools\Cli;
  * @license   http://www.horde.org/licenses/lgpl LGPL
  * @package   GitTools
  */
-class Status extends Base
+class Status extends \Horde\GitTools\Action\Base
 {
     /**
      * Outputs status of all available locally checkout out repositories.

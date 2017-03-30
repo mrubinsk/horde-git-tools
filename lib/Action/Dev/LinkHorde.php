@@ -12,7 +12,7 @@
  * @package  GitTools
  */
 
-namespace Horde\GitTools\Action;
+namespace Horde\GitTools\Action\Dev;
 
 use Horde\GitTools\Cli;
 
@@ -26,7 +26,7 @@ use Horde\GitTools\Cli;
  * @license   http://www.horde.org/licenses/lgpl LGPL
  * @package   GitTools
  */
-class LinkHorde extends Base
+class LinkHorde extends Horde\GitTools\Action\Base
 {
     /**
      * Empties the linked web directory.

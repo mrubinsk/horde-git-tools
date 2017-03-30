@@ -14,7 +14,9 @@
 namespace Horde\GitTools\Repositories;
 
 use Horde_Http_Client;
+use Horde\GitTools\Cli;
 use Horde\GitTools\Exception;
+
 
 /**
  * Responsible for requesting and parsing a list of available repositories

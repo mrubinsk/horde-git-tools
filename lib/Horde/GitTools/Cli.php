@@ -29,8 +29,18 @@ use Horde_Cli;
  */
 class Cli
 {
+    /**
+     * The useragent to use when issuing HTTP requests to GitHub.
+     */
     const USERAGENT = 'Horde/GitTools';
+
+    /**
+     * The Horde_Cli instance.
+     *
+     * @var Hord_Cli
+     */
     public static $cli;
+
     /**
      * Entry point
      */
@@ -93,6 +103,7 @@ class Cli
                 )
             )
         );
+
         list($options, $arguments) = $parser->parseArgs();
         if (empty($arguments)) {
             $parser->printHelp();
@@ -209,13 +220,12 @@ class Cli
      *
      * @param  array $params  Configuration parameters.
      */
-    protected static function _doList($params)
+    protected static function _doList(array $params)
     {
-        $cli = Horde_Cli::init();
         $curl = self::_getRepositories($params);
         foreach ($curl->repositories as $repo_name => $repo) {
             if (!empty($params['debug'])) {
-                $cli->header($repo_name);
+                self::$cli->header($repo_name);
                 print_r($repo);
             } else {
                 echo $repo_name . "\n";
@@ -228,7 +238,7 @@ class Cli
      *
      * @param  array $params  Configuration parameters.
      */
-    protected static function _doCheckout($params)
+    protected static function _doCheckout(array $params)
     {
         $action = new Action\Checkout($params);
         $action->run($params['branch']);

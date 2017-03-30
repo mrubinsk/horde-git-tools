@@ -24,29 +24,59 @@ use Horde_Cli;
  */
 abstract class Base
 {
+    /**
+     * List of available repositories.
+     *
+     * @var array
+     */
     protected $_repositories;
-    protected $_cli;
-    protected $_cache = false;
-    protected $_lifetime;
 
-    public function __construct(array $params, $cache = false, $lifetime = 600)
+    /**
+     * Local cache of API call to retrieve list of available repositories.
+     *
+     * @var Horde_Cache
+     */
+    protected $_cache;
+
+    /**
+     * Default lifetime of cache entries.
+     *
+     * @var integer
+     */
+    protected $_lifetime = 86400;
+
+    /**
+     * Const'r
+     *
+     * @param array   $params     Configuration parameters
+     * @param Horde_Cache $cache  An optional cache to store API call results.
+     * @param boolean $lifetime   Optional lifetime of cache entries.
+     */
+    public function __construct(array $params, $cache = null, $lifetime = null)
     {
         $this->_params = $params;
-        $this->_cli = Horde_Cli::init();
-
         if (!empty($cache)) {
             $this->_cache = $cache;
-            $this->_lifetime = $lifetime;
+            $this->_lifetime = !empty($lifetime)
+                ? $lifetime
+                : $this->_lifetime;
         }
     }
 
+    /**
+     * Magic
+     *
+     * @param string  $property  The property name.
+     *
+     * @return  mixed  The value.
+     */
     public function __get($property)
     {
         switch ($property) {
         case 'repositories':
             return $this->_repositories;
         default:
-            exit("Unknown Property");
+            exit('Unknown Property');
         }
     }
 

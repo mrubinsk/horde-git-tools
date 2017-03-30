@@ -13,6 +13,8 @@
 
 namespace Horde\GitTools\Action;
 
+use Horde\GitTools\Cli;
+
 /**
  * Clone all repositories existing in specified organization.
  *
@@ -51,7 +53,7 @@ class CloneRepositories extends Base
 
         // Is this a developer checkout or anon?
         $target = $this->_params['git_base'] . '/' . ($app ? 'applications/' : '') . $package_webname;
-        $this->_cli->message('Cloning ' . $package_webname . ' into ' . $target);
+        Cli::$cli->message('Cloning ' . $package_webname . ' into ' . $target);
         if (!empty($this->_params['git_ssh'])) {
             // Do a developer checkout.
             $source = $this->_params['git_ssh'] . '/' . $this->_params['org'] . '/' . $package . '.git';

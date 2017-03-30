@@ -13,6 +13,7 @@
  */
 
 namespace Horde\GitTools\Action;
+
 use Horde_Cli;
 
 /**
@@ -56,36 +57,36 @@ class LinkFramework extends Base
             ini_set('include_path', $destDir . PATH_SEPARATOR . ini_get('include_path'));
         }
 
-        $this->_cli->message('Source directory: ' . $horde_git);
-        $this->_cli->message('Framework destination directory: ' . $destDir);
-        $this->_cli->message('Horde directory: ' . $web_dir);
-        $this->_cli->message('Create symbolic links: ' . (!empty($this->_params['copy']) ? 'NO' : 'Yes'));
+        Cli::$cli->message('Source directory: ' . $horde_git);
+        Cli::$cli->message('Framework destination directory: ' . $destDir);
+        Cli::$cli->message('Horde directory: ' . $web_dir);
+        Cli::$cli->message('Create symbolic links: ' . (!empty($this->_params['copy']) ? 'NO' : 'Yes'));
 
         $pkg_ob = new \Horde\GitTools\PEAR\Package\Parse();
         $pkgs = $pkg_ob->getPackages(array($horde_git));
 
-        $this->_cli->writeLn();
-        $this->_cli->message('Package(s) to install: ' . ((count($pkgs) === 1) ? reset($pkgs) : 'ALL (' . count($pkgs) . ' packages)'));
+        Cli::$cli->writeLn();
+        Cli::$cli->message('Package(s) to install: ' . ((count($pkgs) === 1) ? reset($pkgs) : 'ALL (' . count($pkgs) . ' packages)'));
 
         foreach ($pkgs as $key => $val) {
             if ($this->_params['debug']) {
-                $this->_cli->writeLn();
+                Cli::$cli->writeLn();
             }
-            $this->_cli->message('Installing package ' . $key);
+            Cli::$cli->message('Installing package ' . $key);
 
             $pkg = $pkg_ob->pear_pkg->fromPackageFile($val . '/package.xml', 0);
             if ($pkg instanceof PEAR_Error) {
-                $this->_cli->message('Could not install package ' . $key . ': ' . $pkg->getMessage(), 'cli.error');
+                Cli::$cli->message('Could not install package ' . $key . ': ' . $pkg->getMessage(), 'cli.error');
                 continue;
             }
             foreach ($pkg->getInstallationFilelist() as $file) {
                 if (!isset($file['attribs']['name'])) {
-                    $this->_cli->message('Invalid <install> entry: ' . print_r($file['attribs'], true), 'cli.error');
+                    Cli::$cli->message('Invalid <install> entry: ' . print_r($file['attribs'], true), 'cli.error');
                     continue;
                 }
                 $orig = realpath($val . '/' . $file['attribs']['name']);
                 if (empty($orig)) {
-                    $this->_cli->message('Install file does not seem to exist: ' . $val . '/' . $file['attribs']['name'], 'cli.error');
+                    Cli::$cli->message('Install file does not seem to exist: ' . $val . '/' . $file['attribs']['name'], 'cli.error');
                     continue;
                 }
 
@@ -94,7 +95,7 @@ class LinkFramework extends Base
                     if (isset($file['attribs']['install-as'])) {
                         $dest = $web_dir . '/' . $file['attribs']['install-as'];
                     } else {
-                        $this->_cli->message('Could not determine install directory (role "horde") for ' . $web_dir, 'cli.error');
+                        Cli::$cli->message('Could not determine install directory (role "horde") for ' . $web_dir, 'cli.error');
                         continue;
                     }
                     break;
@@ -126,14 +127,14 @@ class LinkFramework extends Base
                             print 'COPY: ' . $orig . ' -> ' . $dest . "\n";
                         }
                         if (!copy($orig, $dest)) {
-                            $this->_cli->message('Could not link ' . $orig . '.', 'cli.error');
+                            Cli::$cli->message('Could not link ' . $orig . '.', 'cli.error');
                         }
                     } else {
                         if ($this->_params['debug']) {
                             print 'SYMLINK: ' . $orig . ' -> ' . $dest . "\n";
                         }
                         if (!symlink($orig, $dest)) {
-                            $this->_cli->message('Could not link ' . $orig . '.', 'cli.error');
+                            Cli::$cli->message('Could not link ' . $orig . '.', 'cli.error');
                         }
                     }
                 }

@@ -53,9 +53,7 @@ class Status extends Base
      */
     public function run()
     {
-        $cli = Horde_Cli::init();
-
-        $cli->message('Checking status of libraries');
+        Cli::$cli->message('Checking status of libraries');
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
             if (!$it->isDot() && $it->isDir() && $it != 'applications' &&
                 is_dir($it->getPathname() . '/.git')) {
@@ -64,13 +62,13 @@ class Status extends Base
                 chdir($it->getPathname());
                 exec('git status', $results);
 
-                $cli->message('Status of ' . $it->getFileName());
-                $cli->message(implode("\n", $results));
-                $cli->writeLn();
+                Cli::$cli->message('Status of ' . $it->getFileName());
+                Cli::$cli->message(implode("\n", $results));
+                Cli::$cli->writeLn();
             }
         }
 
-        $cli->message('Checking status of applications');
+        Cli::$cli->message('Checking status of applications');
         foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
             if (!$it->isDot() && $it->isDir() &&
                 is_dir($it->getPathname() . '/.git')) {
@@ -79,9 +77,9 @@ class Status extends Base
                 chdir($it->getPathname());
                 exec('git status', $results);
 
-                $cli->message('Status of ' . $it->getFileName());
-                $cli->message(implode("\n", $results));
-                $cli->writeLn();
+                Cli::$cli->message('Status of ' . $it->getFileName());
+                Cli::$cli->message(implode("\n", $results));
+                Cli::$cli->writeLn();
             }
         }
     }

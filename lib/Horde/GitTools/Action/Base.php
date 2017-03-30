@@ -33,24 +33,18 @@ abstract class Base
     protected $_params;
 
     /**
-     * Cli object.
-     *
-     * @var  Horde_Cli
-     */
-    protected $_cli;
-
-    /**
+     * Const'r
      *
      * @param array $params  Configuration parameters
      */
     public function __construct(array $params = array())
     {
         $this->_params = $params;
+
         // Make sure no one runs this from the web.
         if (!Horde_Cli::runningFromCLI()) {
             exit;
         }
-        $this->_cli = Horde_Cli::init();
     }
 
     abstract public function run();

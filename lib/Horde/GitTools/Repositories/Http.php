@@ -43,10 +43,10 @@ class Http extends Base
         }
         $key = md5(serialize($git) . $url);
         if (!empty($this->_cache) && $this->_cache->exists($key, $this->_params['lifetime'])) {
-            $this->_cli->message('Using cached data for ' . $url);
+            Cli::$cli->message('Using cached data for ' . $url);
             $response = unserialize($this->_cache->get($key, $this->_params['lifetime']));
         }  else {
-            $this->_cli->message('Listing repositories from ' . $url);
+            Cli::$cli->message('Listing repositories from ' . $url);
             $http_client = new Horde_Http_Client();
             $response = $http_client->get($url);
             if ($this->_cache) {
@@ -64,7 +64,7 @@ class Http extends Base
                 throw new Exception();
             }
         }
-        $this->_cli->message('You have ' . $rate_remaining . ' GitHub API requests left until ' . date('r', $response->headers['x-ratelimit-reset']));
+        Cli::$cli->message('You have ' . $rate_remaining . ' GitHub API requests left until ' . date('r', $response->headers['x-ratelimit-reset']));
         $this->_parseRepositories(json_decode($response->getBody()));
 
         // Pagination
@@ -97,79 +97,13 @@ class Http extends Base
     }
 
     /**
-     * Return the body of the HTTP response and places any parsed headers into
-     * $this->_headers.
-     *
-     * @param  string  The full HTTP respone string.
-     *
-     * @return string  The BODY content.
-     */
-    protected function _getResponseBody($curlresult)
-    {
-        /* Curl returns multiple headers, if the last action required multiple
-         * requests, e.g. when doing Digest authentication. Only parse the
-         * headers of the latest response. */
-        preg_match_all('/(^|\r\n\r\n)(HTTP\/)/', $curlresult, $matches, PREG_OFFSET_CAPTURE);
-        $startOfHeaders = $matches[2][count($matches[2]) - 1][1];
-        $endOfHeaders = strpos($curlresult, "\r\n\r\n", $startOfHeaders);
-        $headers = substr($curlresult, $startOfHeaders, $endOfHeaders - $startOfHeaders);
-        $this->_parseHeaders($headers);
-
-        return substr($curlresult, $endOfHeaders + 4);
-    }
-
-    /**
-     * Parse the header text returned in the HTTP response and place results
-     * in $this->_headers.
-     *
-     * @param  string $headers  The header text.
-     */
-    protected function _parseHeaders($headers)
-    {
-        $this->_headers = array();
-        $headers = preg_split("/\r?\n/", $headers);
-        foreach ($headers as $headerLine) {
-            $headerLine = trim($headerLine, "\r\n");
-            if ($headerLine == '') {
-                break;
-            }
-            if (preg_match('|^([\w-]+):\s+(.+)|', $headerLine, $m)) {
-                $headerName = strtolower($m[1]);
-                $headerValue = $m[2];
-
-                if (!empty($this->_headers[$headerName])) {
-                    $tmp = $this->_headers[$headerName];
-                    if (!is_array($tmp)) {
-                        $tmp = array($tmp);
-                    }
-                    $tmp[] = $headerValue;
-                    $headerValue = $tmp;
-                }
-
-                $this->_headers[$headerName] = $headerValue;
-                $lastHeader = $headerName;
-            } elseif (preg_match("|^\s+(.+)$|", $headerLine, $m) &&
-                      !is_null($lastHeader)) {
-                if (is_array($this->_headers[$lastHeader])) {
-                    $tmp = $this->_headers[$lastHeader];
-                    end($tmp);
-                    $tmp[key($tmp)] .= $m[1];
-                    $this->_headers[$lastHeader] = $tmp;
-                } else {
-                    $this->_headers[$lastHeader] .= $m[1];
-                }
-            }
-        }
-    }
-
-    /**
      * Build the local cache of repository names and properties.
      *
      * @param  array $results  An array of objects representing available
      *                         repositories.
      * @param  array $params   Parameters.
      */
-    protected function _parseRepositories($results, $params = array())
+    protected function _parseRepositories(array $results, array $params = array())
     {
         foreach ($results as $repo) {
             if (!empty($this->_params['ignore']) && in_array($repo->name, $this->_params['ignore']) !== false) {
@@ -178,4 +112,5 @@ class Http extends Base
             $this->_repositories[$repo->name] = $repo;
         }
     }
+
 }

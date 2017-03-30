@@ -14,6 +14,8 @@
 
 namespace Horde\GitTools\Action;
 
+use Horde\GitTools\Cli;
+
 /**
  * Links applications into the web directory.
  *
@@ -25,7 +27,6 @@ namespace Horde\GitTools\Action;
  */
 class LinkApps extends Base
 {
-
     /**
      *
      */
@@ -45,7 +46,7 @@ class LinkApps extends Base
      */
     protected function _linkApps($horde_git, $web_dir)
     {
-        $this->_cli->message('LINKING applications to web directory ' . $web_dir);
+        Cli::$cli->message('LINKING applications to web directory ' . $web_dir);
         if (count($this->_params['apps'])) {
             foreach ($this->_apps as $app) {
                 if ($app == 'horde') {
@@ -77,7 +78,7 @@ class LinkApps extends Base
     {
         print 'LINKING ' . $app . "\n";
         if (!symlink($horde_git . '/applications/' . $app, $web_dir . '/' . $app)) {
-            $this->_cli->message('Cannot link ' . $web_dir . '/' . $app . ' to '
+            Cli::$cli->message('Cannot link ' . $web_dir . '/' . $app . ' to '
                 . $horde_git . '/applications/' . $app, 'cli.error');
         }
         file_put_contents($horde_git . '/applications/' . $app . '/config/horde.local.php', '<?php define(\'HORDE_BASE\', \'' . $web_dir . '\');');

@@ -14,6 +14,8 @@
 
 namespace Horde\GitTools\Action;
 
+use Horde\GitTools\Cli;
+
 /**
  * Links the base Horde directory into the web directory.
  *
@@ -44,10 +46,14 @@ class LinkHorde extends Base
      */
     protected function _linkHorde($horde_git, $web_dir)
     {
-        print "\nLINKING horde\n";
+        Cli::$cli->writeln("LINKING horde");;
         $horde_git .= '/applications';
 
-        file_put_contents($horde_git . '/horde/config/horde.local.php', "<?php if (!defined('HORDE_BASE')) define('HORDE_BASE', '$web_dir'); ini_set('include_path', '{$web_dir}/libs' . PATH_SEPARATOR . ini_get('include_path'));");
+        file_put_contents(
+            $horde_git . '/horde/config/horde.local.php',
+            "<?php if (!defined('HORDE_BASE')) define('HORDE_BASE', '$web_dir'); ini_set('include_path', '{$web_dir}/libs' . PATH_SEPARATOR . ini_get('include_path'));"
+        );
+
         foreach (new \DirectoryIterator($horde_git . '/horde') as $it) {
             if ($it->isDot()) {
                 continue;
@@ -55,7 +61,7 @@ class LinkHorde extends Base
             if ($it->isDir()) {
                 if (strpos($it->getPathname(), $horde_git . '/horde/js') !== false) {
                     if ($this->_params['debug']) {
-                        print 'CREATING DIRECTORY: ' . $web_dir . '/' . $it . "\n";
+                        Cli::$cli->writeln("CREATING DIRECTORY: $web_dir/$it");
                     }
                     mkdir($web_dir . '/' . $it);
                     foreach (new \DirectoryIterator($horde_git . '/horde/' . $it) as $sub) {
@@ -64,32 +70,33 @@ class LinkHorde extends Base
                         }
                         if ($this->_params['debug']) {
                             if ($sub->isDir()) {
-                                print 'LINKING DIRECTORY: ' . $web_dir . '/' . $it . '/' . $sub . "\n";
+                                Cli::$cli->writeln("LINKING DIRECTORY: $web_dir/$it/$sub");
                             } else {
-                                print 'LINKING FILE: ' . $web_dir . '/' . $it . '/' . $sub . "\n";
+                               Cli::$cli->writeln("LINKING FILE: $web_dir/$it/$sub");
                             }
                         }
                         symlink($sub->getPathname(), $web_dir . '/' . $it . '/' . $sub);
                     }
                 } else {
                     if ($this->_params['debug']) {
-                        print 'LINKING DIRECTORY: ' . $web_dir . '/' . $it . "\n";
+                        Cli::$cli->writeln("LINKING DIRECTORY: $web_dir/$it");
                     }
                     symlink($it->getPathname(), $web_dir . '/' . $it);
                 }
             } else {
                 if ($this->_params['debug']) {
-                    print 'LINKING FILE: ' . $web_dir . '/' . $it . "\n";
+                    Cli::$cli->writeln("LINKING FILE: $web_dir/$it");
                 }
                 symlink($it->getPathname(), $web_dir . '/' . $it);
             }
         }
+
         // Check settings of static cache directory.
         if (file_exists($web_dir . '/static')) {
-            $this->_cli->message('Setting static directory permissions...');
+            Cli::$cli->message('Setting static directory permissions...');
             chmod($web_dir . '/static', $this->_params['static_mode']);
         } else {
-            $this->_cli->message('Creating static directory...');
+            Cli::$cli->message('Creating static directory...');
             mkdir($web_dir . '/static', $this->_params['static_mode']);
         }
         if (!empty($this->_params['static_group'])) {

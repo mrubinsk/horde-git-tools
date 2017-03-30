@@ -30,6 +30,7 @@ class Status extends Base
      * Outputs status of all available locally checkout out repositories.
      *
      * @param  string  $package  The repository name.
+     * @todo  Use --porcelain output, parse into array, and output cleaner data.
      */
     public function run()
     {
@@ -40,6 +41,7 @@ class Status extends Base
 
                 $results = array();
                 chdir($it->getPathname());
+                // exec('git status --porcelain -b --untracked-files=no', $results);
                 exec('git status', $results);
 
                 Cli::$cli->message('Status of ' . $it->getFileName());

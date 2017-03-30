@@ -62,3 +62,7 @@ Still todo
 
 - Subset of Component functionality. I.e., releases, changes, package.xml
   maintenance etc...
+
+- Add action to run an arbitrary git command in all repositories.
+
+- Replace "git pull --rebase" with the "git get" alias from https://www.horde.org/development/git#updating-repository in the pull action?

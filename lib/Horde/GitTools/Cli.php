@@ -30,18 +30,21 @@ use Horde_Cli;
 class Cli
 {
     const USERAGENT = 'Horde/GitTools';
-
+    public static $cli;
     /**
      * Entry point
      */
     public static function main()
     {
 
+        self::$cli = Horde_Cli::init();
+
         $parser = new Horde_Argv_Parser(
             array('usage' => "%prog [OPTIONS] COMMAND\n
 \tAvailable commands:
 \t\tlist        List available repositories on remote.
 \t\tclone       Creates a full clone of all repositories on remote.
+\t\tcheckout    Recursivly checkout branch specified in --branch
 \t\tlink        Links repositories into web directory.
 \t\tstatus      List the local git status of all repositories.")
         );
@@ -78,6 +81,14 @@ class Cli
                     array(
                         'action' => 'store_true',
                         'help'   => 'Enable debug output.',
+                    )
+                ),
+                new Horde_Argv_Option(
+                    '-b',
+                    '--branch',
+                    array(
+                        'action' => 'store',
+                        'help'   => 'Name of branch to checkout when using checkout action.',
                     )
                 )
             )
@@ -117,6 +128,13 @@ class Cli
         case 'status':
             self::_doStatus($params);
             break;
+        case 'checkout':
+            if (empty($params['branch'])) {
+                self::$cli->message('Missing required branch option.', 'cli.error');
+                $parser->printHelp();
+                exit;
+            }
+            self::_doCheckout($params);
         }
     }
 
@@ -204,6 +222,19 @@ class Cli
             }
         }
     }
+
+    /**
+     * Recursively checkout out $branch.
+     *
+     * @param  array $params  Configuration parameters.
+     */
+    protected static function _doCheckout($params)
+    {
+        $action = new Action\Checkout($params);
+        $action->run($params['branch']);
+    }
+
+
 
     /**
      * Return whether or not the specified package is an application.

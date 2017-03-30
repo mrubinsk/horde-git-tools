@@ -14,7 +14,7 @@
 
 namespace Horde\GitTools\Action;
 
-use Horde_Cli;
+use Horde\GitTools\Cli;
 
 /**
  * Links the framework libraries into the web directory.

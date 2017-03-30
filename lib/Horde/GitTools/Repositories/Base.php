@@ -12,7 +12,7 @@
  */
 
 namespace Horde\GitTools\Repositories;
-use Horde_Cli;
+
 /**
  * Base class for requesting and parsing a list of available repositories from a
  * GitHub organization.

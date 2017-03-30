@@ -12,7 +12,8 @@
  */
 
 namespace Horde\GitTools\Action;
-use Horde_Cli;
+
+use Horde\GitTools\Cli;
 
 /**
  * Report on the status of all locally checked out repositories.

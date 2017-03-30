@@ -244,7 +244,7 @@ class Cli
      */
     protected static function _doCheckout(array $params)
     {
-        $action = new Action\Git\heckout($params);
+        $action = new Action\Git\Checkout($params);
         $action->run($params['branch']);
     }
 

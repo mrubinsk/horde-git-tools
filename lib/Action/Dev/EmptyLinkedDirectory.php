@@ -26,7 +26,7 @@ use Horde\GitTools\Cli;
  * @license   http://www.horde.org/licenses/lgpl LGPL
  * @package   GitTools
  */
-class EmptyLinkedDirectory extends Horde\GitTools\Action\Base
+class EmptyLinkedDirectory extends \Horde\GitTools\Action\Base
 {
     /**
      */

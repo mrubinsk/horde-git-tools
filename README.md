@@ -2,7 +2,7 @@ Horde-Git-Tools
 ========================================
 
 POC/WIP toolchain for dealing with the upcoming split repository structure of
-[Horde] (https://github.com/horde/horde),
+[Horde](https://github.com/horde/horde),
 
 Installation
 ------------

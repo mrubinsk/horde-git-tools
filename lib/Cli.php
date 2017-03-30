@@ -113,7 +113,7 @@ class Cli
 
         $params = array();
         if (empty($options['config'])) {
-             require dirname(__FILE__) . '/../../../bin/conf.php';
+             require dirname(__FILE__) . '/../bin/conf.php';
         } else {
             require $options['config'];
         }

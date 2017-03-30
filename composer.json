@@ -34,6 +34,6 @@
         "pear-pear.horde.org/Horde_Cache": ">=2.0.0,<=3.0.0alpha1"
     },
     "autoload": {
-        "psr-4": {"Horde\\GitTools\\": "lib/Horde/GitTools"}
+        "psr-4": {"Horde\\GitTools\\": "lib"}
     }
 }

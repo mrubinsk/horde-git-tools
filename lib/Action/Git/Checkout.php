@@ -25,7 +25,7 @@ use Horde\GitTools\Exception;
  * @license   http://www.horde.org/licenses/lgpl LGPL
  * @package   GitTools
  */
-class Git\Checkout extends \Horde\GitTools\Action\Base
+class Git\Checkout extends Base
 {
     /**
      * Clones the specified package/repository.
@@ -46,31 +46,33 @@ class Git\Checkout extends \Horde\GitTools\Action\Base
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
             $output = $results = array();
             if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
-                chdir($it->getPathname());
                 Cli::$cli->message('Repository: ' . $it->getFilename());
-                exec("(git checkout $branch > /dev/null) 3>&1 1>&2 2>&3", $output);
-                exec('git branch', $results);
-                if (in_array('* ' . $branch, $results) !== false) {
-                    $success[] = $it->getFilename();
-                } else {
-                    $failures[] = $it->getFilename() . ': ' . implode("\n", $output);
-                }
+
+                $output = $this->_callGit("checkout $branch", $it->getPathname());
+                $results = $this->_callGit('branch', $it->getPathname());
+
+                // if (in_array('* ' . $branch, $results) !== false) {
+                //     $success[] = $it->getFilename();
+                // } else {
+                //     $failures[] = $it->getFilename() . ': ' . implode("\n", $output);
+                // }
             }
         }
 
-        foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
-            $output = $results = array();
-            if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
-                Cli::$cli->message('Switching ' . $it->getFilename() . ' to branch: ' . $branch);
-                chdir($it->getPathname());
-                exec('git branch', $results);
-                if (in_array('* ' . $branch, $results) !== false) {
-                    $success[] = $it->getFilename();
-                } else {
-                    $failures[] = $it->getFilename() . ': ' . implode("\n", $output);
-                }
-            }
-        }
+        // foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
+        //     $output = $results = array();
+        //     if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
+        //         Cli::$cli->message('Switching ' . $it->getFilename() . ' to branch: ' . $branch);
+
+        //         $this->_callGit('branch')
+        //         exec('git branch', $results);
+        //         if (in_array('* ' . $branch, $results) !== false) {
+        //             $success[] = $it->getFilename();
+        //         } else {
+        //             $failures[] = $it->getFilename() . ': ' . implode("\n", $output);
+        //         }
+        //     }
+        // }
 
         if (!empty($success)) {
             Cli::$cli->message('The following repositories were successfully changed to ' . $branch, 'cli.success');

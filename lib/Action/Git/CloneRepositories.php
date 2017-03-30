@@ -11,7 +11,7 @@
  * @package  GitTools
  */
 
-namespace Horde\GitTools\Action;
+namespace Horde\GitTools\Action\Git;
 
 use Horde\GitTools\Cli;
 
@@ -61,9 +61,20 @@ class CloneRepositories extends Base
         } else {
             $source = self::HTTPS_GITURL . '/' . $this->_params['org'] . '/' . $package . '.git';
         }
-        exec("(git clone $source $target > /dev/null) 3>&1 1>&2 2>&3", $results);
+        $results = $this->_callGit("clone $source $target", $this->_params['git_base']);
+
+        // Git seems to output certain status to stderr, so don't assume failure
+        // if this is non-empty.
+        if (!empty($results[1])) {
+            if (strpos($results[1], 'fatal') === 0) {
+                Cli::$cli->message(Cli::$cli->red($results[1]), 'cli.error');
+            } else {
+                Cli::$cli->message($results[1], 'cli.success');
+            }
+        }
         if (!empty($this->_params['debug'])) {
-            print implode("\n", $results);
+            Cli::$cli->writeln($results[0]);
         }
     }
+
 }

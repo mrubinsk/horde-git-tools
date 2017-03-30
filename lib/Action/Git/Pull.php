@@ -25,7 +25,7 @@ use Horde\GitTools\Exception;
  * @license   http://www.horde.org/licenses/lgpl LGPL
  * @package   GitTools
  */
-class Pull extends \Horde\GitTools\Action\Base
+class Pull extends Base
 {
 
     protected $_failures = array();
@@ -49,31 +49,30 @@ class Pull extends \Horde\GitTools\Action\Base
         Cli::$cli->message('Starting update of libraries.');
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
             if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
-                chdir($it->getPathname());
                 // First determine if branch is clean.
-                $results = $this->_getStatus();
+                $results = $this->_getStatus($it->getPathname());
                 if ($results !== true) {
                     Cli::$cli->message('Repository: ' . $it->getFilename(), 'cli.error');
                     $failures[$it->getFilename()] = $results;
                     continue;
                 }
+                $results = $this->_callGit('pull --rebase', $it->getFilename());
+                // @todo validate?
                 Cli::$cli->message('Repository: ' . $it->getFilename(). 'cli.success');
-                exec('git pull --rebase', $results);
             }
         }
 
         Cli::$cli->message('Starting update of applications.');
         foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
             if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
-                chdir($it->getPathname());
-                $results = $this->_getStatus();
+                $results = $this->_getStatus($it->getPathname());
                 if ($results !== true) {
                     Cli::$cli->message('Repository: ' . $it->getFilename(), 'cli.error');
                     $failures[$it->getFilename()] = $results;
                     continue;
                 }
+                $reults = $this->_callGit('pull --rebase', $it->getFilename());
                 Cli::$cli->message('Repository: ' . $it->getFilename(), 'cli.success');
-                exec('git pull --rebase', $results);
             }
         }
 
@@ -91,11 +90,11 @@ class Pull extends \Horde\GitTools\Action\Base
      *
      * @return mixed  True on success, error description on failurde.
      */
-    protected function _getStatus()
+    protected function _getStatus($path)
     {
-        exec('git status', $results);
-        if (strpos($results[1], 'Your branch is up-to-date') !== 0) {
-            return $results;
+        $results = $this->_callGit('status', $path);
+        if (strpos($results[0], 'Your branch is up-to-date') !== 0) {
+            return $results[0];
         }
 
         return true;

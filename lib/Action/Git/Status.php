@@ -24,7 +24,7 @@ use Horde\GitTools\Cli;
  * @license   http://www.horde.org/licenses/lgpl LGPL
  * @package   GitTools
  */
-class Status extends \Horde\GitTools\Action\Base
+class Status extends Base
 {
     /**
      * Outputs status of all available locally checkout out repositories.
@@ -39,28 +39,20 @@ class Status extends \Horde\GitTools\Action\Base
             if (!$it->isDot() && $it->isDir() && $it != 'applications' &&
                 is_dir($it->getPathname() . '/.git')) {
 
-                $results = array();
-                chdir($it->getPathname());
-                // exec('git status --porcelain -b --untracked-files=no', $results);
-                exec('git status', $results);
-
+                $results = $this->_callGit('status --porcelain -b', $it->getPathname());
                 Cli::$cli->message('Status of ' . $it->getFileName());
-                Cli::$cli->message(implode("\n", $results));
+                Cli::$cli->message($results[0]);
                 Cli::$cli->writeLn();
             }
         }
 
         Cli::$cli->message('Checking status of applications');
         foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
-            if (!$it->isDot() && $it->isDir() &&
-                is_dir($it->getPathname() . '/.git')) {
+            if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
 
-                $results = array();
-                chdir($it->getPathname());
-                exec('git status', $results);
-
+                $results = $this->_callGit('status --porcelain -b', $it->getPathname());
                 Cli::$cli->message('Status of ' . $it->getFileName());
-                Cli::$cli->message(implode("\n", $results));
+                Cli::$cli->message($results[0]);
                 Cli::$cli->writeLn();
             }
         }

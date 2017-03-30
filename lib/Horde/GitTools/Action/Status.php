@@ -24,28 +24,6 @@ use Horde_Cli;
  */
 class Status extends Base
 {
-    public function __construct(array $params = array())
-    {
-        parent::__construct($params);
-
-        // Do CLI checks and environment setup first.
-        // @todo: Anyway to be more flexible with this?
-        if ((!@include_once 'Horde/Cli.php')  &&
-            (!@include_once $horde_git . '/Cli/lib/Horde/Cli.php')) {
-            print_usage('Horde_Cli library is not in the include_path or in the src directory.');
-        }
-
-        // Make sure no one runs this from the web.
-        if (!Horde_Cli::runningFromCLI()) {
-            exit;
-        }
-
-        // Need to override the error handler Horde_Cli uses, since we can't
-        // assume we have a functioning autoloader at this point and
-        // Horde_Cli::fatal() relies on one.
-        set_exception_handler(array($this, 'fatal'));
-    }
-
     /**
      * Outputs status of all available locally checkout out repositories.
      *
@@ -82,17 +60,6 @@ class Status extends Base
                 Cli::$cli->writeLn();
             }
         }
-    }
-
-    public function fatal($error)
-    {
-        if ($error instanceof \Exception) {
-            $trace = $error;
-        } else {
-            $trace = debug_backtrace();
-        }
-
-        var_dump($trace);
     }
 
 }

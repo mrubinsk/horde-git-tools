@@ -45,9 +45,9 @@ class Http extends Base
             $url = 'https://api.github.com/orgs/' . $git['org'] . '/repos';
         }
         $key = md5(serialize($git) . $url);
-        if (!empty($this->_cache) && $this->_cache->exists($key, $this->_params['lifetime'])) {
+        if (!empty($this->_cache) && $this->_cache->exists($key, $this->_lifetime)) {
             Cli::$cli->message('Using cached data for ' . $url);
-            $response = unserialize($this->_cache->get($key, $this->_params['lifetime']));
+            $response = unserialize($this->_cache->get($key, $this->_lifetime));
         }  else {
             Cli::$cli->message('Listing repositories from ' . $url);
             $http_client = new Horde_Http_Client();

@@ -23,7 +23,6 @@ use Horde_Cli;
  * Summary
  *
  * @author    Michael J Rubinsky <mrubinsk@horde.org>
- * @category  Horde
  * @copyright 2017 Horde LLC
  * @license   http://www.horde.org/licenses/lgpl LGPL
  * @package   GitTools
@@ -55,7 +54,8 @@ class Cli
 \tAvailable commands:
 \t\tlist        List available repositories on remote.
 \t\tclone       Creates a full clone of all repositories on remote.
-\t\tcheckout    Recursivly checkout branch specified in --branch
+\t\tcheckout    Recursively checkout branch specified in --branch.
+\t\tpull        Recursively pull and rebase all repositories.
 \t\tlink        Links repositories into web directory.
 \t\tstatus      List the local git status of all repositories.")
         );
@@ -130,6 +130,9 @@ class Cli
         switch (array_pop($arguments)) {
         case 'clone':
             self::_doClone($params);
+            break;
+        case 'pull':
+            self::_doPull($params);
             break;
         case 'link':
             self::_doLink($params);
@@ -245,7 +248,16 @@ class Cli
         $action->run($params['branch']);
     }
 
-
+    /**
+     * Recursively pull and rebase.
+     *
+     * @param  array $params  Configuration parameters.
+     */
+    protected static function _doPull(array $params)
+    {
+        $action = new Action\Pull($params);
+        $action->run();
+    }
 
     /**
      * Return whether or not the specified package is an application.

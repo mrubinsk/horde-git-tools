@@ -7,7 +7,7 @@
  *
  * @author   Michael J Rubinsky <mrubinsk@horde.org>
  * @category Horde
- * @license  http://www.horde.org/licenses/lgpl LGPL
+ * @license  https://www.horde.org/licenses/bsd BSD
  * @package  GitTools
  */
 
@@ -23,10 +23,10 @@ use Horde\GitTools\Exception;
  * from a GitHub organization using the Horde_Http client.
  *
  * @author    Michael J Rubinsky <mrubinsk@horde.org>
- * @category  Horde
  * @copyright 2017 Horde LLC
- * @license   http://www.horde.org/licenses/lgpl LGPL
+ * @license   https://www.horde.org/licenses/bsd BSD
  * @package   GitTools
+ * @category  Horde
  */
 class Http extends Base
 {

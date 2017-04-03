@@ -7,7 +7,7 @@
  *
  * @author   Michael J Rubinsky <mrubinsk@horde.org>
  * @category Horde
- * @license  http://www.horde.org/licenses/lgpl LGPL
+ * @license  https://www.horde.org/licenses/bsd BSD
  * @package  GitTools
  */
 
@@ -21,7 +21,7 @@ use Horde\GitTools\Cli;
  * @author    Michael J Rubinsky <mrubinsk@horde.org>
  * @category  Horde
  * @copyright 2017 Horde LLC
- * @license   http://www.horde.org/licenses/lgpl LGPL
+ * @license   https://www.horde.org/licenses/bsd BSD
  * @package   GitTools
  */
 class CloneRepositories extends Base

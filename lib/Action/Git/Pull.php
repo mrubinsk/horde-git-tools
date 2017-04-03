@@ -39,7 +39,7 @@ class Pull extends Base
      */
     public function run()
     {
-        $failures = array();
+        $results = $failures = array();
 
         // Ensure the base directory exists.
         if (!file_exists($this->_params['git_base'])) {
@@ -49,15 +49,7 @@ class Pull extends Base
         Cli::$cli->message('Starting update of libraries.');
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
             if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
-                // First determine if branch is clean.
-                $results = $this->_getStatus($it->getPathname());
-                if ($results !== true) {
-                    Cli::$cli->message('Repository: ' . $it->getFilename(), 'cli.error');
-                    $failures[$it->getFilename()] = $results;
-                    continue;
-                }
-                $results = $this->_callGit($this->_getCommand(), $it->getFilename());
-                // @todo validate?
+                $results[$it->getFilename()] = $this->_callGit($this->_getCommand(), $it->getPathname());
                 Cli::$cli->message('Repository: ' . $it->getFilename(), 'cli.success');
             }
         }
@@ -65,14 +57,7 @@ class Pull extends Base
         Cli::$cli->message('Starting update of applications.');
         foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
             if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
-                $results = $this->_getStatus($it->getPathname());
-                if ($results !== true) {
-                    Cli::$cli->message('Repository: ' . $it->getFilename(), 'cli.error');
-                    $failures[$it->getFilename()] = $results;
-                    continue;
-                }
-                $results = $this->_callGit($this->_getCommand(), $it->getFilename());
-                var_dump($results);
+                $results[$it->getFilename()] = $this->_callGit($this->_getCommand(), $it->getPathname());
                 Cli::$cli->message('Repository: ' . $it->getFilename(), 'cli.success');
             }
         }
@@ -83,6 +68,10 @@ class Pull extends Base
                 Cli::$cli->message('---' . $repo . '---', 'cli.error');
                 Cli::$cli->writeln(Cli::$cli->red($results));
             }
+        }
+
+        if (!empty($results) && $this->_params['debug']) {
+            Cli::$cli->writeln(print_r($results, true));
         }
     }
 
@@ -99,21 +88,6 @@ class Pull extends Base
         }
 
         return 'pull --rebase';
-    }
-
-    /**
-     *
-     *
-     * @return mixed  True on success, error description on failurde.
-     */
-    protected function _getStatus($path)
-    {
-        $results = $this->_callGit('status', $path);
-        if (strpos($results[0], 'Your branch is up-to-date') === false) {
-            return $results[0];
-        }
-
-        return true;
     }
 
 }

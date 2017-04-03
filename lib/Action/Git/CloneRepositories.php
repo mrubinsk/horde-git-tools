@@ -28,6 +28,8 @@ class CloneRepositories extends Base
 {
     const MODE = 0775;
     const HTTPS_GITURL = 'https://github.com';
+    const GET_ALIAS ='[alias]
+        get = !BRANCH=$(git branch -vv | grep ^\\\* | sed -E \'s/^[^[]+\\\[([^]:]+).+$/\\\1/\') && git fetch && ( git rebase -v $BRANCH || ( git stash && ( git rebase -v $BRANCH || echo "WARNING: Run \'git stash pop\' manually!" ) && git stash pop ) );';
 
     /**
      * Clones the specified package/repository.
@@ -75,6 +77,13 @@ class CloneRepositories extends Base
         if (!empty($this->_params['debug'])) {
             Cli::$cli->writeln($results[0]);
         }
+
+        // Add the 'get' alias?
+        if (!empty($this->_params['add_get_alias'])) {
+            $target = $target . '/.git/config';
+            file_put_contents($target, self::GET_ALIAS, FILE_APPEND);
+        }
+
     }
 
 }

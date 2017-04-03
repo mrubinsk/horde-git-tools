@@ -56,6 +56,7 @@ class Cli
 \t\tclone       Creates a full clone of all repositories on remote.
 \t\tcheckout    Recursively checkout branch specified in --branch.
 \t\tpull        Recursively pull and rebase all repositories.
+\t\tcommand     Run git command specified by --cmd options on all repositories.
 \t\tlink        Links repositories into web directory.
 \t\tstatus      List the local git status of all repositories.")
         );
@@ -101,6 +102,14 @@ class Cli
                         'action' => 'store',
                         'help'   => 'Name of branch to checkout when using checkout action.',
                     )
+                ),
+                new Horde_Argv_Option(
+                    '',
+                    '--cmd',
+                    array(
+                        'action' => 'store',
+                        'help'   => 'Git command to execute on all repositories.',
+                    )
                 )
             )
         );
@@ -143,6 +152,9 @@ class Cli
         case 'status':
             self::_doStatus($params);
             break;
+        case 'command':
+            self::_doCmd($params, $options['cmd']);
+            break;
         case 'checkout':
             if (empty($params['branch'])) {
                 self::$cli->message('Missing required branch option.', 'cli.error');
@@ -162,6 +174,17 @@ class Cli
     {
         $action = new Action\Git\Status($params);
         $action->run();
+    }
+
+    /**
+     * Report git status of all repositories.
+     *
+     * @param  array $params  Configuration parameters.
+     */
+    protected static function _doCmd(array $params, $cmd)
+    {
+        $action = new Action\Git\Command($params);
+        $action->run(array($cmd));
     }
 
     /**

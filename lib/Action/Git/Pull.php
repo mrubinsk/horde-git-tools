@@ -56,7 +56,7 @@ class Pull extends Base
                     $failures[$it->getFilename()] = $results;
                     continue;
                 }
-                $results = $this->_callGit('pull --rebase', $it->getFilename());
+                $results = $this->_callGit($this->_getCommand(), $it->getFilename());
                 // @todo validate?
                 Cli::$cli->message('Repository: ' . $it->getFilename(). 'cli.success');
             }
@@ -71,7 +71,8 @@ class Pull extends Base
                     $failures[$it->getFilename()] = $results;
                     continue;
                 }
-                $reults = $this->_callGit('pull --rebase', $it->getFilename());
+                $results = $this->_callGit($this->_getCommand(), $it->getFilename());
+                var_dump($results);
                 Cli::$cli->message('Repository: ' . $it->getFilename(), 'cli.success');
             }
         }
@@ -80,9 +81,24 @@ class Pull extends Base
             Cli::$cli->message('The following repositories failed to be updated.', 'cli.error');
             foreach ($failures as $repo => $results) {
                 Cli::$cli->message('---' . $repo . '---', 'cli.error');
-                Cli::$cli->writeln(Cli::$cli->red(implode("\n", $results)));
+                Cli::$cli->writeln(Cli::$cli->red($results));
             }
         }
+    }
+
+    /**
+     * Returns the command string to use for pull.
+     *
+     */
+    protected function _getCommand()
+    {
+        if (!empty($this->_params['use_git_get'])) {
+            return 'get';
+        } elseif (!empty($this->_params['custom_pull'])) {
+            return $this->_params['custom_pull'];
+        }
+
+        return 'pull --rebase';
     }
 
     /**
@@ -93,7 +109,7 @@ class Pull extends Base
     protected function _getStatus($path)
     {
         $results = $this->_callGit('status', $path);
-        if (strpos($results[0], 'Your branch is up-to-date') !== 0) {
+        if (strpos($results[0], 'Your branch is up-to-date') === false) {
             return $results[0];
         }
 

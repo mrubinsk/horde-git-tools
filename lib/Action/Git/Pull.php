@@ -58,7 +58,7 @@ class Pull extends Base
                 }
                 $results = $this->_callGit($this->_getCommand(), $it->getFilename());
                 // @todo validate?
-                Cli::$cli->message('Repository: ' . $it->getFilename(). 'cli.success');
+                Cli::$cli->message('Repository: ' . $it->getFilename(), 'cli.success');
             }
         }
 

@@ -28,6 +28,28 @@ $params = array(
     // Set to true to copy the structure instead of linking.
     'copy' => false,
 
+    // If non-empty, used as URI for checking out a horde repositories as a
+    // developer. Otherwise, clones repository using https://github.com
+    // E.g., this entry assumes a .ssh/config entry defining 'github'
+    // is present:
+    // Host github
+    // Hostname github.com
+    // IdentityFile ~/.ssh/id_rsa_github
+    // User git
+    // IdentitiesOnly yes
+    'git_ssh' => 'git@github:',
+
+    // If true, cache API call results from api.github.com. Used to prevent
+    // hitting API limits.
+    'cache' => true,
+
+    // If true, use the 'get' alias recommended by https://www.horde.org/development/git#updating-repository
+    'use_git_get' => true,
+
+    // If non-false, override the 'git pull --rebase' command with this custom command.
+    // Not typically used.
+    'custom_pull' => false,
+
     // @todo. Currently we use a lowercased repo name to indicate an app. Should
     // we require a provided list, or something else...?
 );

@@ -56,7 +56,7 @@ class LinkHorde extends \Horde\GitTools\Action\Base
         );
 
         foreach (new \DirectoryIterator($horde_git . '/horde') as $it) {
-            if ($it->isDot()) {
+            if ($it->isDot() || $it->getFilename() == '.git' || $it->getFilename() == 'composer.json') {
                 continue;
             }
             if ($it->isDir()) {

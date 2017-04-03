@@ -57,10 +57,6 @@ php horde-git-tools status
 Still todo
 ----------
 
-- Use Horde_Pear for all linking tasks instead of directory iteration like we
-  currently do for applications etc...Requires small refactoring to Horde_Pear
-  to account for different repository structure (IN PROGRESS).
-
 -  Create install action that will perform a full pear install of the webmail or
    groupware bundle (or optionally a specified list of applications).
 

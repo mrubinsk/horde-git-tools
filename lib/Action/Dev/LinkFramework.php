@@ -15,6 +15,7 @@
 namespace Horde\GitTools\Action\Dev;
 
 use Horde\GitTools\Cli;
+use Horde\GitTools\Local\PearPackages;
 
 /**
  * Links the framework libraries into the web directory.
@@ -53,41 +54,35 @@ class LinkFramework extends \Horde\GitTools\Action\Base
     {
         $destDir = $web_dir . DIRECTORY_SEPARATOR . '/libs';
 
-        // Put $destDir into include_path.
-        if (strpos(ini_get('include_path'), $destDir) === false) {
-            ini_set('include_path', $destDir . PATH_SEPARATOR . ini_get('include_path'));
-        }
-
         Cli::$cli->message('Source directory: ' . $horde_git);
         Cli::$cli->message('Framework destination directory: ' . $destDir);
         Cli::$cli->message('Horde directory: ' . $web_dir);
         Cli::$cli->message('Create symbolic links: ' . (!empty($this->_params['copy']) ? 'NO' : 'Yes'));
 
-        $pkg_ob = new \Horde\GitTools\PEAR\Package\Parse();
-        $pkgs = $pkg_ob->getPackages(array($horde_git));
+        // List of available packages to link.
+        $pkg_ob = new PearPackages($this->_params);
+        $pkg_list = $pkg_ob->getRepositories();
 
         Cli::$cli->writeLn();
-        Cli::$cli->message('Package(s) to install: ' . ((count($pkgs) === 1) ? reset($pkgs) : 'ALL (' . count($pkgs) . ' packages)'));
+        Cli::$cli->message('Package(s) to install: ' . ((count($pkg_list) === 1) ? reset($pkg_list) : 'ALL (' . count($pkg_list) . ' packages)'));
 
-        foreach ($pkgs as $key => $val) {
-            if ($this->_params['debug']) {
-                Cli::$cli->writeLn();
-            }
+        // $key = package name, $val is repo base.
+        foreach ($pkg_list as $key => $val) {
             Cli::$cli->message('Installing package ' . $key);
 
-            $pkg = $pkg_ob->pear_pkg->fromPackageFile($val . '/package.xml', 0);
-            if ($pkg instanceof PEAR_Error) {
-                Cli::$cli->message('Could not install package ' . $key . ': ' . $pkg->getMessage(), 'cli.error');
-                continue;
-            }
-            foreach ($pkg->getInstallationFilelist() as $file) {
+            // Get list of files
+            $pear = $pkg_ob->getPearPackage($val . '/package.xml');
+            $file_list = $pear->getInstallationFileList();
+
+            foreach ($file_list as $file) {
                 if (!isset($file['attribs']['name'])) {
-                    Cli::$cli->message('Invalid <install> entry: ' . print_r($file['attribs'], true), 'cli.error');
+                    $cli->message('Invalid <install> entry: ' . print_r($file['attribs'], true), 'cli.error');
                     continue;
                 }
+
                 $orig = realpath($val . '/' . $file['attribs']['name']);
                 if (empty($orig)) {
-                    Cli::$cli->message('Install file does not seem to exist: ' . $val . '/' . $file['attribs']['name'], 'cli.error');
+                    $cli->message('Install file does not seem to exist: ' . $val . '/' . $file['attribs']['name'], 'cli.error');
                     continue;
                 }
 
@@ -96,8 +91,8 @@ class LinkFramework extends \Horde\GitTools\Action\Base
                     if (isset($file['attribs']['install-as'])) {
                         $dest = $web_dir . '/' . $file['attribs']['install-as'];
                     } else {
-                        Cli::$cli->message('Could not determine install directory (role "horde") for ' . $web_dir, 'cli.error');
-                        continue;
+                        Cli::$cli->message('Could not determine install directory (role "horde") for ' . $web_dir . '/' . $file['attribs']['install-as'], 'cli.error');
+                        continue 2;
                     }
                     break;
 

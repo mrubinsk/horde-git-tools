@@ -96,6 +96,17 @@ class Git extends Base
      *
      * @param  array $params  Configuration parameters.
      */
+    protected function _doPull()
+    {
+        $action = new Action\Git\Pull($this->_params);
+        $action->run();
+    }
+
+    /**
+     * Report git status of all repositories.
+     *
+     * @param  array $params  Configuration parameters.
+     */
     protected function _doList()
     {
         $action = new Action\Git\ListRemote($this->_params);

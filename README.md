@@ -65,5 +65,10 @@ Still todo
    groupware bundle (or optionally a specified list of applications).
 
 - Subset of Component functionality. I.e., releases, changes, package.xml
-  maintenance etc...
+  maintenance etc... Need to decide if we want to bundle the Components
+  application or pull the needed functionality out of it and refactor into
+  this app. Pros for bundle: Less work. Cons: Would probably need to perform
+  some refactoring on it anyway to reflect layout of new repo, would be bundling
+  a bunch of CLI code that we won't use since this app already has the
+  CLI infrastructure present. Really not sure which way I'm leaning yet...thoughts?
 

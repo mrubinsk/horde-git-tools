@@ -184,6 +184,14 @@ class Git extends Base
                         'action' => 'store_true',
                         'help'   => 'Do not look for .horde.yml files.'
                     )
+                ),
+                new Horde_Argv_Option(
+                    '',
+                    '--use-git-get',
+                    array(
+                        'action' => 'store_true',
+                        'help'   => 'Use the \'get\' alias for updating.'
+                    )
                 )
             );
     }
@@ -201,7 +209,8 @@ class Git extends Base
     public function getContextOptionHelp($action = null)
     {
         $options = array(
-            'list' => array('--ignore-yml' => '')
+            'list' => array('--ignore-yml' => ''),
+            'pull' => array('--use-git-get' => '')
         );
 
         if (!empty($options[$action])) {

@@ -46,27 +46,27 @@ class Help extends Base
         );
 
         // @todo figure this out when needing contextual options :)
-        // $options = $element->getContextOptionHelp();
-        // if (!empty($options)) {
-        //     $formatter = new Horde_Argv_IndentedHelpFormatter();
-        //     $parser = $this->_dependencies->getParser();
-        //     $title = "OPTIONS for \"" . $action . "\"";
-        //     $sub = str_repeat('-', strlen($title));
-        //     $help .= "\n\n\n" . $title . "\n" . $sub . "";
-        //     foreach ($options as $option => $help_text) {
-        //         $argv_option = $parser->getOption($option);
-        //         $help .= "\n\n    " . $formatter->formatOptionStrings($argv_option) . "\n\n      ";
-        //         if (empty($help_text)) {
-        //             $help .= Horde_String::wordwrap(
-        //                 $argv_option->help, 75, "\n      ", true
-        //             );
-        //         } else {
-        //             $help .= Horde_String::wordwrap(
-        //                 $help_text, 75, "\n      ", true
-        //             );
-        //         }
-        //     }
-        // }
+        $options = $element->getContextOptionHelp($action);
+        if (!empty($options)) {
+            $formatter = new Horde_Argv_IndentedHelpFormatter();
+            $parser = $this->_dependencies->getParser();
+            $title = "OPTIONS for \"" . $action . "\"";
+            $sub = str_repeat('-', strlen($title));
+            $help .= "\n\n\n" . $title . "\n" . $sub . "";
+            foreach ($options as $option => $help_text) {
+                $argv_option = $parser->getOption($option);
+                $help .= "\n\n    " . $formatter->formatOptionStrings($argv_option) . "\n\n      ";
+                if (empty($help_text)) {
+                    $help .= Horde_String::wordwrap(
+                        $argv_option->help, 75, "\n      ", true
+                    );
+                } else {
+                    $help .= Horde_String::wordwrap(
+                        $help_text, 75, "\n      ", true
+                    );
+                }
+            }
+        }
 
         $help .= "\n";
         $this->_dependencies->getCli()->writeln($help);

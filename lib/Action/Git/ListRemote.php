@@ -46,8 +46,7 @@ class ListRemote extends Base
         $repositories = array();
         $curl = self::_getRepositories($this->_params);
         foreach ($curl->repositories as $repo_name => $repo) {
-            // @TODO: Check for horde.yaml file.
-            if (!$this->_isHordeRepo($repo_name)) {
+            if (empty($this->_params['ignore_yml']) && !$this->_isHordeRepo($repo_name)) {
                 if ($this->_params['debug']) {
                     Cli::$cli->message('Skipping ' . $repo_name . ' as it does not contain a .horde.yml file', 'cli.notice');
                 }

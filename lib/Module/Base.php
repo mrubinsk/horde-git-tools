@@ -76,6 +76,8 @@ abstract class Base implements Horde_Cli_Modular_Module
         return $help . "\n";
     }
 
+/**Horde_Cli_Modular_Module**/
+
     /**
      * Returns the list of available actions for this module.
      *
@@ -133,6 +135,19 @@ abstract class Base implements Horde_Cli_Modular_Module
     }
 
     /**
+     * Returns the options for this module.
+     *
+     * @param  string $action   The ACTION to list options for.
+     *
+     * @return array  The group options. A list of Horde_Argv_Option objects
+     *                that apply to the specified action.
+     */
+    public function getOptionGroupOptions($action = null)
+    {
+        return array();
+    }
+
+    /**
      * Returns the title for the option group representing this module.
      *
      * @return string  The group title.
@@ -150,16 +165,6 @@ abstract class Base implements Horde_Cli_Modular_Module
     public function getOptionGroupDescription()
     {
         return '';
-    }
-
-    /**
-     * Returns the options for this module.
-     *
-     * @return array  The group options. A list of Horde_Argv_Option objects.
-     */
-    public function getOptionGroupOptions()
-    {
-        return array();
     }
 
 }

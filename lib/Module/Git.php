@@ -17,6 +17,7 @@ use Horde\GitTools\Repositories;
 use Horde\GitTools\Exception;
 use Horde\GitTools\Action;
 use Horde\GitTools\Cli;
+use Horde_Argv_Option;
 
 /**
  * Class for handling 'git' actions.
@@ -161,6 +162,43 @@ class Git extends Base
     }
 
 /** Horde_Cli_Modular methods */
+
+    public function getOptionGroupOptions($action = null)
+    {
+            return array(
+                new Horde_Argv_Option(
+                    '',
+                    '--ignore-yml',
+                    array(
+                        'action' => 'store_true',
+                        'help'   => 'Do not look for .horde.yml files.'
+                    )
+                )
+            );
+    }
+
+    public function hasOptionGroup()
+    {
+        return true;
+    }
+
+    /**
+     * Return the options that should be explained in the context help.
+     *
+     * @return array A list of option help texts.
+     */
+    public function getContextOptionHelp($action = null)
+    {
+        $options = array(
+            'list' => array('--ignore-yml' => '')
+        );
+
+        if (!empty($options[$action])) {
+            return $options[$action];
+        }
+
+        return array();
+    }
 
     /**
      * Get the usage description for this module.

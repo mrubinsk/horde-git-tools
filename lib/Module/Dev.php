@@ -14,6 +14,7 @@
 namespace Horde\GitTools\Module;
 
 use Horde\GitTools\Action;
+use Horde_Argv_Option;
 
 /**
  * Class for handling 'dev' actions.
@@ -68,6 +69,42 @@ class Dev extends Base
 
 /** Horde_Cli_Modular methods */
 
+    public function getOptionGroupOptions($action = null)
+    {
+            return array(
+                new Horde_Argv_Option(
+                    '',
+                    '--copy',
+                    array(
+                        'action' => 'store_true',
+                        'help'   => 'Copy files instead of linking.'
+                    )
+                )
+            );
+    }
+
+    public function hasOptionGroup()
+    {
+        return true;
+    }
+
+    /**
+     * Return the options that should be explained in the context help.
+     *
+     * @return array A list of option help texts.
+     */
+    public function getContextOptionHelp($action = null)
+    {
+        $options = array(
+            'install' => array('--copy' => '')
+        );
+
+        if (!empty($options[$action])) {
+            return $options[$action];
+        }
+
+        return array();
+    }
     /**
      * Get the usage description for this module.
      *

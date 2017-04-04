@@ -27,31 +27,35 @@ cp bin/conf.php.dist bin/conf.php
 cd horde-git-tools/bin
 
 # Options can also be given on command line. See usage for information.
-php horde-git-tools --help
+php horde-git-tools help
 
 # Clones all repositories locally to the configured git_base directory.
-php horde-git-tools clone
+php horde-git-tools git clone
 
 # Links (or copies) to a web accessible directory (replacement for old
 # install_dev script).
-php horde-git-tools link
+php horde-git-tools dev install
 
 # List available repositories on remote. Providing the --debug flag will
 # output full response from GitHub.
-php horde-git-tools list
+php horde-git-tools --debug git list
+
+# The above will look for a .horde.yml file in the repository root to be
+# considered. To ignore this check, add the --ignore-yml flag.
+php horde-git-tools --ignore-yml git list
 
 # Attempt to checkout a specific branch on all repositories.
-php horde-git-tools --branch FRAMEMWORK_5_2 checkout
+php horde-git-tools git checkout FRAMEWORK_5_2
 
 # Attempt to git pull --rebase all repositories.
 # Still need to add options like ability to ensure repo is on a specific
 # branch before pulling, option to automatically stash/pop if repository is
 # not clean etc...
-php horde-git-tools pull
+php horde-git-tools git pull
 
 # Report on status of each repository.
 # Still need to tweak and add options, better display etc...
-php horde-git-tools status
+php horde-git-tools git status
 ```
 
 Still todo
@@ -63,6 +67,3 @@ Still todo
 - Subset of Component functionality. I.e., releases, changes, package.xml
   maintenance etc...
 
-- Add action to run an arbitrary git command in all repositories.
-
-- Replace "git pull --rebase" with the "git get" alias from https://www.horde.org/development/git#updating-repository in the pull action?

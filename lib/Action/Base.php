@@ -41,11 +41,6 @@ abstract class Base
     public function __construct(array $params = array())
     {
         $this->_params = $params;
-
-        // Make sure no one runs this from the web.
-        if (!Horde_Cli::runningFromCLI()) {
-            exit;
-        }
     }
 
     abstract public function run();

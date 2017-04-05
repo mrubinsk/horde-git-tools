@@ -71,4 +71,6 @@ Still todo
   some refactoring on it anyway to reflect layout of new repo, would be bundling
   a bunch of CLI code that we won't use since this app already has the
   CLI infrastructure present. Really not sure which way I'm leaning yet...thoughts?
+  
+  - We could bundle Components, but use its libraries instead of the command line tool. They even allow specify an output handler that could wrap the local Horde_Cli handler.
 

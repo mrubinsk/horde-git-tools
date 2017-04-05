@@ -144,7 +144,7 @@ class Git extends Base
      *
      * @param  array $params  Configuration parameters.
      *
-     * @return  Horde\GitTools\Repositories\Curl
+     * @return  Horde\GitTools\Repositories\Http
      */
     protected function _getRepositories()
     {
@@ -152,10 +152,13 @@ class Git extends Base
             $storage = new Horde_Cache_Storage_File();
             $cache = new Horde_Cache($storage);
         }
-        $curl = new Repositories\Http($this->_params, $cache);
-        $curl->load(array('org' => $params['org'], 'user-agent' => self::USERAGENT));
+        $repositories = new Repositories\Http($this->_params, $cache);
+        $repositories->load(array(
+            'org' => $params['org'],
+            'user-agent' => self::USERAGENT)
+        );
 
-        return $curl;
+        return $repositories;
     }
 
     /**

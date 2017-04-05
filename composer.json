@@ -22,6 +22,10 @@
         {
             "type": "pear",
             "url": "https://pear.horde.org"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/mrubinsk/Components"
         }
     ],
     "require": {
@@ -32,7 +36,9 @@
         "pear-pear.horde.org/Horde_Cli_Modular": ">=2.0.0,<=3.0.0alpha1",
         "pear-pear.horde.org/Horde_Argv": ">=2.0.0,<=3.0.0alpha1",
         "pear-pear.horde.org/Horde_Http": ">=2.0.0,<=3.0.0alpha1",
-        "pear-pear.horde.org/Horde_Cache": ">=2.0.0,<=3.0.0alpha1"
+        "pear-pear.horde.org/Horde_Cache": ">=2.0.0,<=3.0.0alpha1",
+        "pear-pear.horde.org/Horde_Pear": "^1@alpha",
+        "horde/components": "dev-master",
     },
     "autoload": {
         "psr-4": {"Horde\\GitTools\\": "lib"}

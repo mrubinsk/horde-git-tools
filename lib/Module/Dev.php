@@ -90,6 +90,26 @@ class Dev extends Base
     }
 
     /**
+     * Returns the title for the option group representing this module.
+     *
+     * @return string  The group title.
+     */
+    public function getOptionGroupTitle()
+    {
+        return 'Dev actions';
+    }
+
+    /**
+     * Returns the description for the option group representing this module.
+     *
+     * @return string  The group description.
+     */
+    public function getOptionGroupDescription()
+    {
+        return 'This command performs various development commands on all local repositories.';
+    }
+
+    /**
      * Return the options that should be explained in the context help.
      *
      * @return array A list of option help texts.

@@ -66,15 +66,15 @@ abstract class Base implements Horde_Cli_Modular_Module
      * @return string  Formatted help text explaining each action this module
      *                 handles.
      */
-    protected function _actionFormatter()
+    protected function _actionFormatter($indent = 0)
     {
         $help = "\n";
         $lengths = array_map('strlen', array_keys($this->getActions()));
         foreach ($this->getActions() as $action => $desc) {
-            $help .= str_pad($action, max($lengths) + 2, ' ') . '  -  ' . $desc . "\n";
+            $help .= str_repeat(' ', $indent) . str_pad($action, max($lengths) + 2, ' ') . '  -  ' . $desc . "\n";
         }
 
-        return $help . "\n";
+        return $help;
     }
 
 /**Horde_Cli_Modular_Module**/

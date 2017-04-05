@@ -15,7 +15,7 @@
 namespace Horde\GitTools\Action\Dev;
 
 use Horde\GitTools\Cli;
-use Horde\GitTools\Local\PearPackages;
+use Horde\GitTools\Components\PearPackages;
 
 /**
  * Links the framework libraries into the web directory.

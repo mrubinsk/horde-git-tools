@@ -20,6 +20,7 @@ use Horde_Argv_IndentedHelpFormatter;
  * Class for handling help.
  *
  * @author    Michael J Rubinsky <mrubinsk@horde.org>
+ * @category  Horde
  * @copyright 2017 Horde LLC
  * @license   https://www.horde.org/licenses/bsd BSD
  * @package   GitTools

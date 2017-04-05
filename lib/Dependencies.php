@@ -1,6 +1,14 @@
 <?php
 /**
+ * Copyright 2017 Horde LLC (http://www.horde.org/)
  *
+ * See the enclosed file LICENSE for license information (...). If you
+ * did not receive this file, see http://www.horde.org/licenses/....
+ *
+ * @author   Michael J Rubinsky <mrubinsk@horde.org>
+ * @category Horde
+ * @license  http://www.horde.org/licenses/... ...
+ * @package  GitTools
  */
 
 namespace Horde\GitTools;
@@ -11,6 +19,12 @@ use Horde_Argv_Parser;
 
 /**
  * Simple dependency container for injecting needed objects into module classes.
+ *
+ * @author    Michael J Rubinsky <mrubinsk@horde.org>
+ * @category  Horde
+ * @copyright 2017 Horde LLC
+ * @license   http://www.horde.org/licenses/... ...
+ * @package   GitTools
  */
 class Dependencies
 {

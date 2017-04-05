@@ -20,6 +20,7 @@ use Horde_Argv_Option;
  * Base class for modular command handlers.
  *
  * @author    Michael J Rubinsky <mrubinsk@horde.org>
+ * @category  Horde
  * @copyright 2017 Horde LLC
  * @license   https://www.horde.org/licenses/bsd BSD
  * @package   GitTools

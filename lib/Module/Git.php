@@ -23,6 +23,7 @@ use Horde_Argv_Option;
  * Class for handling 'git' actions.
  *
  * @author    Michael J Rubinsky <mrubinsk@horde.org>
+ * @category  Horde
  * @copyright 2017 Horde LLC
  * @license   https://www.horde.org/licenses/bsd BSD
  * @package   GitTools

@@ -71,7 +71,7 @@ class Checkout extends Base
                 }
             }
         } else {
-            $this->_dependencies->getOutput()->err('Could not find the applications checkout directory');
+            $this->_dependencies->getOutput()->fail('Could not find the applications checkout directory');
         }
 
         if (!empty($success)) {
@@ -80,8 +80,8 @@ class Checkout extends Base
         }
 
         if (!empty($failures)) {
-            $this->_dependencies->getOutput()->err('The following repositories failed to be changed to ' . $branch);
-            $this->_dependencies->getOutput()->red(implode("\n", $failures));
+            $this->_dependencies->getOutput()->warn('The following repositories failed to be changed to ' . $branch);
+            $this->_dependencies->getOutput()->yellow(implode("\n", $failures));
         }
     }
 }

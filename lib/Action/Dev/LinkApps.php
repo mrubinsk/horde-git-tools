@@ -82,7 +82,7 @@ class LinkApps extends \Horde\GitTools\Action\Base
     {
         print 'LINKING ' . $app . "\n";
         if (!symlink($horde_git . '/applications/' . $app, $web_dir . '/' . $app)) {
-            $this->_dependencies->getOutput()->err(
+            $this->_dependencies->getOutput()->fail(
                 'Cannot link ' . $web_dir . '/' . $app . ' to '
                 . $horde_git . '/applications/' . $app
             );

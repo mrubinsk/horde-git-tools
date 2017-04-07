@@ -95,9 +95,9 @@ class Pull extends Base
         }
 
         if (!empty($failures)) {
-            $this->_dependencies->getOutput()->err('The following repositories failed to be updated.');
+            $this->_dependencies->getOutput()->warn('The following repositories failed to be updated.');
             foreach ($failures as $repo => $results) {
-                $this->_dependencies->getOutput()->err('---' . $repo . '---');
+                $this->_dependencies->getOutput()->warn('---' . $repo . '---');
                 $this->_dependencies->getOutput()->red($results);
             }
         }

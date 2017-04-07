@@ -80,7 +80,7 @@ class LinkFramework extends \Horde\GitTools\Action\Base
 
             foreach ($file_list as $file) {
                 if (!isset($file['attribs']['name'])) {
-                    $this->_dependencies->getOutput()->err(
+                    $this->_dependencies->getOutput()->warn(
                         'Invalid <install> entry: '
                         . print_r($file['attribs'], true)
                     );
@@ -89,7 +89,7 @@ class LinkFramework extends \Horde\GitTools\Action\Base
 
                 $orig = realpath($val . '/' . $file['attribs']['name']);
                 if (empty($orig)) {
-                    $this->_dependencies->getOutput()->err(
+                    $this->_dependencies->getOutput()->warn(
                         'Install file does not seem to exist: '
                         . $val . '/' . $file['attribs']['name']
                     );
@@ -101,7 +101,7 @@ class LinkFramework extends \Horde\GitTools\Action\Base
                     if (isset($file['attribs']['install-as'])) {
                         $dest = $web_dir . '/' . $file['attribs']['install-as'];
                     } else {
-                        $this->_dependencies->getOutput()->err(
+                        $this->_dependencies->getOutput()->warn(
                             'Could not determine install directory (role "horde") for '
                              . $web_dir . '/'
                              . $file['attribs']['install-as']
@@ -140,7 +140,7 @@ class LinkFramework extends \Horde\GitTools\Action\Base
                         print 'COPY: ' . $orig . ' -> ' . $dest . "\n";
                     }
                     if (!copy($orig, $dest)) {
-                        $this->_dependencies->getOutput()->err(
+                        $this->_dependencies->getOutput()->warn(
                             'Could not link ' . $orig . '.'
                         );
                     }
@@ -149,7 +149,7 @@ class LinkFramework extends \Horde\GitTools\Action\Base
                         print 'SYMLINK: ' . $orig . ' -> ' . $dest . "\n";
                     }
                     if (!symlink($orig, $dest)) {
-                        $this->_dependencies->getOutput()->err(
+                        $this->_dependencies->getOutput()->warn(
                             'Could not link ' . $orig . '.'
                         );
                     }

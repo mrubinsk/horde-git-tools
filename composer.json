@@ -28,6 +28,10 @@
             "url": "https://github.com/mrubinsk/Components"
         },
         {
+            "type": "vcs",
+            "url": "https://github.com/horde-split-test/Cli"
+        },
+        {
             "type": "package",
             "package": {
                 "name": "pear-pear.horde.org/Horde_Pear",
@@ -57,7 +61,7 @@
         "php": ">=5.5.0",
         "pear-pear.horde.org/Horde_Exception": ">=2.0.0,<=3.0.0alpha1",
         "pear-pear.horde.org/Horde_Translation": ">=2.2.2,<=3.0.0alpha1",
-        "pear-pear.horde.org/Horde_Cli": ">=2.1.0,<=3.0.0alpha1",
+        "horde/horde-cli": "^2",
         "pear-pear.horde.org/Horde_Cli_Modular": ">=2.0.0,<=3.0.0alpha1",
         "pear-pear.horde.org/Horde_Argv": ">=2.0.0,<=3.0.0alpha1",
         "pear-pear.horde.org/Horde_Http": ">=2.0.0,<=3.0.0alpha1",

@@ -23,7 +23,7 @@ actions still have @todo.
 
 ```sh
 # Review bin/conf.php.dist and set values accordingly.
-cp bin/conf.php.dist bin/conf.php
+cp config/conf.php.dist config/conf.php
 cd horde-git-tools/bin
 
 # Options can also be given on command line. See usage for information.
@@ -52,6 +52,9 @@ php horde-git-tools git checkout FRAMEWORK_5_2
 # branch before pulling, option to automatically stash/pop if repository is
 # not clean etc...
 php horde-git-tools git pull
+
+# Attempt to perform arbitrary git command on all repositories.
+php horde-git-tools git run "reset HEAD"
 
 # Report on status of each repository.
 # Still need to tweak and add options, better display etc...

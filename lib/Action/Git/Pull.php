@@ -48,7 +48,7 @@ class Pull extends Base
 
         $this->_dependencies->getOutput()->info('Starting update of libraries.');
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
-            if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
+            if ($this->_includeRepository($it)) {
                 // Debug output
                 if ($this->_params['verbose']) {
                     $this->_dependencies->getOutput()->plain(
@@ -71,8 +71,7 @@ class Pull extends Base
 
         $this->_dependencies->getOutput()->info('Starting update of applications.');
         foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
-            if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
-
+            if ($this->_includeRepository($it)) {
                 // Debug
                 if ($this->_params['verbose']) {
                     $this->_dependencies->getOutput()->plain(
@@ -98,7 +97,7 @@ class Pull extends Base
             $this->_dependencies->getOutput()->warn('The following repositories failed to be updated.');
             foreach ($failures as $repo => $results) {
                 $this->_dependencies->getOutput()->warn('---' . $repo . '---');
-                $this->_dependencies->getOutput()->red($results);
+                $this->_dependencies->getOutput()->yellow($results);
             }
         }
 

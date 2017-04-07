@@ -212,6 +212,14 @@ class Git extends Base
                     'action' => 'store_true',
                     'help'   => 'Use the \'get\' alias for updating.'
                 )
+            ),
+            new Horde_Argv_Option(
+                '',
+                '--repositories',
+                array(
+                    'action' => 'store',
+                    'help'   => 'Only perform any actions on the specified list of comma delimited repositories.'
+                )
             )
         );
     }
@@ -248,13 +256,17 @@ class Git extends Base
      */
     public function getContextOptionHelp($action = null)
     {
+        $all_options = array('--repositories' => '');
         $options = array(
             'list' => array('--ignore-yml' => ''),
             'pull' => array('--use-git-get' => '')
         );
 
         if (!empty($options[$action])) {
-            return $options[$action];
+            return array_merge(
+                $all_options,
+                $options[$action]
+            );
         }
 
         return array();

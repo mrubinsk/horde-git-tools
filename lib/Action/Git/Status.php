@@ -36,9 +36,7 @@ class Status extends Base
     {
         $this->_dependencies->getOutput()->info('Checking status of libraries');
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
-            if (!$it->isDot() && $it->isDir() && $it != 'applications' &&
-                is_dir($it->getPathname() . '/.git')) {
-
+            if ($this->_includeRepository($it)) {
                 $results = $this->_callGit('status --porcelain -b', $it->getPathname());
                 $this->_dependencies->getOutput()->info('Status of ' . $it->getFileName());
                 $this->_dependencies->getOutput()->info($results[0]);
@@ -47,8 +45,7 @@ class Status extends Base
 
         $this->_dependencies->getOutput()->info('Checking status of applications');
         foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
-            if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
-
+            if ($this->_includeRepository($it)) {
                 $results = $this->_callGit('status --porcelain -b', $it->getPathname());
                 $this->_dependencies->getOutput()->info('Status of ' . $it->getFileName());
                 $this->_dependencies->getOutput()->info($results[0]);

@@ -48,7 +48,7 @@ class Command extends Base
 
         $this->_dependencies->getOutput()->info('Starting update of libraries.');
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
-            if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
+            if ($this->_includeRepository($it)) {
                 foreach ($commands as $cmd) {
                     if ($this->_params['verbose']) {
                         $this->_dependencies->getOutput()->plain(
@@ -70,7 +70,7 @@ class Command extends Base
 
         $this->_dependencies->getOutput()->info('Starting update of applications.');
         foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
-            if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
+            if ($this->_includeRepository($it)) {
                 foreach ($commands as $cmd) {
 
                     if ($this->_params['verbose']) {

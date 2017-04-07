@@ -54,4 +54,14 @@ abstract class Base extends \Horde\GitTools\Action\Base
         return array($results, $error);
     }
 
+    protected function _includeRepository($it)
+    {
+        $repositories = !empty($this->_params['repositories'])
+            ? explode(',', $this->_params['repositories'])
+            : array();
+
+        return !$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')
+            && (empty($repositories) || (in_array($it->getFilename(), $repositories)));
+    }
+
 }

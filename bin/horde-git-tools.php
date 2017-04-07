@@ -12,7 +12,7 @@
  */
 
 /**
- * Wrap call to Tools::main()
+ * Wrap call to Cli::main()
  *
  * @author    Michael J Rubinsky <mrubinsk@horde.org>
  * @category  Horde
@@ -20,8 +20,13 @@
  * @license   https://www.horde.org/licenses/bsd BSD
  * @package   GitTools
  */
-require_once dirname(__FILE__) . '/../vendor/autoload.php';
+
+$autoloader = dirname(__FILE__) . '/../vendor/autoload.php';
+
+if (!file_exists($autoloader)) {
+    echo "You need to run \"composer install\" first.\nFor more information on composer see https://getcomposer.org/.\n";
+    exit;
+}
+
+require_once $autoloader;
 \Horde\GitTools\Cli::main();
-
-
-

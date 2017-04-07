@@ -54,22 +54,30 @@ class CloneRepositories extends Base
             $package_webname = $package;
         }
 
-        // Is this a developer checkout or anon?
-        $target = $this->_params['git_base'] . '/' . ($app ? 'applications/' : '') . $package_webname;
-        $this->_dependencies->getOutput()->info('Cloning ' . $package_webname . ' into ' . $target);
+        // Get target
+        $target = $this->_params['git_base'] . '/'
+            . ($app ? 'applications/' : '') . $package_webname;
+        $this->_dependencies->getOutput()->info(
+            'Cloning ' . $package_webname . ' into ' . $target
+        );
+
         if (!empty($this->_params['git_ssh'])) {
             // Do a developer checkout.
-            $source = $this->_params['git_ssh'] . '/' . $this->_params['org'] . '/' . $package . '.git';
+            $source = $this->_params['git_ssh'] . '/'
+                . $this->_params['org'] . '/' . $package . '.git';
         } else {
-            $source = self::HTTPS_GITURL . '/' . $this->_params['org'] . '/' . $package . '.git';
+            $source = self::HTTPS_GITURL . '/'
+                . $this->_params['org'] . '/' . $package . '.git';
         }
+
+        // Clone
         $results = $this->_callGit("clone $source $target", $this->_params['git_base']);
 
         // Git seems to output certain status to stderr, so don't assume failure
         // if this is non-empty.
         if (!empty($results[1])) {
             if (strpos($results[1], 'fatal') === 0) {
-                $this->_dependencies->getOutput()->red($results[1]);
+                $this->_dependencies->getOutput()->yellow($results[1]);
             } else {
                 $this->_dependencies->getOutput()->ok($results[1]);
             }
@@ -83,7 +91,6 @@ class CloneRepositories extends Base
             $target = $target . '/.git/config';
             file_put_contents($target, self::GET_ALIAS, FILE_APPEND);
         }
-
     }
 
 }

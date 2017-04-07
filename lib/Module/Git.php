@@ -290,7 +290,7 @@ class Git extends Base
             'pull'              => 'Update local repositories.',
             'checkout [BRANCH]' => 'Checkout BRANCH on all local repositories.',
             'status'            => 'Display status of all local repositories.',
-            'run [GIT COMMAND]' => 'Run [GIT COMMAND] on all local repositories.'
+            'run ["GIT COMMAND"]' => 'Run [GIT COMMAND] on all local repositories.'
         );
     }
 

@@ -47,14 +47,21 @@ abstract class Base
     protected $_lifetime = 86400;
 
     /**
+     * @var Components_Dependencies
+     */
+    protected $_dependencies;
+
+    /**
      * Const'r
      *
      * @param array   $params     Configuration parameters
      * @param Horde_Cache $cache  An optional cache to store API call results.
      * @param boolean $lifetime   Optional lifetime of cache entries.
      */
-    public function __construct(array $params, $cache = null, $lifetime = null)
+    public function __construct(
+        array $params, \Components_Dependencies $dependencies, $cache = null, $lifetime = null)
     {
+        $this->_dependencies = $dependencies;
         $this->_params = $params;
         if (!empty($cache)) {
             $this->_cache = $cache;
@@ -77,7 +84,8 @@ abstract class Base
         case 'repositories':
             return $this->_repositories;
         default:
-            exit('Unknown Property');
+            // var_dump(debug_backtrace());
+            exit('Unknown Property: ' . $property);
         }
     }
 

@@ -44,10 +44,10 @@ class ListRemote extends Base
     public function run()
     {
         $repositories = array();
-        $curl = self::_getRepositories($this->_params);
-        foreach ($curl->repositories as $repo_name => $repo) {
+        $remotes= self::_getRepositories($this->_params);
+        foreach ($remotes->repositories as $repo_name => $repo) {
             if (empty($this->_params['ignore_yml']) && !$this->_isHordeRepo($repo_name)) {
-                if ($this->_params['debug']) {
+                if ($this->_params['verbose']) {
                     $this->_dependencies->getOutput()->info('Skipping ' . $repo_name . ' as it does not contain a .horde.yml file');
                 }
                 continue;
@@ -71,10 +71,10 @@ class ListRemote extends Base
             $storage = new Horde_Cache_Storage_File();
             $cache = new Horde_Cache($storage);
         }
-        $curl = new Repositories\Http($this->_params, $cache);
-        $curl->load(array('org' => $this->_params['org'], 'user-agent' => self::USERAGENT));
+        $repositories = new Repositories\Http($this->_params, $this->_dependencies, $cache);
+        $repositories->load(array('org' => $this->_params['org'], 'user-agent' => self::USERAGENT));
 
-        return $curl;
+        return $repositories;
     }
 
     protected function _isHordeRepo($repo)

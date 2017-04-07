@@ -2,12 +2,12 @@
 /**
  * Copyright 2017 Horde LLC (http://www.horde.org/)
  *
- * See the enclosed file LICENSE for license information (...). If you
- * did not receive this file, see http://www.horde.org/licenses/....
+ * See the enclosed file LICENSE for license information (BSD). If you
+ * did not receive this file, see https://www.horde.org/licenses/bsd.
  *
  * @author   Michael J Rubinsky <mrubinsk@horde.org>
  * @category Horde
- * @license  http://www.horde.org/licenses/... ...
+ * @license  https://www.horde.org/licenses/bsd BSD
  * @package  GitTools
  */
 
@@ -23,7 +23,7 @@ use Horde_Argv_Parser;
  * @author    Michael J Rubinsky <mrubinsk@horde.org>
  * @category  Horde
  * @copyright 2017 Horde LLC
- * @license   http://www.horde.org/licenses/... ...
+ * @license   https://www.horde.org/licenses/bsd BSD
  * @package   GitTools
  */
 class Dependencies

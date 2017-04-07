@@ -90,7 +90,7 @@ class Command extends Base
                 }
             }
         }
-        if ($this->_params['debug']) {
+        if ($this->_params['verbose']) {
             foreach ($results as $name => $result) {
                 $this->_dependencies->getOutput()->bold($name);
                 $this->_dependencies->getOutput()->plain(implode("\n", $result));

@@ -54,17 +54,17 @@ class EmptyLinkedDirectory extends \Horde\GitTools\Action\Base
         while ($it->valid()) {
             if (!$it->isDot()) {
                 if ($it->isLink()) {
-                    if ($this->_params['debug']) {
+                    if ($this->_params['verbose']) {
                         $this->_dependencies->getOutput()->info('DELETING LINK: ' . $it->key());
                     }
                     unlink($it->key());
                 } elseif ($it->isDir()) {
-                    if ($this->_params['debug']) {
+                    if ($this->_params['verbose']) {
                         $this->_dependencies->getOutput()->info('DELETING DIR: ' . $it->key());
                     }
                     rmdir($it->key());
                 } elseif ($it->isFile()) {
-                    if ($this->_params['debug']) {
+                    if ($this->_params['verbose']) {
                         $this->_dependencies->getOutput()->info('DELETING FILE: ' . $it->key());
                     }
                     unlink($it->key());

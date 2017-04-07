@@ -74,7 +74,7 @@ class CloneRepositories extends Base
                 $this->_dependencies->getOutput()->ok($results[1]);
             }
         }
-        if (!empty($this->_params['debug'])) {
+        if (!empty($this->_params['verbose'])) {
             $this->_dependencies->getOutput()->plain($results[0]);
         }
 

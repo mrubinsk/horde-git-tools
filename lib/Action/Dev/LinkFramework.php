@@ -136,7 +136,7 @@ class LinkFramework extends \Horde\GitTools\Action\Base
                 }
 
                 if (!empty($this->_params['copy'])) {
-                    if ($this->_params['debug']) {
+                    if ($this->_params['verbose']) {
                         print 'COPY: ' . $orig . ' -> ' . $dest . "\n";
                     }
                     if (!copy($orig, $dest)) {
@@ -145,7 +145,7 @@ class LinkFramework extends \Horde\GitTools\Action\Base
                         );
                     }
                 } else {
-                    if ($this->_params['debug']) {
+                    if ($this->_params['verbose']) {
                         print 'SYMLINK: ' . $orig . ' -> ' . $dest . "\n";
                     }
                     if (!symlink($orig, $dest)) {

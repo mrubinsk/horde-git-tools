@@ -59,7 +59,7 @@ class LinkHorde extends \Horde\GitTools\Action\Base
             }
             if ($it->isDir()) {
                 if (strpos($it->getPathname(), $horde_git . '/horde/js') !== false) {
-                    if ($this->_params['debug']) {
+                    if ($this->_params['verbose']) {
                         $this->_dependencies->getOutput()->plain(
                             "CREATING DIRECTORY: $web_dir/$it"
                         );
@@ -69,7 +69,7 @@ class LinkHorde extends \Horde\GitTools\Action\Base
                         if ($sub->isDot()) {
                             continue;
                         }
-                        if ($this->_params['debug']) {
+                        if ($this->_params['verbose']) {
                             if ($sub->isDir()) {
                                 $this->_dependencies->getOutput()->plain(
                                     "LINKING DIRECTORY: $web_dir/$it/$sub"
@@ -83,7 +83,7 @@ class LinkHorde extends \Horde\GitTools\Action\Base
                         symlink($sub->getPathname(), $web_dir . '/' . $it . '/' . $sub);
                     }
                 } else {
-                    if ($this->_params['debug']) {
+                    if ($this->_params['verbose']) {
                         $this->_dependencies->getOutput()->plain
                             ("LINKING DIRECTORY: $web_dir/$it"
                         );
@@ -91,7 +91,7 @@ class LinkHorde extends \Horde\GitTools\Action\Base
                     symlink($it->getPathname(), $web_dir . '/' . $it);
                 }
             } else {
-                if ($this->_params['debug']) {
+                if ($this->_params['verbose']) {
                     $this->_dependencies->getOutput()->plain(
                         "LINKING FILE: $web_dir/$it"
                     );

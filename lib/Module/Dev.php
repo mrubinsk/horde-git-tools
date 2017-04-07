@@ -34,9 +34,20 @@ class Dev extends Base
      * @param  array $arguments  Argv arguments
      * @param  array $params    Configuration parameters.
      */
-    public function handle($arguments, $params)
+    public function handle(\Components_Configs $config)
     {
-        $this->_params = $params;
+        // Grab the CLI options
+        $this->_params = $config->getOptions();
+
+        // ...and the arguments.
+        $arguments = $config->getArguments();
+
+        // Exit early if we aren't actually calling any git related commands.
+        if (array_shift($arguments) != 'dev' || !count($arguments)) {
+            // Exit early if we didn't request any actual actions.
+            return false;
+        }
+
         switch (array_shift($arguments)) {
         case 'install':
             $this->_doInstallDev();
@@ -55,16 +66,16 @@ class Dev extends Base
         $params = $this->_params;
 
         // First, empty directory.
-        $action = new Action\Dev\EmptyLinkedDirectory($params);
+        $action = new Action\Dev\EmptyLinkedDirectory($params, $this->_dependencies);
         $action->run();
 
-        $action = new Action\Dev\LinkHorde($params);
+        $action = new Action\Dev\LinkHorde($params, $this->_dependencies);
         $action->run();
 
-        $action = new Action\Dev\LinkApps($params);
+        $action = new Action\Dev\LinkApps($params, $this->_dependencies);
         $action->run();
 
-        $action = new Action\Dev\LinkFramework($params);
+        $action = new Action\Dev\LinkFramework($params, $this->_dependencies);
         $action->run();
     }
 
@@ -72,16 +83,16 @@ class Dev extends Base
 
     public function getOptionGroupOptions($action = null)
     {
-            return array(
-                new Horde_Argv_Option(
-                    '',
-                    '--copy',
-                    array(
-                        'action' => 'store_true',
-                        'help'   => 'Copy files instead of linking.'
-                    )
+        return array(
+            new Horde_Argv_Option(
+                '',
+                '--copy',
+                array(
+                    'action' => 'store_true',
+                    'help'   => 'Copy files instead of linking.'
                 )
-            );
+            )
+        );
     }
 
     public function hasOptionGroup()

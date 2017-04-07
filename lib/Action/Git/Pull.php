@@ -46,32 +46,64 @@ class Pull extends Base
             throw new Exception("Base checkout directory does not exist.");
         }
 
-        Cli::$cli->message('Starting update of libraries.');
+        $this->_dependencies->getOutput()->info('Starting update of libraries.');
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
             if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
+                // Debug output
+                if ($this->_params['verbose']) {
+                    $this->_dependencies->getOutput()->plain(
+                        '    >>>GIT COMMAND: ' . $this->_getCommand()
+                    );
+                }
+
+                // Perform pull
                 $results[$it->getFilename()] = $this->_callGit($this->_getCommand(), $it->getPathname());
-                Cli::$cli->message('Repository: ' . $it->getFilename(), 'cli.success');
+
+                // Debug output
+                if ($this->_params['verbose']) {
+                    $this->_dependencies->getOutput()->plain(
+                        '   >>>RESULTS: ' . implode("\n", $results[$it->getFilename()])
+                    );
+                }
+                $this->_dependencies->getOutput()->ok('Repository: ' . $it->getFilename());
             }
         }
 
-        Cli::$cli->message('Starting update of applications.');
+        $this->_dependencies->getOutput()->info('Starting update of applications.');
         foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
             if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
+
+                // Debug
+                if ($this->_params['verbose']) {
+                    $this->_dependencies->getOutput()->plain(
+                        '    >>>GIT COMMAND: ' . $this->_getCommand()
+                    );
+                }
+
+                // Perform pull
                 $results[$it->getFilename()] = $this->_callGit($this->_getCommand(), $it->getPathname());
-                Cli::$cli->message('Repository: ' . $it->getFilename(), 'cli.success');
+
+                // Debug results
+                if ($this->_params['verbose']) {
+                    $this->_dependencies->getOutput()->plain(
+                        '    >>>RESULTS: ' . implode("\n", $results[$it->getFilename()])
+                    );
+                }
+
+                $this->_dependencies->getOutput()->ok('Repository: ' . $it->getFilename());
             }
         }
 
         if (!empty($failures)) {
-            Cli::$cli->message('The following repositories failed to be updated.', 'cli.error');
+            $this->_dependencies->getOutput()->err('The following repositories failed to be updated.');
             foreach ($failures as $repo => $results) {
-                Cli::$cli->message('---' . $repo . '---', 'cli.error');
-                Cli::$cli->writeln(Cli::$cli->red($results));
+                $this->_dependencies->getOutput()->err('---' . $repo . '---');
+                $this->_dependencies->getOutput()->red($results);
             }
         }
 
-        if (!empty($results) && $this->_params['debug']) {
-            Cli::$cli->writeln(print_r($results, true));
+        if (!empty($results) && $this->_params['verbose']) {
+            $this->_dependencies->getOutput()->plain(print_r($results, true));
         }
     }
 

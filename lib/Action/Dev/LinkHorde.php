@@ -14,8 +14,6 @@
 
 namespace Horde\GitTools\Action\Dev;
 
-use Horde\GitTools\Cli;
-
 /**
  * Links the base Horde directory into the web directory.
  *
@@ -47,7 +45,7 @@ class LinkHorde extends \Horde\GitTools\Action\Base
      */
     protected function _linkHorde($horde_git, $web_dir)
     {
-        Cli::$cli->writeln("LINKING horde");;
+        $this->_dependencies->getOutput()->plain("LINKING horde");;
         $horde_git .= '/applications';
 
         file_put_contents(
@@ -62,7 +60,9 @@ class LinkHorde extends \Horde\GitTools\Action\Base
             if ($it->isDir()) {
                 if (strpos($it->getPathname(), $horde_git . '/horde/js') !== false) {
                     if ($this->_params['debug']) {
-                        Cli::$cli->writeln("CREATING DIRECTORY: $web_dir/$it");
+                        $this->_dependencies->getOutput()->plain(
+                            "CREATING DIRECTORY: $web_dir/$it"
+                        );
                     }
                     mkdir($web_dir . '/' . $it);
                     foreach (new \DirectoryIterator($horde_git . '/horde/' . $it) as $sub) {
@@ -71,22 +71,30 @@ class LinkHorde extends \Horde\GitTools\Action\Base
                         }
                         if ($this->_params['debug']) {
                             if ($sub->isDir()) {
-                                Cli::$cli->writeln("LINKING DIRECTORY: $web_dir/$it/$sub");
+                                $this->_dependencies->getOutput()->plain(
+                                    "LINKING DIRECTORY: $web_dir/$it/$sub"
+                                );
                             } else {
-                               Cli::$cli->writeln("LINKING FILE: $web_dir/$it/$sub");
+                               $this->_dependencies->getOutput()->plain(
+                                    "LINKING FILE: $web_dir/$it/$sub"
+                                );
                             }
                         }
                         symlink($sub->getPathname(), $web_dir . '/' . $it . '/' . $sub);
                     }
                 } else {
                     if ($this->_params['debug']) {
-                        Cli::$cli->writeln("LINKING DIRECTORY: $web_dir/$it");
+                        $this->_dependencies->getOutput()->plain
+                            ("LINKING DIRECTORY: $web_dir/$it"
+                        );
                     }
                     symlink($it->getPathname(), $web_dir . '/' . $it);
                 }
             } else {
                 if ($this->_params['debug']) {
-                    Cli::$cli->writeln("LINKING FILE: $web_dir/$it");
+                    $this->_dependencies->getOutput()->plain(
+                        "LINKING FILE: $web_dir/$it"
+                    );
                 }
                 symlink($it->getPathname(), $web_dir . '/' . $it);
             }
@@ -94,10 +102,10 @@ class LinkHorde extends \Horde\GitTools\Action\Base
 
         // Check settings of static cache directory.
         if (file_exists($web_dir . '/static')) {
-            Cli::$cli->message('Setting static directory permissions...');
+            $this->_dependencies->getOutput()->info('Setting static directory permissions...');
             chmod($web_dir . '/static', $this->_params['static_mode']);
         } else {
-            Cli::$cli->message('Creating static directory...');
+            $this->_dependencies->getOutput()->info('Creating static directory...');
             mkdir($web_dir . '/static', $this->_params['static_mode']);
         }
         if (!empty($this->_params['static_group'])) {

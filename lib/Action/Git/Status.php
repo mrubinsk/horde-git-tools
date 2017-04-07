@@ -34,26 +34,24 @@ class Status extends Base
      */
     public function run()
     {
-        Cli::$cli->message('Checking status of libraries');
+        $this->_dependencies->getOutput()->info('Checking status of libraries');
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
             if (!$it->isDot() && $it->isDir() && $it != 'applications' &&
                 is_dir($it->getPathname() . '/.git')) {
 
                 $results = $this->_callGit('status --porcelain -b', $it->getPathname());
-                Cli::$cli->message('Status of ' . $it->getFileName());
-                Cli::$cli->message($results[0]);
-                Cli::$cli->writeLn();
+                $this->_dependencies->getOutput()->info('Status of ' . $it->getFileName());
+                $this->_dependencies->getOutput()->info($results[0]);
             }
         }
 
-        Cli::$cli->message('Checking status of applications');
+        $this->_dependencies->getOutput()->info('Checking status of applications');
         foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
             if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
 
                 $results = $this->_callGit('status --porcelain -b', $it->getPathname());
-                Cli::$cli->message('Status of ' . $it->getFileName());
-                Cli::$cli->message($results[0]);
-                Cli::$cli->writeLn();
+                $this->_dependencies->getOutput()->info('Status of ' . $it->getFileName());
+                $this->_dependencies->getOutput()->info($results[0]);
             }
         }
     }

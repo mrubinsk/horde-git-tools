@@ -26,9 +26,8 @@ use Horde\GitTools\Exception;
 use PEAR_Config;
 use PEAR_PackageFile;
 
-class PearPackages extends Base
+class PearPackages
 {
-
     /**
      *
      * @var PEAR_PackageFile
@@ -66,7 +65,6 @@ class PearPackages extends Base
         }
 
         $this->_params = $params;
-        parent::__construct($params);
         if (empty(self::$_repositories)) {
             $this->_getRepositories();
         }

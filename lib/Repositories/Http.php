@@ -46,10 +46,10 @@ class Http extends Base
         }
         $key = md5(serialize($git) . $url);
         if (!empty($this->_cache) && $this->_cache->exists($key, $this->_lifetime)) {
-            Cli::$cli->message('Using cached data for ' . $url);
+            $this->_dependencies->getOutput()->info('Using cached data for ' . $url);
             $response = unserialize($this->_cache->get($key, $this->_lifetime));
         }  else {
-            Cli::$cli->message('Listing repositories from ' . $url);
+            $this->_dependencies->getOutput()->info('Listing repositories from ' . $url);
             $http_client = new Horde_Http_Client();
             $response = $http_client->get($url);
             if ($this->_cache) {
@@ -67,7 +67,7 @@ class Http extends Base
                 throw new Exception();
             }
         }
-        Cli::$cli->message('You have ' . $rate_remaining . ' GitHub API requests left until ' . date('r', $response->headers['x-ratelimit-reset']));
+        $this->_dependencies->getOutput()->info('You have ' . $rate_remaining . ' GitHub API requests left until ' . date('r', $response->headers['x-ratelimit-reset']));
         $this->_parseRepositories(json_decode($response->getBody()));
 
         // Pagination

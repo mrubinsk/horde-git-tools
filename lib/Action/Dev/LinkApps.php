@@ -47,7 +47,10 @@ class LinkApps extends \Horde\GitTools\Action\Base
      */
     protected function _linkApps($horde_git, $web_dir)
     {
-        Cli::$cli->message('LINKING applications to web directory ' . $web_dir);
+        $this->_dependencies->getOutput()->info(
+            'LINKING applications to web directory ' . $web_dir
+        );
+
         if (count($this->_params['apps'])) {
             foreach ($this->_apps as $app) {
                 if ($app == 'horde') {
@@ -79,10 +82,15 @@ class LinkApps extends \Horde\GitTools\Action\Base
     {
         print 'LINKING ' . $app . "\n";
         if (!symlink($horde_git . '/applications/' . $app, $web_dir . '/' . $app)) {
-            Cli::$cli->message('Cannot link ' . $web_dir . '/' . $app . ' to '
-                . $horde_git . '/applications/' . $app, 'cli.error');
+            $this->_dependencies->getOutput()->err(
+                'Cannot link ' . $web_dir . '/' . $app . ' to '
+                . $horde_git . '/applications/' . $app
+            );
         }
-        file_put_contents($horde_git . '/applications/' . $app . '/config/horde.local.php', '<?php define(\'HORDE_BASE\', \'' . $web_dir . '\');');
+        file_put_contents(
+            $horde_git . '/applications/' . $app . '/config/horde.local.php',
+            '<?php define(\'HORDE_BASE\', \'' . $web_dir . '\');'
+        );
     }
 
 }

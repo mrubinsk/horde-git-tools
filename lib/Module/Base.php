@@ -44,9 +44,9 @@ abstract class Base implements Horde_Cli_Modular_Module
     /**
      * Const'r
      *
-     * @param \Horde\GitTools\Dependencies $dependencies [description]
+     * @param \Horde\GitTools\Dependencies $dependencies Dependency container
      */
-    public function __construct(\Horde\GitTools\Dependencies $dependencies)
+    public function __construct(\Components_Dependencies $dependencies)
     {
         $this->_dependencies = $dependencies;
     }
@@ -54,14 +54,15 @@ abstract class Base implements Horde_Cli_Modular_Module
     /**
      * Handles the module's actions.
      *
-     * @param  array $arguments  Argv arguments
-     * @param  array $params    Configuration parameters.
+     * @param \Components_Config $config  The configuration object
      */
-    abstract public function handle($arguments, $params);
+    abstract public function handle(\Components_Configs $config);
 
 
     /**
      * Formatter for action help.
+     *
+     * @param  integer $indent  Indent this many spaces
      *
      * @return string  Formatted help text explaining each action this module
      *                 handles.
@@ -166,6 +167,15 @@ abstract class Base implements Horde_Cli_Modular_Module
     public function getOptionGroupDescription()
     {
         return '';
+    }
+    /**
+     * Return the options that should be explained in the context help.
+     *
+     * @return array A list of option help texts.
+     */
+    public function getContextOptionHelp()
+    {
+        return array();
     }
 
 }

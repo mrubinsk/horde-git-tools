@@ -54,21 +54,25 @@ class LinkFramework extends \Horde\GitTools\Action\Base
     {
         $destDir = $web_dir . DIRECTORY_SEPARATOR . '/libs';
 
-        Cli::$cli->message('Source directory: ' . $horde_git);
-        Cli::$cli->message('Framework destination directory: ' . $destDir);
-        Cli::$cli->message('Horde directory: ' . $web_dir);
-        Cli::$cli->message('Create symbolic links: ' . (!empty($this->_params['copy']) ? 'NO' : 'Yes'));
+        $this->_dependencies->getOutput()->info('Source directory: ' . $horde_git);
+        $this->_dependencies->getOutput()->info('Framework destination directory: ' . $destDir);
+        $this->_dependencies->getOutput()->info('Horde directory: ' . $web_dir);
+        $this->_dependencies->getOutput()->info('Create symbolic links: ' . (!empty($this->_params['copy']) ? 'NO' : 'Yes'));
 
         // List of available packages to link.
         $pkg_ob = new PearPackages($this->_params);
         $pkg_list = $pkg_ob->getRepositories();
 
-        Cli::$cli->writeLn();
-        Cli::$cli->message('Package(s) to install: ' . ((count($pkg_list) === 1) ? reset($pkg_list) : 'ALL (' . count($pkg_list) . ' packages)'));
+        $this->_dependencies->getOutput()->info(
+            'Package(s) to install: '
+                . ((count($pkg_list) === 1)
+                    ? reset($pkg_list)
+                    : 'ALL (' . count($pkg_list) . ' packages)')
+        );
 
         // $key = package name, $val is repo base.
         foreach ($pkg_list as $key => $val) {
-            Cli::$cli->message('Installing package ' . $key);
+            $this->_dependencies->getOutput()->info('Installing package ' . $key);
 
             // Get list of files
             $pear = $pkg_ob->getPearPackage($val . '/package.xml');
@@ -76,13 +80,19 @@ class LinkFramework extends \Horde\GitTools\Action\Base
 
             foreach ($file_list as $file) {
                 if (!isset($file['attribs']['name'])) {
-                    $cli->message('Invalid <install> entry: ' . print_r($file['attribs'], true), 'cli.error');
+                    $this->_dependencies->getOutput()->err(
+                        'Invalid <install> entry: '
+                        . print_r($file['attribs'], true)
+                    );
                     continue;
                 }
 
                 $orig = realpath($val . '/' . $file['attribs']['name']);
                 if (empty($orig)) {
-                    $cli->message('Install file does not seem to exist: ' . $val . '/' . $file['attribs']['name'], 'cli.error');
+                    $this->_dependencies->getOutput()->err(
+                        'Install file does not seem to exist: '
+                        . $val . '/' . $file['attribs']['name']
+                    );
                     continue;
                 }
 
@@ -91,7 +101,11 @@ class LinkFramework extends \Horde\GitTools\Action\Base
                     if (isset($file['attribs']['install-as'])) {
                         $dest = $web_dir . '/' . $file['attribs']['install-as'];
                     } else {
-                        Cli::$cli->message('Could not determine install directory (role "horde") for ' . $web_dir . '/' . $file['attribs']['install-as'], 'cli.error');
+                        $this->_dependencies->getOutput()->err(
+                            'Could not determine install directory (role "horde") for '
+                             . $web_dir . '/'
+                             . $file['attribs']['install-as']
+                        );
                         continue 2;
                     }
                     break;
@@ -111,27 +125,33 @@ class LinkFramework extends \Horde\GitTools\Action\Base
                     break;
                 }
 
-                if (!is_null($dest)) {
-                    if (file_exists($dest)) {
-                        @unlink($dest);
-                    } elseif (!file_exists(dirname($dest))) {
-                        @mkdir(dirname($dest), 0777, true);
-                    }
+                if (is_null($dest)) {
+                    continue;
+                }
 
-                    if (!empty($this->_params['copy'])) {
-                        if ($this->_params['debug']) {
-                            print 'COPY: ' . $orig . ' -> ' . $dest . "\n";
-                        }
-                        if (!copy($orig, $dest)) {
-                            Cli::$cli->message('Could not link ' . $orig . '.', 'cli.error');
-                        }
-                    } else {
-                        if ($this->_params['debug']) {
-                            print 'SYMLINK: ' . $orig . ' -> ' . $dest . "\n";
-                        }
-                        if (!symlink($orig, $dest)) {
-                            Cli::$cli->message('Could not link ' . $orig . '.', 'cli.error');
-                        }
+                if (file_exists($dest)) {
+                    @unlink($dest);
+                } elseif (!file_exists(dirname($dest))) {
+                    @mkdir(dirname($dest), 0777, true);
+                }
+
+                if (!empty($this->_params['copy'])) {
+                    if ($this->_params['debug']) {
+                        print 'COPY: ' . $orig . ' -> ' . $dest . "\n";
+                    }
+                    if (!copy($orig, $dest)) {
+                        $this->_dependencies->getOutput()->err(
+                            'Could not link ' . $orig . '.'
+                        );
+                    }
+                } else {
+                    if ($this->_params['debug']) {
+                        print 'SYMLINK: ' . $orig . ' -> ' . $dest . "\n";
+                    }
+                    if (!symlink($orig, $dest)) {
+                        $this->_dependencies->getOutput()->err(
+                            'Could not link ' . $orig . '.'
+                        );
                     }
                 }
             }

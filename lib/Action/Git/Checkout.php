@@ -42,10 +42,10 @@ class Checkout extends Base
             throw new Exception("Base checkout directory does not exist.");
         }
 
-        Cli::$cli->message('Switching libraries branch: ' . $branch);
+        $this->_dependencies->getOutput()->info('Switching libraries branch: ' . $branch);
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
             if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
-                Cli::$cli->message('Repository: ' . $it->getFilename());
+                $this->_dependencies->getOutput()->info('Repository: ' . $it->getFilename());
                 $output = $this->_callGit("checkout $branch", $it->getPathname());
                 $results = $this->_callGit('branch', $it->getPathname());
                 if (in_array('* ' . $branch, explode("\n", $results[0])) !== false) {
@@ -60,7 +60,7 @@ class Checkout extends Base
         if (file_exists($this->_params['git_base'] . '/applications')) {
             foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
                 if (!$it->isDot() && $it->isDir() && is_dir($it->getPathname() . '/.git')) {
-                    Cli::$cli->message('Switching ' . $it->getFilename() . ' to branch: ' . $branch);
+                    $this->_dependencies->getOutput()->info('Switching ' . $it->getFilename() . ' to branch: ' . $branch);
                     $output = $this->_callGit("checkout $branch", $it->getPathname());
                     $results = $this->_callGit('branch', $it->getPathname());
                     if (in_array('* ' . $branch, explode("\n", $results[0])) !== false) {
@@ -71,17 +71,17 @@ class Checkout extends Base
                 }
             }
         } else {
-            Cli::$cli->message('Could not find the applications checkout directory', 'cli.error');
+            $this->_dependencies->getOutput()->err('Could not find the applications checkout directory');
         }
 
         if (!empty($success)) {
-            Cli::$cli->message('The following repositories were successfully changed to ' . $branch, 'cli.success');
-            Cli::$cli->writeln(implode("\n", $success));
+            $this->_dependencies->getOutput()->ok('The following repositories were successfully changed to ' . $branch);
+            $this->_dependencies->getOutput()->plain(implode("\n", $success));
         }
 
         if (!empty($failures)) {
-            Cli::$cli->message('The following repositories failed to be changed to ' . $branch, 'cli.error');
-            Cli::$cli->writeln(Cli::$cli->red(implode("\n", $failures)));
+            $this->_dependencies->getOutput()->err('The following repositories failed to be changed to ' . $branch);
+            $this->_dependencies->getOutput()->red(implode("\n", $failures));
         }
     }
 }

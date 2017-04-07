@@ -27,50 +27,62 @@ use Horde_Argv_IndentedHelpFormatter;
  */
 class Help extends Base
 {
-    public function handle($arguments, $params)
+    public function handle(\Components_Configs $config)
     {
-        $command = $arguments[0];
-        if (isset($arguments[1])) {
-            $action = $arguments[1];
-        } else {
-            $action = '';
-        }
-        $modular = $this->_dependencies->getModular();
-        $element = $modular->getProvider()->getModule($command);
+        // Arguments will be an array:
+        // 0 => help 1 => COMMAND [2 => ACTION]
+        $arguments = $config->getArguments();
+        if (isset($arguments[0]) && $arguments[0] == 'help') {
+            if (isset($arguments[1])) {
+                $command = $arguments[1];
+            } else {
+                $this->_dependencies->getParser()->printHelp();
+                return true;
+            }
+            if (isset($arguments[2])) {
+                $action = $arguments[2];
+            } else {
+                $action = '';
+            }
 
-        // Generate main help text.
-        $title = "COMMAND \"" . $command . "\"";
-        $sub = str_repeat('-', strlen($title));
-        $help = "\n" . $title . "\n" . $sub . "\n\n";
-        $help .= Horde_String::wordwrap(
-            $element->getHelp($action), 75, "\n", true
-        );
+            $modules = $this->_dependencies->getModules();
+            $element= $modules->getProvider()->getModule($command);
 
-        // @todo figure this out when needing contextual options :)
-        $options = $element->getContextOptionHelp($action);
-        if (!empty($options)) {
-            $formatter = new Horde_Argv_IndentedHelpFormatter();
-            $parser = $this->_dependencies->getParser();
-            $title = "OPTIONS for \"" . $action . "\"";
+            // Generate main help text.
+            $title = "COMMAND \"" . $command . "\"";
             $sub = str_repeat('-', strlen($title));
-            $help .= "\n\n\n" . $title . "\n" . $sub . "";
-            foreach ($options as $option => $help_text) {
-                $argv_option = $parser->getOption($option);
-                $help .= "\n\n    " . $formatter->formatOptionStrings($argv_option) . "\n\n      ";
-                if (empty($help_text)) {
-                    $help .= Horde_String::wordwrap(
-                        $argv_option->help, 75, "\n      ", true
-                    );
-                } else {
-                    $help .= Horde_String::wordwrap(
-                        $help_text, 75, "\n      ", true
-                    );
+            $help = "\n" . $title . "\n" . $sub . "\n\n";
+            $help .= Horde_String::wordwrap(
+                $element->getHelp($action), 75, "\n", true
+            );
+            $options = $element->getContextOptionHelp($action);
+            if (!empty($options)) {
+                $formatter = new Horde_Argv_IndentedHelpFormatter();
+                $parser = $this->_dependencies->getParser();
+                $title = "OPTIONS for \"" . $action . "\"";
+                $sub = str_repeat('-', strlen($title));
+                $help .= "\n\n\n" . $title . "\n" . $sub . "";
+                foreach ($options as $option => $help_text) {
+                    $argv_option = $parser->getOption($option);
+                    $help .= "\n\n    " . $formatter->formatOptionStrings($argv_option) . "\n\n      ";
+                    if (empty($help_text)) {
+                        $help .= Horde_String::wordwrap(
+                            $argv_option->help, 75, "\n      ", true
+                        );
+                    } else {
+                        $help .= Horde_String::wordwrap(
+                            $help_text, 75, "\n      ", true
+                        );
+                    }
                 }
             }
+            $help .= "\n";
+            $this->_dependencies->getOutput()->help(
+                $help
+            );
         }
 
-        $help .= "\n";
-        $this->_dependencies->getCli()->writeln($help);
+        return true;
     }
 
     /**

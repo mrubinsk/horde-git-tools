@@ -33,13 +33,17 @@ abstract class Base
      */
     protected $_params;
 
+    protected $_dependencies;
+
     /**
      * Const'r
      *
      * @param array $params  Configuration parameters
      */
-    public function __construct(array $params = array())
+    public function __construct(
+        array $params = array(), \Components_Dependencies $dependencies)
     {
+        $this->_dependencies = $dependencies;
         $this->_params = $params;
     }
 

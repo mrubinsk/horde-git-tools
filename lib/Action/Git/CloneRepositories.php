@@ -56,7 +56,7 @@ class CloneRepositories extends Base
 
         // Is this a developer checkout or anon?
         $target = $this->_params['git_base'] . '/' . ($app ? 'applications/' : '') . $package_webname;
-        Cli::$cli->message('Cloning ' . $package_webname . ' into ' . $target);
+        $this->_dependencies->getOutput()->info('Cloning ' . $package_webname . ' into ' . $target);
         if (!empty($this->_params['git_ssh'])) {
             // Do a developer checkout.
             $source = $this->_params['git_ssh'] . '/' . $this->_params['org'] . '/' . $package . '.git';
@@ -69,13 +69,13 @@ class CloneRepositories extends Base
         // if this is non-empty.
         if (!empty($results[1])) {
             if (strpos($results[1], 'fatal') === 0) {
-                Cli::$cli->message(Cli::$cli->red($results[1]), 'cli.error');
+                $this->_dependencies->getOutput()->red($results[1]);
             } else {
-                Cli::$cli->message($results[1], 'cli.success');
+                $this->_dependencies->getOutput()->ok($results[1]);
             }
         }
         if (!empty($this->_params['debug'])) {
-            Cli::$cli->writeln($results[0]);
+            $this->_dependencies->getOutput()->plain($results[0]);
         }
 
         // Add the 'get' alias?

@@ -48,7 +48,7 @@ class ListRemote extends Base
         foreach ($curl->repositories as $repo_name => $repo) {
             if (empty($this->_params['ignore_yml']) && !$this->_isHordeRepo($repo_name)) {
                 if ($this->_params['debug']) {
-                    Cli::$cli->message('Skipping ' . $repo_name . ' as it does not contain a .horde.yml file', 'cli.notice');
+                    $this->_dependencies->getOutput()->info('Skipping ' . $repo_name . ' as it does not contain a .horde.yml file');
                 }
                 continue;
             }

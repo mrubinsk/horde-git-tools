@@ -43,11 +43,11 @@ class EmptyLinkedDirectory extends \Horde\GitTools\Action\Base
      */
     protected function _emptyWebDir($web_dir)
     {
-        Cli::$cli->message("EMPTYING old web directory $web_dir");
+        $this->_dependencies->getOutput()->info("EMPTYING old web directory $web_dir");
         try {
             $it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($web_dir), \RecursiveIteratorIterator::CHILD_FIRST);
         } catch (\UnexpectedValueException $e) {
-            Cli::$cli->message('Old web directory not found. Creating it.');
+            $this->_dependencies->getOutput()->info('Old web directory not found. Creating it.');
             mkdir($web_dir);
             $it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($web_dir), \RecursiveIteratorIterator::CHILD_FIRST);
         }
@@ -55,17 +55,17 @@ class EmptyLinkedDirectory extends \Horde\GitTools\Action\Base
             if (!$it->isDot()) {
                 if ($it->isLink()) {
                     if ($this->_params['debug']) {
-                        Cli::$cli->message('DELETING LINK: ' . $it->key());
+                        $this->_dependencies->getOutput()->info('DELETING LINK: ' . $it->key());
                     }
                     unlink($it->key());
                 } elseif ($it->isDir()) {
                     if ($this->_params['debug']) {
-                        Cli::$cli->message('DELETING DIR: ' . $it->key());
+                        $this->_dependencies->getOutput()->info('DELETING DIR: ' . $it->key());
                     }
                     rmdir($it->key());
                 } elseif ($it->isFile()) {
                     if ($this->_params['debug']) {
-                        Cli::$cli->message('DELETING FILE: ' . $it->key());
+                        $this->_dependencies->getOutput()->info('DELETING FILE: ' . $it->key());
                     }
                     unlink($it->key());
                 }

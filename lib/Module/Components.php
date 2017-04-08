@@ -37,6 +37,11 @@ class Components extends Base
      */
     public function handle(\Components_Configs $config)
     {
+        $arguments = $config->getArguments();
+        if (empty($arguments) ||
+           (!empty($arguments[0]) && $arguments[0] != 'components')) {
+            return false;
+        }
         \Horde\GitTools\Components::main();
         return true;
     }

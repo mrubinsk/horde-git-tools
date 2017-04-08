@@ -1,5 +1,14 @@
 <?php
 /**
+ * Copyright 2017 Horde LLC (http://www.horde.org/)
+ *
+ * See the enclosed file LICENSE for license information (BSD). If you
+ * did not receive this file, see https://www.horde.org/licenses/bsd.
+ *
+ * @author   Michael J Rubinsky <mrubinsk@horde.org>
+ * @category Horde
+ * @license  https://www.horde.org/licenses/bsd BSD
+ * @package  GitTools
  */
 
 namespace Horde\GitTools\Config;
@@ -8,6 +17,12 @@ use Horde_Argv_Parser;
 use Horde_Argv_Option;
 
 /**
+ * Base configuratino of Cli options.
+ *
+ * @author    Michael J Rubinsky <mrubinsk@horde.org>
+ * @copyright 2017 Horde LLC
+ * @license   https://www.horde.org/licenses/bsd BSD
+ * @package   GitTools
  */
 class Cli extends \Components_Config_Base
 {

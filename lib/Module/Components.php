@@ -37,29 +37,8 @@ class Components extends Base
      */
     public function handle(\Components_Configs $config)
     {
-
         \Horde\GitTools\Components::main();
-        // $options = $config->getOptions();
-        // $arguments = $config->getArguments();
-        // if (!empty($options['updatexml'])
-        //     || (isset($arguments[0]) && $arguments[0] == 'update')) {
-        //     $this->_dependencies->getRunnerUpdate()->run();
-        //     return true;
-        // }
-        // $this->_params = $options;
-        // switch (array_shift($arguments)) {
-        // case 'update':
-        //     $this->_doUpdate(array_shift($arguments));
-        //     break;
-        // }
-
-        // return false;
-    }
-
-    public function _doUpdate($component)
-    {
-        $action = new \Horde\GitTools\Action\Components\Update(array('component' => $component, 'dependencies' => $this->_dependencies));
-        $action->run($this->_params);
+        return true;
     }
 
 /** Horde_Cli_Modular methods */

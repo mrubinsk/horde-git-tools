@@ -56,6 +56,9 @@ php horde-git-tools git pull
 # Attempt to perform arbitrary git command on all repositories.
 php horde-git-tools git run "reset HEAD"
 
+# Do the same, but only for imp and ansel.
+php horde-git-tools git run --repositories=imp,ansel "reset HEAD"
+
 # Report on status of each repository.
 # Still need to tweak and add options, better display etc...
 php horde-git-tools git status

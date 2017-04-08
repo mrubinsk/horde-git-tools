@@ -59,6 +59,11 @@ php horde-git-tools git run "reset HEAD"
 # Report on status of each repository.
 # Still need to tweak and add options, better display etc...
 php horde-git-tools git status
+
+# Perform a "component" action
+php horde-git-tools component /path/to/repository update
+php horde-git-tools component /path/to/repository changed '[mjr] Some change'
+php horde-git-tools component /path/to/repository release
 ```
 
 Still todo

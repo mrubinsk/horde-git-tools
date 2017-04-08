@@ -22,7 +22,9 @@
  */
 
 $autoloader = dirname(__FILE__) . '/../vendor/autoload.php';
-
+//  ini_set('include_path', '/opt/local/lib/php/' . PATH_SEPARATOR . ini_get('include_path'));
+require_once 'PEAR/Config.php';
+require_once 'PEAR/PackageFile.php';
 if (!file_exists($autoloader)) {
     echo "You need to run \"composer install\" first.\nFor more information on composer see https://getcomposer.org/.\n";
     exit;

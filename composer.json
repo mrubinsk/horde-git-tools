@@ -62,7 +62,9 @@
         "pear-pear.horde.org/Horde_Http": ">=2.0.0,<=3.0.0alpha1",
         "pear-pear.horde.org/Horde_Cache": ">=2.0.0,<=3.0.0alpha1",
         "pear-pear.horde.org/Horde_Pear": "1.0.0alpha12",
-        "horde/components": "dev-master"
+        "horde/components": "dev-master",
+        "pear/pear": ">=1.10.3",
+        "pear/Archive_Tar": "*"
     },
     "autoload": {
         "psr-4": {"Horde\\GitTools\\": "lib"}

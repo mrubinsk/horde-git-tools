@@ -15,6 +15,7 @@ namespace Horde\GitTools;
 
 use Horde_Argv_Parser;
 use Horde_Cli_Modular;
+
 /**
  * The Components:: class is the entry point for the various component actions
  * provided by the package.
@@ -74,6 +75,22 @@ class Components extends \Components
         if (!$ran) {
             $parser->parserError(self::ERROR_NO_ACTION);
         }
+    }
+
+    protected static function _prepareConfig(Horde_Argv_Parser $parser)
+    {
+        $config = new \Components_Configs();
+        $config->addConfigurationType(
+            new Components\Config\Cli(
+                $parser
+            )
+        );
+        $config->unshiftConfigurationType(
+            new \Components_Config_File(
+                $config->getOption('config')
+            )
+        );
+        return $config;
     }
 
 }

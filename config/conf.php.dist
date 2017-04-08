@@ -49,6 +49,26 @@ $conf['add_get_alias'] = true;
 $conf['cache'] = true;
 
 
+/* PEAR server name. Only change for testing purposes. */
+$conf['releaseserver'] = 'pear.horde.org';
+
+/* PEAR server directory. Only change for testing purposes. */
+$conf['releasedir'] = '/horde/web/pear.horde.org';
+
+/* Username for horde.org.
+ * Make sure you belong to the "horde" group there. */
+$conf['horde_user'] = '';
+
+/* Needed to update the Whups versions */
+$conf['horde_pass'] = '';
+
+/* From: address for announcements. */
+$conf['from'] = 'Full name <user@horde.org>';
+
+/* Path to a checkout of the horde-web repository. */
+// $conf['web_dir'] = '/var/www/horde-web';
+
+
 // "Dev" related configuration. I.e., "install-dev" type stuff.
 
 // List of applications to create symlinks for. Empty array will link all.

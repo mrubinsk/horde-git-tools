@@ -32,7 +32,7 @@ class LinkHorde extends \Horde\GitTools\Action\Base
     public function run()
     {
         $horde_git = rtrim(ltrim($this->_params['git_base']), '/ ');
-        $web_dir = rtrim(ltrim($this->_params['web_dir']), '/ ');
+        $web_dir = rtrim(ltrim($this->_params['web_base']), '/ ');
         $this->_linkHorde($horde_git, $web_dir);
     }
 

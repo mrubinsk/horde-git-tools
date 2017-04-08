@@ -32,7 +32,7 @@ class EmptyLinkedDirectory extends \Horde\GitTools\Action\Base
      */
     public function run()
     {
-        $web_dir = rtrim(ltrim($this->_params['web_dir']), '/ ');
+        $web_dir = rtrim(ltrim($this->_params['web_base']), '/ ');
         $this->_emptyWebDir($web_dir);
     }
 

@@ -75,7 +75,7 @@ $conf['from'] = 'Full name <user@horde.org>';
 $conf['apps'] = array();
 
 // Web-accessible base directory.
-$conf['web_dir'] = '/private/tmp/horde_webtest';
+$conf['web_base'] = '/private/tmp/horde_webtest';
 
 // Group name and mode to use for the static directory.
 $conf['static_group'] = 'www';

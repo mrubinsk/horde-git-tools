@@ -24,33 +24,8 @@
             "url": "https://pear.horde.org"
         },
         {
-            "type": "vcs",
-            "url": "https://github.com/mrubinsk/Components"
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "pear-pear.horde.org/Horde_Pear",
-                "version": "1.0.0alpha12",
-                "source": {
-                    "url": "https://github.com/mrubinsk/Pear",
-                    "type": "git",
-                    "reference": "master"
-                },
-                "require": {
-                    "php": ">=5.3.0,<=8.0.0alpha1",
-                    "pear-pear.horde.org/Horde_Exception": ">=2.0.0,<=3.0.0alpha1",
-                    "pear-pear.horde.org/Horde_Util": ">=2.0.0,<=3.0.0alpha1",
-                    "pear-pear.horde.org/Horde_Xml_Element": ">=2.0.0,<=3.0.0alpha1"
-                },
-                "suggest": {
-                    "pear-pear.horde.org/Horde_Http": ">=2.0.0,<=3.0.0alpha1",
-                    "pear-pear.horde.org/Horde_Test": ">=2.1.0,<=3.0.0alpha1"
-                },
-                "autoload": {
-                    "psr-0": { "Horde_Pear": "lib/" }
-                }
-            }
+            "type": "path",
+            "url": "~/horde-git/framework/*"
         }
     ],
     "require": {
@@ -61,7 +36,7 @@
         "pear-pear.horde.org/Horde_Argv": ">=2.0.0,<=3.0.0alpha1",
         "pear-pear.horde.org/Horde_Http": ">=2.0.0,<=3.0.0alpha1",
         "pear-pear.horde.org/Horde_Cache": ">=2.0.0,<=3.0.0alpha1",
-        "pear-pear.horde.org/Horde_Pear": "1.0.0alpha12",
+        "horde/Horde_Pear": "dev-master",
         "horde/components": "dev-master",
         "pear/pear": ">=1.10.3",
         "pear/Archive_Tar": "*"

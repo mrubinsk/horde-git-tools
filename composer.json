@@ -1,8 +1,8 @@
 {
     "name": "horde/horde-gittools",
     "description": "Utility for installing and managing Horde checkouts.",
-    "type": "library",
-    "homepage": "https://pear.horde.org",
+    "type": "project",
+    "homepage": "https://www.horde.org",
     "license": "LGPL",
     "authors": [
         {
@@ -20,25 +20,30 @@
     "time": "2017-03-29",
     "repositories": [
         {
-            "type": "pear",
-            "url": "https://pear.horde.org"
+            "type": "path",
+            "url": "~/horde-git/framework/*"
         },
         {
             "type": "path",
-            "url": "~/horde-git/framework/*"
+            "url": "~/horde-git/components"
+        },
+        {
+            "type": "pear",
+            "url": "https://pear.horde.org"
         }
     ],
     "require": {
         "php": ">=5.5.0",
-        "pear-pear.horde.org/Horde_Exception": ">=2.0.0,<=3.0.0alpha1",
-        "pear-pear.horde.org/Horde_Translation": ">=2.2.2,<=3.0.0alpha1",
-        "pear-pear.horde.org/Horde_Cli_Modular": ">=2.0.0,<=3.0.0alpha1",
-        "pear-pear.horde.org/Horde_Argv": ">=2.0.0,<=3.0.0alpha1",
-        "pear-pear.horde.org/Horde_Http": ">=2.0.0,<=3.0.0alpha1",
-        "pear-pear.horde.org/Horde_Cache": ">=2.0.0,<=3.0.0alpha1",
-        "horde/Horde_Pear": "dev-master",
-        "horde/components": "dev-master",
-        "pear/pear": ">=1.10.3",
+        "pear-pear.horde.org/Horde_Exception": "^2.0.0",
+        "pear-pear.horde.org/Horde_Translation": "^2.2.2",
+        "horde/horde-cli": "^2",
+        "horde/horde-cli-modular": "^2",
+        "horde/horde-argv": "^2",
+        "pear-pear.horde.org/Horde_Http": "^2",
+        "pear-pear.horde.org/Horde_Cache": "^2",
+        "horde/horde-pear": "*@dev",
+        "horde/components": "*",
+        "pear/pear": "^1.10.3",
         "pear/Archive_Tar": "*"
     },
     "autoload": {

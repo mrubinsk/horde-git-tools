@@ -273,13 +273,23 @@ class Git extends Base
     }
 
     /**
-     * Get the usage description for this module.
+     * Returns additional usage title for this module.
+     *
+     * @return string  The usage title.
+     */
+    public function getTitle()
+    {
+        return 'git ACTION';
+    }
+
+    /**
+     * Returns additional usage description for this module.
      *
      * @return string The description.
      */
     public function getUsage()
     {
-        return "\n  git  ACTION   - Perform Git related actions.";
+        return 'Perform Git related actions.';
     }
 
     public function getActions()

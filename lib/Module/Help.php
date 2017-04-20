@@ -86,13 +86,23 @@ class Help extends Base
     }
 
     /**
-     * Get the usage description for this module.
+     * Returns additional usage title for this module.
+     *
+     * @return string  The usage title.
+     */
+    public function getTitle()
+    {
+        return 'help COMMAND';
+    }
+
+    /**
+     * Returns additional usage description for this module.
      *
      * @return string The description.
      */
     public function getUsage()
     {
-        return "\n  help COMMAND  - Provide information about the specified COMMAND.";
+        return 'Provide information about the specified COMMAND.';
     }
 
     /**

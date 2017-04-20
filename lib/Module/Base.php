@@ -13,8 +13,11 @@
 
 namespace Horde\GitTools\Module;
 
-use Horde_Cli_Modular_Module;
+use Components_Configs;
+use Components_Dependencies;
 use Horde_Argv_Option;
+use Horde_Cli_Modular_Module;
+use Horde_Cli_Modular_ModuleUsage;
 
 /**
  * Base class for modular command handlers.
@@ -25,7 +28,8 @@ use Horde_Argv_Option;
  * @license   https://www.horde.org/licenses/bsd BSD
  * @package   GitTools
  */
-abstract class Base implements Horde_Cli_Modular_Module
+abstract class Base
+implements Horde_Cli_Modular_Module, Horde_Cli_Modular_ModuleUsage
 {
     /**
      * The configuration parameters.
@@ -37,16 +41,16 @@ abstract class Base implements Horde_Cli_Modular_Module
     /**
      * Dependency container
      *
-     * @var \Horde\GitTools\Dependencies
+     * @var \Components_Dependencies
      */
     protected $_dependencies;
 
     /**
      * Const'r
      *
-     * @param \Horde\GitTools\Dependencies $dependencies Dependency container
+     * @param \Components_Dependencies $dependencies Dependency container
      */
-    public function __construct(\Components_Dependencies $dependencies)
+    public function __construct(Components_Dependencies $dependencies)
     {
         $this->_dependencies = $dependencies;
     }
@@ -56,7 +60,7 @@ abstract class Base implements Horde_Cli_Modular_Module
      *
      * @param \Components_Config $config  The configuration object
      */
-    abstract public function handle(\Components_Configs $config);
+    abstract public function handle(Components_Configs $config);
 
 
     /**
@@ -78,7 +82,7 @@ abstract class Base implements Horde_Cli_Modular_Module
         return $help;
     }
 
-/**Horde_Cli_Modular_Module**/
+    /* Horde_Cli_Modular_Module */
 
     /**
      * Returns the list of available actions for this module.
@@ -103,10 +107,17 @@ abstract class Base implements Horde_Cli_Modular_Module
     }
 
     /**
-     * Returns usage description for this module.
+     * Returns additional usage title for this module.
      *
-     * This description will be added after the automatically generated usage
-     * line, so make sure to add any necessary line breaks or other separators.
+     * @return string  The usage title.
+     */
+    public function getTitle()
+    {
+        return '';
+    }
+
+    /**
+     * Returns additional usage description for this module.
      *
      * @return string  The description.
      */
@@ -168,6 +179,7 @@ abstract class Base implements Horde_Cli_Modular_Module
     {
         return '';
     }
+
     /**
      * Return the options that should be explained in the context help.
      *

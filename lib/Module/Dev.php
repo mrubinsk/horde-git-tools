@@ -137,14 +137,25 @@ class Dev extends Base
 
         return array();
     }
+
     /**
-     * Get the usage description for this module.
+     * Returns additional usage title for this module.
+     *
+     * @return string  The usage title.
+     */
+    public function getTitle()
+    {
+        return 'dev ACTION';
+    }
+
+    /**
+     * Returns additional usage description for this module.
      *
      * @return string The description.
      */
     public function getUsage()
     {
-        return "\n  dev  ACTION   - Perform a development install related action.";
+        return 'Perform a development install related action.';
     }
 
     /**

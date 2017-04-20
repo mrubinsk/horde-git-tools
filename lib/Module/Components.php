@@ -95,14 +95,25 @@ class Components extends Base
 
         return array();
     }
+
     /**
-     * Get the usage description for this module.
+     * Returns additional usage title for this module.
+     *
+     * @return string  The usage title.
+     */
+    public function getTitle()
+    {
+        return 'components ACTION';
+    }
+
+    /**
+     * Returns additional usage description for this module.
      *
      * @return string The description.
      */
     public function getUsage()
     {
-        return "\n  components  ACTION   - Perform a component related action.";
+        return 'Perform a component related action.';
     }
 
     /**

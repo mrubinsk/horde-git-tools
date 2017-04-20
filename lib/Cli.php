@@ -13,8 +13,9 @@
 
 namespace Horde\GitTools;
 
-use Horde_Cli_Modular;
+use Horde_Argv_IndentedHelpFormatter;
 use Horde_Argv_Parser;
+use Horde_Cli_Modular;
 
 /**
  * Main class
@@ -92,12 +93,13 @@ class Cli
     protected static function _prepareModular($dependencies)
     {
         // The modular CLI helper.
+        $formatter = new Horde_Argv_IndentedHelpFormatter();
         $modular = new Horde_Cli_Modular(array(
             'parser' => array('usage' => '[OPTIONS] COMMAND [ARGUMENTS]
 
-COMMAND
+  ' . $formatter->highlightOption('COMMAND') . ' - Selects the command to perform. This is a list of possible commands:
 
-Selects the command to perform. This is a list of possible commands '
+'
             ),
             'modules' => array(
                 'directory' => __DIR__ . '/Module',

@@ -14,7 +14,6 @@
 namespace Horde\GitTools;
 
 use Horde_Cli_Modular;
-use Horde_Cli_Modular_Exception;
 use Horde_Argv_Parser;
 
 /**
@@ -98,14 +97,17 @@ class Cli
 
 COMMAND
 
-Selects the command to perform. This is a list of possible commands '),
+Selects the command to perform. This is a list of possible commands '
+            ),
             'modules' => array(
                 'directory' => __DIR__ . '/Module',
                 'exclude' => 'Base'
-                ),
+            ),
             'provider' => array(
                 'prefix' => '\Horde\GitTools\Module\\',
-                'dependencies' => $dependencies)
+                'dependencies' => $dependencies
+            ),
+            'cli' => $dependencies->getInstance('Horde_Cli'),
         ));
         $dependencies->setModules($modular);
 

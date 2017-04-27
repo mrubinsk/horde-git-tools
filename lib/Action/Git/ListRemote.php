@@ -67,9 +67,10 @@ class ListRemote extends Base
      */
     protected function _getRepositories()
     {
+
+        $cache = null;
         if (!empty($this->_params['cache'])) {
-            $storage = new Horde_Cache_Storage_File();
-            $cache = new Horde_Cache($storage);
+            $cache = new Horde_Cache(new Horde_Cache_Storage_File());
         }
         $repositories = new Repositories\Http($this->_params, $this->_dependencies, $cache);
         $repositories->load(array('org' => $this->_params['org'], 'user-agent' => self::USERAGENT));

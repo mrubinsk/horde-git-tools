@@ -52,6 +52,9 @@ class Http extends Base
             $this->_dependencies->getOutput()->info('Listing repositories from ' . $url);
             $http_client = new Horde_Http_Client();
             $response = $http_client->get($url);
+            if ($response->code == 200) {
+                $body = json_decode($response->getBody());
+            }
             if ($this->_cache) {
                 $this->_cache->set($key, serialize($response));
             }
@@ -59,7 +62,6 @@ class Http extends Base
         $rate_reset = $response->headers['x-ratelimit-reset'];
         $rate_remaining = $response->headers['x-ratelimit-remaining'];
         if ($response->code != 200) {
-            $body = json_decode($response->getBody());
             if (!empty($body->message)) {
                 $message = $body->message . "\n You can retry at: " . date('r', $response->headers['x-ratelimit-reset']);
                 throw new Exception($message);

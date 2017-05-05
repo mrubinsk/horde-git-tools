@@ -49,23 +49,23 @@ class LinkHorde extends \Horde\GitTools\Action\Base
         $horde_git .= '/applications';
 
         file_put_contents(
-            $horde_git . '/horde/config/horde.local.php',
+            $horde_git . '/base/config/horde.local.php',
             "<?php if (!defined('HORDE_BASE')) define('HORDE_BASE', '$web_dir'); ini_set('include_path', '{$web_dir}/libs' . PATH_SEPARATOR . ini_get('include_path'));"
         );
 
-        foreach (new \DirectoryIterator($horde_git . '/horde') as $it) {
+        foreach (new \DirectoryIterator($horde_git . '/base') as $it) {
             if ($it->isDot() || $it->getFilename() == '.git' || $it->getFilename() == 'composer.json') {
                 continue;
             }
             if ($it->isDir()) {
-                if (strpos($it->getPathname(), $horde_git . '/horde/js') !== false) {
+                if (strpos($it->getPathname(), $horde_git . 'base/js') !== false) {
                     if ($this->_params['verbose']) {
                         $this->_dependencies->getOutput()->plain(
                             "CREATING DIRECTORY: $web_dir/$it"
                         );
                     }
                     mkdir($web_dir . '/' . $it);
-                    foreach (new \DirectoryIterator($horde_git . '/horde/' . $it) as $sub) {
+                    foreach (new \DirectoryIterator($horde_git . 'base/' . $it) as $sub) {
                         if ($sub->isDot()) {
                             continue;
                         }

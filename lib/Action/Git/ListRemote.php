@@ -82,7 +82,7 @@ class ListRemote extends Base
     {
         $url = 'https://raw.githubusercontent.com/'
             . $this->_params['org']
-            . '/' . $repo . '/master/horde.yml';
+            . '/' . $repo . '/master/.horde.yml';
 
         $http = new Horde_Http_Client();
         $response = $http->get($url);

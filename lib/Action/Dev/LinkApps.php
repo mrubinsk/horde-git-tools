@@ -62,7 +62,7 @@ class LinkApps extends \Horde\GitTools\Action\Base
             }
         } else {
             foreach (new \DirectoryIterator($horde_git . '/applications') as $it) {
-                if (!$it->isDot() && $it->isDir() && $it != 'horde' &&
+                if (!$it->isDot() && $it->isDir() && $it != 'base' &&
                     is_dir($it->getPathname() . '/config')) {
                     $this->_linkApp($it, $horde_git, $web_dir);
                 }

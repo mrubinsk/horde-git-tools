@@ -21,9 +21,8 @@
  * @license   https://www.horde.org/licenses/bsd BSD
  * @package   GitTools
  */
-
 $autoloader = dirname(__FILE__) . '/../vendor/autoload.php';
-//  ini_set('include_path', '/opt/local/lib/php/' . PATH_SEPARATOR . ini_get('include_path'));
+require_once $autoloader;
 require_once 'PEAR/Config.php';
 require_once 'PEAR/PackageFile.php';
 if (!file_exists($autoloader)) {
@@ -31,5 +30,4 @@ if (!file_exists($autoloader)) {
     exit;
 }
 
-require_once $autoloader;
 \Horde\GitTools\Cli::main();

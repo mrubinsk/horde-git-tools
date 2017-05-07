@@ -51,7 +51,7 @@ abstract class Base extends \Horde\GitTools\Action\Base
         fclose($pipes[2]);
         proc_close($process);
 
-        return array($results, $error);
+        return array(trim($results), trim($error));
     }
 
     protected function _includeRepository($it)

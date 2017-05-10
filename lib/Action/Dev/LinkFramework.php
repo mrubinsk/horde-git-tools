@@ -141,7 +141,7 @@ class LinkFramework extends \Horde\GitTools\Action\Base
                     }
                     if (!copy($orig, $dest)) {
                         $this->_dependencies->getOutput()->warn(
-                            'Could not link ' . $orig . '.'
+                            'Could not copy ' . $orig . '.'
                         );
                     }
                 } else {

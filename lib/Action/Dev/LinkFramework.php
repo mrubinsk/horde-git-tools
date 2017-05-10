@@ -52,7 +52,7 @@ class LinkFramework extends \Horde\GitTools\Action\Base
      */
     protected function _linkFramework($horde_git, $web_dir)
     {
-        $destDir = $web_dir . DIRECTORY_SEPARATOR . '/libs';
+        $destDir = $web_dir . DIRECTORY_SEPARATOR . 'libs';
 
         $this->_dependencies->getOutput()->info('Source directory: ' . $horde_git);
         $this->_dependencies->getOutput()->info('Framework destination directory: ' . $destDir);

@@ -58,14 +58,14 @@ class LinkHorde extends \Horde\GitTools\Action\Base
                 continue;
             }
             if ($it->isDir()) {
-                if (strpos($it->getPathname(), $horde_git . 'base/js') !== false) {
+                if (strpos($it->getPathname(), $horde_git . '/base/js') !== false) {
                     if ($this->_params['verbose']) {
                         $this->_dependencies->getOutput()->plain(
                             "CREATING DIRECTORY: $web_dir/$it"
                         );
                     }
                     mkdir($web_dir . '/' . $it);
-                    foreach (new \DirectoryIterator($horde_git . 'base/' . $it) as $sub) {
+                    foreach (new \DirectoryIterator($horde_git . '/base/' . $it) as $sub) {
                         if ($sub->isDot()) {
                             continue;
                         }

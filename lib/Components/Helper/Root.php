@@ -39,7 +39,7 @@ class Root extends Components_Helper_Root
      */
     public function getRoot()
     {
-        return $this->_path;
+        return $this->_options['git_base'];
     }
 
 }

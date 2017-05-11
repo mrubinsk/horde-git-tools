@@ -44,7 +44,7 @@
         "horde/horde-pear": "*@dev",
         "horde/components": "*",
         "pear/pear": "*@dev",
-        "pear-pear.php.net/Archive_Tar": ">=1.4.2"
+        "pear/Archive_Tar": ">=1.4.2"
     },
     "autoload": {
         "psr-4": {"Horde\\GitTools\\": "lib"}

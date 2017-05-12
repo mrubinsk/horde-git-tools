@@ -52,7 +52,9 @@ class Cli
         try {
             $ran = false;
             foreach (clone $modular->getModules() as $module) {
-                $ran |= $modular->getProvider()->getModule($module)->handle($config);
+                $ran |= $modular->getProvider()
+                    ->getModule($module)
+                    ->handle($config);
             }
         } catch (Components_Exception $e) {
             $dependencies->getOutput()->fail($e);

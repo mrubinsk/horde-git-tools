@@ -294,11 +294,11 @@ class Git extends Base
     public function getActions()
     {
         return array(
-            'list'              => 'Lists available remote repositories.',
-            'clone'             => 'Clones all remote repositories locally.',
-            'pull'              => 'Update local repositories.',
-            'checkout [BRANCH]' => 'Checkout BRANCH on all local repositories.',
-            'status'            => 'Display status of all local repositories.',
+            'list'                => 'Lists available remote repositories.',
+            'clone'               => 'Clones all remote repositories locally.',
+            'pull'                => 'Update local repositories.',
+            'checkout [BRANCH]'   => 'Checkout BRANCH on all local repositories.',
+            'status'              => 'Display status of all local repositories.',
             'run ["GIT COMMAND"]' => 'Run [GIT COMMAND] on all local repositories.'
         );
     }

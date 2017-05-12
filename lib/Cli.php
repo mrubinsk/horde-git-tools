@@ -13,9 +13,14 @@
 
 namespace Horde\GitTools;
 
-use Horde_Argv_IndentedHelpFormatter;
-use Horde_Argv_Parser;
-use Horde_Cli_Modular;
+use Horde_Argv_IndentedHelpFormatter as IndentedHelpFormatter;
+use Horde_Argv_Parser as Parser;
+use Horde_Cli_Modular as Cli_Modular;
+
+use Components_Config_File as Config_File;
+use Components_Configs as Configs;
+use Components_Dependencies_Injector as Injector;
+use Components_Exception;
 
 /**
  * Main class
@@ -36,7 +41,7 @@ class Cli
     public static function main()
     {
         // Setup the modular cli.
-        $dependencies = new \Components_Dependencies_Injector();
+        $dependencies = new Injector();
         $modular = self::_prepareModular($dependencies);
         $parser = $modular->createParser();
         $dependencies->setParser($parser);
@@ -49,7 +54,7 @@ class Cli
             foreach (clone $modular->getModules() as $module) {
                 $ran |= $modular->getProvider()->getModule($module)->handle($config);
             }
-        } catch (\Components_Exception $e) {
+        } catch (Components_Exception $e) {
             $dependencies->getOutput()->fail($e);
             return;
         }
@@ -67,16 +72,16 @@ class Cli
      *
      * @return \Component_Configs  The configuration helper.
      */
-    protected static function _prepareConfig(Horde_Argv_Parser $parser)
+    protected static function _prepareConfig(Parser $parser)
     {
-        $config = new \Components_Configs();
+        $config = new Configs();
         $config->addConfigurationType(
             new Config\Cli(
                 $parser
             )
         );
         $config->unshiftConfigurationType(
-            new \Components_Config_File(
+            new Config_File(
                 $config->getOption('config')
             )
         );
@@ -93,8 +98,8 @@ class Cli
     protected static function _prepareModular($dependencies)
     {
         // The modular CLI helper.
-        $formatter = new Horde_Argv_IndentedHelpFormatter();
-        $modular = new Horde_Cli_Modular(array(
+        $formatter = new IndentedHelpFormatter();
+        $modular = new Cli_Modular(array(
             'parser' => array('usage' => '[OPTIONS] COMMAND [ARGUMENTS]
 
   ' . $formatter->highlightOption('COMMAND') . ' - Selects the command to perform. This is a list of possible commands:

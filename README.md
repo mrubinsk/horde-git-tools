@@ -10,6 +10,7 @@ Installation
 Uses composer for dependency management.
 
 ```sh
+git clone --depth 1 https://github.com/horde/horde.git horde-git
 git clone https://github.com/mrubinsk/horde-git-tools.git horde-git-tools
 cd horde-git-tools
 composer.phar install

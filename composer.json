@@ -21,11 +21,11 @@
     "repositories": [
         {
             "type": "path",
-            "url": "~/horde-git/framework/*"
+            "url": "../horde-git/framework/*"
         },
         {
             "type": "path",
-            "url": "~/horde-git/components"
+            "url": "../horde-git/components"
         },
         {
             "type": "pear",

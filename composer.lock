@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "38c089431609a6dcd8f50bab2248366c",
+    "content-hash": "4618bb1312b7dd3118132ee8329b05b3",
     "packages": [
         {
             "name": "horde/components",
             "version": "0.99.1",
             "dist": {
                 "type": "path",
-                "url": "/Users/mrubinsk/horde-git/components",
+                "url": "../horde-git/components",
                 "reference": "892a6127fa5c950bb9fdb80b27b6dc61c3a181a4",
                 "shasum": null
             },
@@ -60,14 +60,14 @@
             ],
             "description": "A package for dealing with Horde components",
             "homepage": "https://pear.horde.org",
-            "time": "2016-06-28T00:00:00+00:00"
+            "time": "2016-06-28 00:00:00"
         },
         {
             "name": "horde/horde-argv",
             "version": "2.1.0",
             "dist": {
                 "type": "path",
-                "url": "/Users/mrubinsk/horde-git/framework/Argv",
+                "url": "../horde-git/framework/Argv",
                 "reference": "d41c9df265b8da61725748693a833364df37b631",
                 "shasum": null
             },
@@ -113,14 +113,14 @@
             ],
             "description": "Horde command-line argument parsing package",
             "homepage": "https://pear.horde.org",
-            "time": "2017-05-03T00:00:00+00:00"
+            "time": "2017-05-03 00:00:00"
         },
         {
             "name": "horde/horde-cli",
             "version": "2.2.2",
             "dist": {
                 "type": "path",
-                "url": "/Users/mrubinsk/horde-git/framework/Cli",
+                "url": "../horde-git/framework/Cli",
                 "reference": "4da204dc13c5b789de074a6183215d77168fa063",
                 "shasum": null
             },
@@ -156,14 +156,14 @@
             ],
             "description": "Horde Command Line Interface API",
             "homepage": "https://pear.horde.org",
-            "time": "2017-05-04T00:00:00+00:00"
+            "time": "2017-05-04 00:00:00"
         },
         {
             "name": "horde/horde-cli-modular",
             "version": "2.1.0",
             "dist": {
                 "type": "path",
-                "url": "/Users/mrubinsk/horde-git/framework/Cli_Modular",
+                "url": "../horde-git/framework/Cli_Modular",
                 "reference": "9c810aa7a9c1cd78f298d163fb03840cb9b1b941",
                 "shasum": null
             },
@@ -201,14 +201,14 @@
             ],
             "description": "A toolset for CLI interfaces that are modular.",
             "homepage": "https://pear.horde.org",
-            "time": "2017-05-03T00:00:00+00:00"
+            "time": "2017-05-03 00:00:00"
         },
         {
             "name": "horde/horde-pear",
             "version": "1.0.0alpha12",
             "dist": {
                 "type": "path",
-                "url": "/Users/mrubinsk/horde-git/framework/Pear",
+                "url": "../horde-git/framework/Pear",
                 "reference": "74c6d56202c39ae87affc6ce171c62be53718191",
                 "shasum": null
             },
@@ -244,7 +244,7 @@
             ],
             "description": "A library for handling a subset of the PEAR formats and specifications",
             "homepage": "https://pear.horde.org",
-            "time": "2017-05-03T00:00:00+00:00"
+            "time": "2017-05-03 00:00:00"
         },
         {
             "name": "pear-pear.horde.org/Horde_Alarm",
@@ -2110,7 +2110,7 @@
                 "archive",
                 "tar"
             ],
-            "time": "2016-02-25T10:30:39+00:00"
+            "time": "2016-02-25 10:30:39"
         },
         {
             "name": "pear/console_getopt",
@@ -2157,7 +2157,7 @@
                 }
             ],
             "description": "More info available on: http://pear.php.net/package/Console_Getopt",
-            "time": "2015-07-20T20:28:12+00:00"
+            "time": "2015-07-20 20:28:12"
         },
         {
             "name": "pear/pear",
@@ -2388,7 +2388,7 @@
                 }
             ],
             "description": "More info available on: http://pear.php.net/package/Structures_Graph",
-            "time": "2015-07-20T20:05:12+00:00"
+            "time": "2015-07-20 20:05:12"
         },
         {
             "name": "pear/xml_util",

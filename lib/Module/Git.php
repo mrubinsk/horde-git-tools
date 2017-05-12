@@ -151,7 +151,6 @@ class Git extends Base
      */
     protected function _doCmd($cmd)
     {
-        var_dump($cmd);
         $action = new Action\Git\Command($this->_params ,$this->_dependencies);
         $action->run($cmd);
     }

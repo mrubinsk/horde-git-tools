@@ -13,16 +13,15 @@
 
 namespace Horde\GitTools\Module;
 
-use Action\Git\Checkout;
-use Action\Git\CloneRepositories;
-use Action\Git\Command;
-use Action\Git\ListRemote;
-use Action\Git\Pull;
-use Action\Git\Status;
-
-use Horde\GitTools\Repositories;
-use Horde\GitTools\Exception;
 use Horde\GitTools\Action;
+use Horde\GitTools\Action\Git\Checkout;
+use Horde\GitTools\Action\Git\CloneRepositories;
+use Horde\GitTools\Action\Git\Command;
+use Horde\GitTools\Action\Git\ListRemote;
+use Horde\GitTools\Action\Git\Pull;
+use Horde\GitTools\Action\Git\Status;
+use Horde\GitTools\Exception;
+use Horde\GitTools\Repositories;
 use Horde_Argv_Option as Option;
 use Horde_Cache as Cache;
 use Horde_Cache_Storage_File as Storage_File;

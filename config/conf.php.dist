@@ -23,7 +23,7 @@ $conf['verbose'] = false;
 $conf['git_base'] = '/private/tmp/horde_git';
 
 // Github organization to use for repositories
-$conf['org'] = 'horde-split-test';
+$conf['org'] = 'horde-git-test';
 
 // To use a "developer" checkout, use the following URI for github.
 // Otherwise, an anonymous clone will be done that cannot be pushed.

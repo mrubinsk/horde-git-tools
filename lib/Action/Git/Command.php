@@ -46,55 +46,51 @@ class Command extends Base
             throw new Exception("Base checkout directory does not exist.");
         }
 
-        $this->_dependencies->getOutput()->info('Starting update of libraries.');
+        $this->_dependencies->getOutput()->info('Handling git command in libraries.');
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
             if ($this->_includeRepository($it)) {
                 foreach ($commands as $cmd) {
-                    if ($this->_params['verbose']) {
+                    if (empty($this->_params['quiet'])) {
                         $this->_dependencies->getOutput()->plain(
                             '   >>>GIT COMMAND: ' . $cmd
                         );
                     }
                     $results[$it->getFilename()] = $this->_callGit($cmd, $it->getPathname());
 
-                    if ($this->_params['verbose']) {
+                    if (empty($this->_params['quiet'])) {
                         $this->_dependencies->getOutput()->plain(
                             '   >>>RESULTS: ' . implode("\n", $results[$it->getFilename()])
                         );
                     }
 
-                    $this->_dependencies->getOutput()->info('Repository: ' . $it->getFilename());
+                    $this->_dependencies->getOutput()->ok('Repository: ' . $it->getFilename() . ' completed.');
                 }
             }
         }
 
-        $this->_dependencies->getOutput()->info('Starting update of applications.');
+        $this->_dependencies->getOutput()->info('Handling git command in applications.');
         foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
             if ($this->_includeRepository($it)) {
                 foreach ($commands as $cmd) {
-
-                    if ($this->_params['verbose']) {
+                    if (empty($this->_params['quiet'])) {
                         $this->_dependencies->getOutput()->plain(
                             '   >>>GIT COMMAND: ' . $cmd
                         );
                     }
-
                     $results[$it->getFilename()] = $this->_callGit($cmd, $it->getPathname());
 
-                    if ($this->_params['verbose']) {
+                    if (empty($this->_params['quiet'])) {
                         $this->_dependencies->getOutput()->plain(
                             '   >>>RESULTS: ' . implode("\n", $results[$it->getFilename()])
                         );
                     }
-                    $this->_dependencies->getOutput()->ok('Repository: ' . $it->getFilename());
+                    $this->_dependencies->getOutput()->ok('Repository: ' . $it->getFilename() . ' completed.');
                 }
             }
         }
-        if ($this->_params['verbose']) {
-            foreach ($results as $name => $result) {
-                $this->_dependencies->getOutput()->bold($name);
-                $this->_dependencies->getOutput()->plain(implode("\n", $result));
-            }
+        foreach ($results as $name => $result) {
+            $this->_dependencies->getOutput()->bold($name);
+            $this->_dependencies->getOutput()->plain(implode("\n", $result));
         }
     }
 

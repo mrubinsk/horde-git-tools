@@ -14,6 +14,7 @@
 namespace Horde\GitTools\Action\Git;
 
 use Horde\GitTools\Cli;
+use Horde\GitTools\Exception;
 
 /**
  * Report on the status of all locally checked out repositories.
@@ -34,6 +35,12 @@ class Status extends Base
      */
     public function run()
     {
+        // Ensure the base directory exists.
+        if (!strlen($this->_params['git_base']) ||
+            !file_exists($this->_params['git_base'])) {
+            throw new Exception("Target directory for git checkouts does not exist.");
+        }
+
         $this->_dependencies->getOutput()->info('Checking status of libraries');
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
             if ($this->_includeRepository($it)) {

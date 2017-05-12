@@ -14,6 +14,7 @@
 namespace Horde\GitTools\Action\Git;
 
 use Horde\GitTools\Cli;
+use Horde\GitTools\Exception;
 
 /**
  * Clone all repositories existing in specified organization.
@@ -43,6 +44,9 @@ class CloneRepositories extends Base
         //       validate the same type of checkout (dev/anon)?
 
         // Ensure the base directory exists.
+        if (!strlen($this->_params['git_base'])) {
+            throw new Exception("Target directory for git checkouts is not configured.");
+        }
         if (!file_exists($this->_params['git_base'])) {
             mkdir($this->_params['git_base'], self::MODE, true);
         }

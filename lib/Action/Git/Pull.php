@@ -42,8 +42,9 @@ class Pull extends Base
         $results = $failures = array();
 
         // Ensure the base directory exists.
-        if (!file_exists($this->_params['git_base'])) {
-            throw new Exception("Base checkout directory does not exist.");
+        if (!strlen($this->_params['git_base']) ||
+            !file_exists($this->_params['git_base'])) {
+            throw new Exception("Target directory for git checkouts does not exist.");
         }
 
         $this->_dependencies->getOutput()->info('Starting update of libraries.');

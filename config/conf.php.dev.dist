@@ -1,6 +1,6 @@
 <?php
 /**
- * Default configuration for administrators and testers.
+ * Default configuration for Horde developers.
  */
 
 /*******************************************/
@@ -16,6 +16,16 @@ $conf['web_base'] = '';
 // Group name to use for the static directory. Should be the web server's
 // group.
 $conf['static_group'] = '';
+
+// Username for horde.org.
+// Make sure you belong to the "horde" group there.
+$conf['horde_user'] = '';
+
+// Needed to update the Whups versions.
+$conf['horde_pass'] = '';
+
+// From: address for announcements.
+$conf['from'] = 'Full name <user@horde.org>';
 
 
 /************************************************************/
@@ -35,7 +45,7 @@ $conf['org'] = 'horde-git-test';
 
 // To use a "developer" checkout, use the following URI for github.
 // Otherwise, an anonymous clone will be done that cannot be pushed.
-$conf['git_ssh'] = '';
+$conf['git_ssh'] = 'git@github.com:';
 
 // Ignore the following repositories. Mostly used to avoid cloning of the
 // legacy monolithic repository.
@@ -46,7 +56,7 @@ $conf['map'] = array('base' => 'horde');
 
 // If true, use the 'get' alias recommended by
 // https://www.horde.org/development/git#updating-repository
-$conf['use_git_get'] = false;
+$conf['use_git_get'] = true;
 
 // If setting use_git_get to true, you probably want the alias to be
 // automatically created in each repository that is cloned.
@@ -68,3 +78,15 @@ $conf['static_mode'] = 0775;
 
 // Set to true to copy the structure instead of linking.
 $conf['copy'] = false;
+
+
+/* Horde developer configuration */
+
+// PEAR server name. Only change for testing purposes.
+$conf['releaseserver'] = 'pear.horde.org';
+
+// PEAR server directory. Only change for testing purposes.
+$conf['releasedir'] = '/horde/web/pear.horde.org';
+
+/* Path to a checkout of the horde-web repository. */
+// $conf['web_dir'] = '/var/www/horde-web';

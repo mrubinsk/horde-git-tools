@@ -13,8 +13,10 @@
 
 namespace Horde\GitTools\Module;
 
-use Horde_String;
-use Horde_Argv_IndentedHelpFormatter;
+use Horde_String as String;
+use Horde_Argv_IndentedHelpFormatter as IndentedHelpFormatter;
+
+use Components_Configs as Configs;
 
 /**
  * Class for handling help.
@@ -27,7 +29,7 @@ use Horde_Argv_IndentedHelpFormatter;
  */
 class Help extends Base
 {
-    public function handle(\Components_Configs $config)
+    public function handle(Configs $config)
     {
         // Arguments will be an array:
         // 0 => help 1 => COMMAND [2 => ACTION]
@@ -53,12 +55,12 @@ class Help extends Base
             $title = "COMMAND \"" . $command . "\"";
             $sub = str_repeat('-', strlen($title));
             $help = "\n" . $title . "\n" . $sub . "\n\n";
-            $help .= Horde_String::wordwrap(
+            $help .= String::wordwrap(
                 $element->getHelp($action), 75, "\n", true
             );
             $options = $element->getContextOptionHelp($action);
             if (!empty($options)) {
-                $formatter = new Horde_Argv_IndentedHelpFormatter();
+                $formatter = new IndentedHelpFormatter();
                 $parser = $this->_dependencies->getParser();
                 $title = "OPTIONS for \"" . $action . "\"";
                 $sub = str_repeat('-', strlen($title));
@@ -67,11 +69,11 @@ class Help extends Base
                     $argv_option = $parser->getOption($option);
                     $help .= "\n\n    " . $formatter->formatOptionStrings($argv_option) . "\n\n      ";
                     if (empty($help_text)) {
-                        $help .= Horde_String::wordwrap(
+                        $help .= String::wordwrap(
                             $argv_option->help, 75, "\n      ", true
                         );
                     } else {
-                        $help .= Horde_String::wordwrap(
+                        $help .= String::wordwrap(
                             $help_text, 75, "\n      ", true
                         );
                     }

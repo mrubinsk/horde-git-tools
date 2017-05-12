@@ -15,9 +15,9 @@ namespace Horde\GitTools\Action\Git;
 
 use Horde\GitTools\Cli;
 use Horde\GitTools\Repositories;
-use Horde_Cache;
-use Horde_Cache_Storage_File;
-use Horde_Http_Client;
+use Horde_Cache as Cache;
+use Horde_Cache_Storage_File as Storage_File;
+use Horde_Http_Client as Client;
 
 /**
  * Provides a listing of remote repositories.
@@ -44,11 +44,15 @@ class ListRemote extends Base
     public function run()
     {
         $repositories = array();
-        $remotes= self::_getRepositories($this->_params);
+        $remotes = self::_getRepositories();
         foreach ($remotes->repositories as $repo_name => $repo) {
-            if (empty($this->_params['ignore_yml']) && !$this->_isHordeRepo($repo_name)) {
+            if (empty($this->_params['ignore_yml']) &&
+                !$this->_isHordeRepo($repo_name)) {
                 if ($this->_params['verbose']) {
-                    $this->_dependencies->getOutput()->info('Skipping ' . $repo_name . ' as it does not contain a .horde.yml file');
+                    $this->_dependencies->getOutput()->info(
+                        'Skipping ' . $repo_name
+                        . ' as it does not contain a .horde.yml file'
+                    );
                 }
                 continue;
             }
@@ -67,13 +71,17 @@ class ListRemote extends Base
      */
     protected function _getRepositories()
     {
-
         $cache = null;
         if (!empty($this->_params['cache'])) {
-            $cache = new Horde_Cache(new Horde_Cache_Storage_File());
+            $cache = new Cache(new Storage_File());
         }
-        $repositories = new Repositories\Http($this->_params, $this->_dependencies, $cache);
-        $repositories->load(array('org' => $this->_params['org'], 'user-agent' => self::USERAGENT));
+        $repositories = new Repositories\Http(
+            $this->_params, $this->_dependencies, $cache
+        );
+        $repositories->load(array(
+            'org' => $this->_params['org'],
+            'user-agent' => self::USERAGENT
+        ));
 
         return $repositories;
     }
@@ -83,10 +91,8 @@ class ListRemote extends Base
         $url = 'https://raw.githubusercontent.com/'
             . $this->_params['org']
             . '/' . $repo . '/master/.horde.yml';
-
-        $http = new Horde_Http_Client();
+        $http = new Client();
         $response = $http->get($url);
         return $response->code == 200;
     }
-
 }

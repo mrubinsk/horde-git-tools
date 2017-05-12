@@ -13,10 +13,21 @@
 
 namespace Horde\GitTools\Module;
 
+use Action\Git\Checkout;
+use Action\Git\CloneRepositories;
+use Action\Git\Command;
+use Action\Git\ListRemote;
+use Action\Git\Pull;
+use Action\Git\Status;
+
 use Horde\GitTools\Repositories;
 use Horde\GitTools\Exception;
 use Horde\GitTools\Action;
-use Horde_Argv_Option;
+use Horde_Argv_Option as Option;
+use Horde_Cache as Cache;
+use Horde_Cache_Storage_File as Storage_File;
+
+use Components_Configs as Configs;
 
 /**
  * Class for handling 'git' actions.
@@ -34,7 +45,7 @@ class Git extends Base
      *
      * @param \Components_Config $config  The configuration object
      */
-    public function handle(\Components_Configs $config)
+    public function handle(Configs $config)
     {
         // Grab the CLI options
         $this->_params = $config->getOptions();
@@ -83,10 +94,10 @@ class Git extends Base
      */
     protected function _doClone()
     {
-        $list = new Action\Git\ListRemote($this->_params, $this->_dependencies);
+        $list = new ListRemote($this->_params, $this->_dependencies);
         $repositories = $list->run();
 
-        $action = new Action\Git\CloneRepositories(
+        $action = new CloneRepositories(
             $this->_params, $this->_dependencies
         );
         foreach ($repositories as $package) {
@@ -101,7 +112,7 @@ class Git extends Base
      */
     protected function _doStatus()
     {
-        $action = new Action\Git\Status($this->_params, $this->_dependencies);
+        $action = new Status($this->_params, $this->_dependencies);
         $action->run();
     }
 
@@ -112,7 +123,7 @@ class Git extends Base
      */
     protected function _doPull()
     {
-        $action = new Action\Git\Pull($this->_params, $this->_dependencies);
+        $action = new Pull($this->_params, $this->_dependencies);
         $action->run();
     }
 
@@ -123,7 +134,7 @@ class Git extends Base
      */
     protected function _doList()
     {
-        $action = new Action\Git\ListRemote($this->_params, $this->_dependencies);
+        $action = new ListRemote($this->_params, $this->_dependencies);
         $repos = $action->run();
         $this->_dependencies->getOutput()->info(
             'Available remote repositories on ' . $this->_params['org']
@@ -140,7 +151,7 @@ class Git extends Base
      */
     protected function _doCheckout($branch)
     {
-        $action = new Action\Git\Checkout($this->_params, $this->_dependencies);
+        $action = new Checkout($this->_params, $this->_dependencies);
         $action->run($branch);
     }
 
@@ -151,7 +162,7 @@ class Git extends Base
      */
     protected function _doCmd($cmd)
     {
-        $action = new Action\Git\Command($this->_params ,$this->_dependencies);
+        $action = new Command($this->_params ,$this->_dependencies);
         $action->run($cmd);
     }
 
@@ -165,8 +176,8 @@ class Git extends Base
     protected function _getRepositories()
     {
         if (!empty($this->_params['cache'])) {
-            $storage = new Horde_Cache_Storage_File();
-            $cache = new Horde_Cache($storage);
+            $storage = new Storage_File();
+            $cache = new Cache($storage);
         }
         $repositories = new Repositories\Http($this->_params, $cache);
         $repositories->load(array(
@@ -191,12 +202,12 @@ class Git extends Base
         return strtoupper($package_name[0]) != $package_name[0];
     }
 
-/** Horde_Cli_Modular methods */
+    /* Horde_Cli_Modular methods */
 
     public function getOptionGroupOptions($action = null)
     {
         return array(
-            new Horde_Argv_Option(
+            new Option(
                 '',
                 '--ignore-yml',
                 array(
@@ -204,7 +215,7 @@ class Git extends Base
                     'help'   => 'Do not look for .horde.yml files.'
                 )
             ),
-            new Horde_Argv_Option(
+            new Option(
                 '',
                 '--use-git-get',
                 array(
@@ -212,7 +223,7 @@ class Git extends Base
                     'help'   => 'Use the \'get\' alias for updating.'
                 )
             ),
-            new Horde_Argv_Option(
+            new Option(
                 '',
                 '--repositories',
                 array(

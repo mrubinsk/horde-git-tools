@@ -32,7 +32,8 @@ class Help extends Base
         // Arguments will be an array:
         // 0 => help 1 => COMMAND [2 => ACTION]
         $arguments = $config->getArguments();
-        if (isset($arguments[0]) && $arguments[0] == 'help') {
+        if (!isset($arguments[0]) ||
+            (isset($arguments[0]) && $arguments[0] == 'help')) {
             if (isset($arguments[1])) {
                 $command = $arguments[1];
             } else {

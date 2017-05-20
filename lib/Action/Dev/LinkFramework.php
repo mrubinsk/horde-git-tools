@@ -79,7 +79,7 @@ class LinkFramework extends \Horde\GitTools\Action\Base
                 continue;
             }
             $yaml = Yaml::loadFile($val . '/.horde.yml');
-            if ($yaml['type'] != 'library') {
+            if (empty($yaml['type']) || $yaml['type'] != 'library') {
                 continue;
             }
             // Get list of files

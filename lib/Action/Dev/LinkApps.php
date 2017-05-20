@@ -69,7 +69,7 @@ class LinkApps extends \Horde\GitTools\Action\Base
                     continue;
                 }
                 $yaml = Yaml::loadFile($it->getPathname() . '/.horde.yml');
-                if ($yaml['type'] != 'application') {
+                if (empty($yaml['type']) || $yaml['type'] != 'application') {
                     continue;
                 }
                 $this->_linkApp($it, $horde_git, $web_dir);

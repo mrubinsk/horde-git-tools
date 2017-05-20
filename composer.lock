@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6208f058545c5ed5160d6cbff9a91c48",
-    "content-hash": "4618bb1312b7dd3118132ee8329b05b3",
+    "content-hash": "3d575f207f690fbe2df8f10e5b5820df",
     "packages": [
         {
             "name": "horde/components",
@@ -61,7 +60,7 @@
             ],
             "description": "A package for dealing with Horde components",
             "homepage": "https://pear.horde.org",
-            "time": "2016-06-28 00:00:00"
+            "time": "2016-06-28T00:00:00+00:00"
         },
         {
             "name": "horde/horde-argv",
@@ -114,7 +113,7 @@
             ],
             "description": "Horde command-line argument parsing package",
             "homepage": "https://pear.horde.org",
-            "time": "2017-05-03 00:00:00"
+            "time": "2017-05-03T00:00:00+00:00"
         },
         {
             "name": "horde/horde-cli",
@@ -157,7 +156,7 @@
             ],
             "description": "Horde Command Line Interface API",
             "homepage": "https://pear.horde.org",
-            "time": "2017-05-04 00:00:00"
+            "time": "2017-05-04T00:00:00+00:00"
         },
         {
             "name": "horde/horde-cli-modular",
@@ -202,7 +201,7 @@
             ],
             "description": "A toolset for CLI interfaces that are modular.",
             "homepage": "https://pear.horde.org",
-            "time": "2017-05-03 00:00:00"
+            "time": "2017-05-03T00:00:00+00:00"
         },
         {
             "name": "horde/horde-pear",
@@ -245,7 +244,53 @@
             ],
             "description": "A library for handling a subset of the PEAR formats and specifications",
             "homepage": "https://pear.horde.org",
-            "time": "2017-05-03 00:00:00"
+            "time": "2017-05-03T00:00:00+00:00"
+        },
+        {
+            "name": "horde/horde-yaml",
+            "version": "2.0.6",
+            "dist": {
+                "type": "path",
+                "url": "../horde-git/framework/Yaml",
+                "reference": "73c8af698da3d2900b75897c2b3ac08c4b606f16",
+                "shasum": null
+            },
+            "require": {
+                "pear-pear.horde.org/horde_exception": "^2@stable",
+                "pear-pear.horde.org/horde_util": "^2@stable",
+                "php": "^5.3 || ^7"
+            },
+            "replace": {
+                "pear-horde/horde_yaml": "2.*",
+                "pear-pear.horde.org/horde_yaml": "2.*"
+            },
+            "suggest": {
+                "pear-pear.horde.org/Horde_Test": "^2.1@stable"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Horde_Yaml": "lib/"
+                }
+            },
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Chuck Hagenbuch",
+                    "email": "chuck@horde.org",
+                    "role": "lead"
+                },
+                {
+                    "name": "Mike Naberezny",
+                    "email": "mike@maintainable.com",
+                    "role": "lead"
+                }
+            ],
+            "description": "Horde YAML parsing and dumping routines",
+            "homepage": "https://pear.horde.org",
+            "time": "2017-05-03T00:00:00+00:00"
         },
         {
             "name": "pear-pear.horde.org/Horde_Alarm",
@@ -2111,7 +2156,7 @@
                 "archive",
                 "tar"
             ],
-            "time": "2016-02-25 10:30:39"
+            "time": "2016-02-25T10:30:39+00:00"
         },
         {
             "name": "pear/console_getopt",
@@ -2158,7 +2203,7 @@
                 }
             ],
             "description": "More info available on: http://pear.php.net/package/Console_Getopt",
-            "time": "2015-07-20 20:28:12"
+            "time": "2015-07-20T20:28:12+00:00"
         },
         {
             "name": "pear/pear",
@@ -2290,7 +2335,7 @@
                 }
             ],
             "description": "More info available on: http://pear.php.net/package/Structures_Graph",
-            "time": "2015-07-20 20:05:12"
+            "time": "2015-07-20T20:05:12+00:00"
         },
         {
             "name": "pear/xml_util",
@@ -2345,7 +2390,7 @@
             ],
             "description": "Methods to work with XML documents",
             "homepage": "http://pear.php.net/package/XML_Util",
-            "time": "2017-02-22 19:26:29"
+            "time": "2017-02-22T19:26:29+00:00"
         }
     ],
     "packages-dev": [],

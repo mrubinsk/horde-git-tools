@@ -14,6 +14,8 @@
 
 namespace Horde\GitTools\Action\Dev;
 
+use Horde_Yaml as Yaml;
+
 use Horde\GitTools\Cli;
 
 /**
@@ -66,7 +68,7 @@ class LinkApps extends \Horde\GitTools\Action\Base
                     || $it == 'base' || !file_exists($it->getPathname() . '/.horde.yml')) {
                     continue;
                 }
-                $yaml = Horde_Yaml::loadFile($it->getPathname() . './horde.yml');
+                $yaml = Yaml::loadFile($it->getPathname() . '/.horde.yml');
                 if ($yaml['type'] != 'application') {
                     continue;
                 }

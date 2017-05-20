@@ -259,7 +259,6 @@ class Git extends Base
     {
         $all_options = array('--repositories' => '');
         $options = array(
-            'list' => array('--ignore-yml' => ''),
             'pull' => array('--use-git-get' => '')
         );
 

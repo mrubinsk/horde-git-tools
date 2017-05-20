@@ -14,6 +14,7 @@
 namespace Horde\GitTools\Module;
 
 use Horde_Argv_IndentedHelpFormatter as IndentedHelpFormatter;
+use Horde_String;
 use Components_Configs as Configs;
 
 /**

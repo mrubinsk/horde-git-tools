@@ -41,9 +41,6 @@ $conf['git_ssh'] = '';
 // legacy monolithic repository.
 $conf['ignore'] = array();
 
-// A renaming map. Renames repository names to a new "web" name.
-$conf['map'] = array('base' => 'horde');
-
 // If true, use the 'get' alias recommended by
 // https://www.horde.org/development/git#updating-repository
 $conf['use_git_get'] = false;

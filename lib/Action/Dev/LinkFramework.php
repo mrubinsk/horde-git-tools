@@ -14,6 +14,8 @@
 
 namespace Horde\GitTools\Action\Dev;
 
+use Horde_Yaml as Yaml;
+
 use Horde\GitTools\Cli;
 use Horde\GitTools\PearPackages;
 
@@ -73,7 +75,13 @@ class LinkFramework extends \Horde\GitTools\Action\Base
         // $key = package name, $val is repo base.
         foreach ($pkg_list as $key => $val) {
             $this->_dependencies->getOutput()->info('Installing package ' . $key);
-
+            if (!file_exists($val . '/.horde.yml')) {
+                continue;
+            }
+            $yaml = Yaml::loadFile($val . '/.horde.yml');
+            if ($yaml['type'] != 'library') {
+                continue;
+            }
             // Get list of files
             $pear = $pkg_ob->getPearPackage($val . '/package.xml');
             $file_list = $pear->getInstallationFileList();

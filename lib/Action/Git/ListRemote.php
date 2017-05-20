@@ -46,12 +46,11 @@ class ListRemote extends Base
         $repositories = array();
         $remotes = self::_getRepositories();
         foreach ($remotes->repositories as $repo_name => $repo) {
-            if (empty($this->_params['ignore_yml']) &&
-                !$this->_isHordeRepo($repo_name)) {
+            if (!$this->_isHordeRepo($repo_name)) {
                 if ($this->_params['verbose']) {
                     $this->_dependencies->getOutput()->info(
                         'Skipping ' . $repo_name
-                        . ' as it does not contain a .horde.yml file'
+                        . ' as it does not contain a .horde.yml file.'
                     );
                 }
                 continue;

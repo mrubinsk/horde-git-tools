@@ -56,16 +56,21 @@ class LinkApps extends \Horde\GitTools\Action\Base
                 if ($app == 'horde') {
                     continue;
                 }
-                if (file_exists($horde_git . '/applications/' . $app)) {
+                if (file_exists($horde_git . '/' . $app)) {
                     $this->_linkApp($app);
                 }
             }
         } else {
-            foreach (new \DirectoryIterator($horde_git . '/applications') as $it) {
-                if (!$it->isDot() && $it->isDir() && $it != 'base' &&
-                    is_dir($it->getPathname() . '/config')) {
-                    $this->_linkApp($it, $horde_git, $web_dir);
+            foreach (new \DirectoryIterator($horde_git) as $it) {
+                if ($it->isDot() || !$it->isDir()
+                    || $it == 'base' || !file_exists($it->getPathname() . '/.horde.yml')) {
+                    continue;
                 }
+                $yaml = Horde_Yaml::loadFile($it->getPathname() . './horde.yml');
+                if ($yaml['type'] != 'application') {
+                    continue;
+                }
+                $this->_linkApp($it, $horde_git, $web_dir);
             }
         }
     }
@@ -81,14 +86,14 @@ class LinkApps extends \Horde\GitTools\Action\Base
     protected function _linkApp($app, $horde_git, $web_dir)
     {
         print 'LINKING ' . $app . "\n";
-        if (!symlink($horde_git . '/applications/' . $app, $web_dir . '/' . $app)) {
+        if (!symlink($horde_git . '/' . $app, $web_dir . '/' . $app)) {
             $this->_dependencies->getOutput()->fail(
                 'Cannot link ' . $web_dir . '/' . $app . ' to '
-                . $horde_git . '/applications/' . $app
+                . $horde_git . '/' . $app
             );
         }
         file_put_contents(
-            $horde_git . '/applications/' . $app . '/config/horde.local.php',
+            $horde_git . '/' . $app . '/config/horde.local.php',
             '<?php define(\'HORDE_BASE\', \'' . $web_dir . '\');'
         );
     }

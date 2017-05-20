@@ -45,9 +45,7 @@ class LinkHorde extends \Horde\GitTools\Action\Base
      */
     protected function _linkHorde($horde_git, $web_dir)
     {
-        $this->_dependencies->getOutput()->plain("LINKING horde");;
-        $horde_git .= '/applications';
-
+        $this->_dependencies->getOutput()->plain("LINKING horde");
         file_put_contents(
             $horde_git . '/base/config/horde.local.php',
             "<?php if (!defined('HORDE_BASE')) define('HORDE_BASE', '$web_dir'); ini_set('include_path', '{$web_dir}/libs' . PATH_SEPARATOR . ini_get('include_path'));"

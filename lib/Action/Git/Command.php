@@ -47,7 +47,7 @@ class Command extends Base
             throw new Exception("Target directory for git checkouts does not exist.");
         }
 
-        $this->_dependencies->getOutput()->info('Handling git command in libraries.');
+        $this->_dependencies->getOutput()->info('Handling git command.');
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
             if ($this->_includeRepository($it)) {
                 foreach ($commands as $cmd) {
@@ -69,26 +69,6 @@ class Command extends Base
             }
         }
 
-        $this->_dependencies->getOutput()->info('Handling git command in applications.');
-        foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
-            if ($this->_includeRepository($it)) {
-                foreach ($commands as $cmd) {
-                    if (empty($this->_params['quiet'])) {
-                        $this->_dependencies->getOutput()->plain(
-                            '   >>>GIT COMMAND: ' . $cmd
-                        );
-                    }
-                    $results[$it->getFilename()] = $this->_callGit($cmd, $it->getPathname());
-
-                    if (empty($this->_params['quiet'])) {
-                        $this->_dependencies->getOutput()->plain(
-                            '   >>>RESULTS: ' . implode("\n", $results[$it->getFilename()])
-                        );
-                    }
-                    $this->_dependencies->getOutput()->ok('Repository: ' . $it->getFilename() . ' completed.');
-                }
-            }
-        }
         foreach ($results as $name => $result) {
             $this->_dependencies->getOutput()->bold($name);
             $this->_dependencies->getOutput()->plain(implode("\n", $result));

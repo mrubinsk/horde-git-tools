@@ -47,7 +47,7 @@ class Pull extends Base
             throw new Exception("Target directory for git checkouts does not exist.");
         }
 
-        $this->_dependencies->getOutput()->info('Starting update of libraries.');
+        $this->_dependencies->getOutput()->info('Starting update of repositories.');
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
             if ($this->_includeRepository($it)) {
                 // Debug output
@@ -66,30 +66,6 @@ class Pull extends Base
                         '   >>>RESULTS: ' . implode("\n", $results[$it->getFilename()])
                     );
                 }
-                $this->_dependencies->getOutput()->ok('Repository: ' . $it->getFilename());
-            }
-        }
-
-        $this->_dependencies->getOutput()->info('Starting update of applications.');
-        foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
-            if ($this->_includeRepository($it)) {
-                // Debug
-                if ($this->_params['verbose']) {
-                    $this->_dependencies->getOutput()->plain(
-                        '    >>>GIT COMMAND: ' . $this->_getCommand()
-                    );
-                }
-
-                // Perform pull
-                $results[$it->getFilename()] = $this->_callGit($this->_getCommand(), $it->getPathname());
-
-                // Debug results
-                if ($this->_params['verbose']) {
-                    $this->_dependencies->getOutput()->plain(
-                        '    >>>RESULTS: ' . implode("\n", $results[$it->getFilename()])
-                    );
-                }
-
                 $this->_dependencies->getOutput()->ok('Repository: ' . $it->getFilename());
             }
         }

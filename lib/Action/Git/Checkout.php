@@ -58,8 +58,8 @@ class Checkout extends Base
         }
 
         // Ensure the base directory exists.
-        if (file_exists($this->_params['git_base'] . '/applications')) {
-            foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
+        if (file_exists($this->_params['git_base'])) {
+            foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
                 if ($this->_includeRepository($it)) {
                     $this->_dependencies->getOutput()->info('Switching ' . $it->getFilename() . ' to branch: ' . $branch);
                     $output = $this->_callGit("checkout $branch", $it->getPathname());
@@ -72,7 +72,7 @@ class Checkout extends Base
                 }
             }
         } else {
-            $this->_dependencies->getOutput()->fail('Could not find the applications checkout directory');
+            $this->_dependencies->getOutput()->fail('Could not find the base checkout directory');
         }
 
         if (!empty($success)) {

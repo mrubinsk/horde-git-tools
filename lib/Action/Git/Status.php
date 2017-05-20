@@ -41,17 +41,8 @@ class Status extends Base
             throw new Exception("Target directory for git checkouts does not exist.");
         }
 
-        $this->_dependencies->getOutput()->info('Checking status of libraries');
+        $this->_dependencies->getOutput()->info('Checking status of repositories.');
         foreach (new \DirectoryIterator($this->_params['git_base']) as $it) {
-            if ($this->_includeRepository($it)) {
-                $results = $this->_callGit('status --porcelain -b', $it->getPathname());
-                $this->_dependencies->getOutput()->info('Status of ' . $it->getFileName());
-                $this->_dependencies->getOutput()->info($results[0]);
-            }
-        }
-
-        $this->_dependencies->getOutput()->info('Checking status of applications');
-        foreach (new \DirectoryIterator($this->_params['git_base'] . '/applications') as $it) {
             if ($this->_includeRepository($it)) {
                 $results = $this->_callGit('status --porcelain -b', $it->getPathname());
                 $this->_dependencies->getOutput()->info('Status of ' . $it->getFileName());

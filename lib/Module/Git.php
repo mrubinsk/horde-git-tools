@@ -208,14 +208,6 @@ class Git extends Base
         return array(
             new Option(
                 '',
-                '--ignore-yml',
-                array(
-                    'action' => 'store_true',
-                    'help'   => 'Do not look for .horde.yml files.'
-                )
-            ),
-            new Option(
-                '',
                 '--use-git-get',
                 array(
                     'action' => 'store_true',

@@ -36,9 +36,8 @@ class CloneRepositories extends Base
      * Clones the specified package/repository.
      *
      * @param  string  $package  The repository name.
-     * @param  boolean $app      If repository is an application, set to true.
      */
-    public function run($package = '', $app = false)
+    public function run($package = '')
     {
         // @todo validate the package name.
         //       validate the same type of checkout (dev/anon)?
@@ -59,8 +58,7 @@ class CloneRepositories extends Base
         }
 
         // Get target
-        $target = $this->_params['git_base'] . '/'
-            . ($app ? 'applications/' : '') . $package_webname;
+        $target = $this->_params['git_base'] . '/' . $package_webname;
         $this->_dependencies->getOutput()->info(
             'Cloning ' . $package_webname . ' into ' . $target
         );

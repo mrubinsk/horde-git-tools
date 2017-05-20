@@ -50,17 +50,10 @@ class CloneRepositories extends Base
             mkdir($this->_params['git_base'], self::MODE, true);
         }
 
-        // Check for any renaming
-        if (!empty($this->_params['map'][$package])) {
-            $package_webname = $this->_params['map'][$package];
-        } else {
-            $package_webname = $package;
-        }
-
         // Get target
-        $target = $this->_params['git_base'] . '/' . $package_webname;
+        $target = $this->_params['git_base'] . '/' . $package;
         $this->_dependencies->getOutput()->info(
-            'Cloning ' . $package_webname . ' into ' . $target
+            'Cloning ' . $package . ' into ' . $target
         );
 
         if (!empty($this->_params['git_ssh'])) {

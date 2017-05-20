@@ -13,9 +13,7 @@
 
 namespace Horde\GitTools\Module;
 
-use Horde_String as String;
 use Horde_Argv_IndentedHelpFormatter as IndentedHelpFormatter;
-
 use Components_Configs as Configs;
 
 /**
@@ -55,7 +53,7 @@ class Help extends Base
             $title = "COMMAND \"" . $command . "\"";
             $sub = str_repeat('-', strlen($title));
             $help = "\n" . $title . "\n" . $sub . "\n\n";
-            $help .= String::wordwrap(
+            $help .= Horde_String::wordwrap(
                 $element->getHelp($action), 75, "\n", true
             );
             $options = $element->getContextOptionHelp($action);
@@ -69,11 +67,11 @@ class Help extends Base
                     $argv_option = $parser->getOption($option);
                     $help .= "\n\n    " . $formatter->formatOptionStrings($argv_option) . "\n\n      ";
                     if (empty($help_text)) {
-                        $help .= String::wordwrap(
+                        $help .= Horde_String::wordwrap(
                             $argv_option->help, 75, "\n      ", true
                         );
                     } else {
-                        $help .= String::wordwrap(
+                        $help .= Horde_String::wordwrap(
                             $help_text, 75, "\n      ", true
                         );
                     }

@@ -14,6 +14,8 @@
 
 namespace Horde\GitTools\Action\Dev;
 
+use Horde\GitTools\Exception;
+
 /**
  * Links the base Horde directory into the web directory.
  *
@@ -45,6 +47,12 @@ class LinkHorde extends \Horde\GitTools\Action\Base
      */
     protected function _linkHorde($horde_git, $web_dir)
     {
+        if (!is_writable($web_dir)) {
+            throw new Exception(
+                sprintf('Directory "%s" is not writable', $web_dir)
+            );
+        }
+
         $this->_dependencies->getOutput()->plain("LINKING horde");
         file_put_contents(
             $horde_git . '/base/config/horde.local.php',

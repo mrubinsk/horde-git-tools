@@ -33,13 +33,18 @@ $conf['verbose'] = false;
 // Github organization to use for repositories
 $conf['org'] = 'horde-git-test';
 
-// To use a "developer" checkout, use the following URI for github.
+// To use a "developer" checkout, use the 'git@github.com:' URI.
 // Otherwise, an anonymous clone will be done that cannot be pushed.
 $conf['git_ssh'] = '';
 
 // Ignore the following repositories. Mostly used to avoid cloning of the
 // legacy monolithic repository.
 $conf['ignore'] = array();
+
+// Additional arguments for the git clone command. By default uses a less
+// resources consuming "shallow" copy. If you need the full commit history,
+// remove the --depth parameter.
+$conf['clone'] = '--depth 1';
 
 // If true, use the 'get' alias recommended by
 // https://www.horde.org/development/git#updating-repository

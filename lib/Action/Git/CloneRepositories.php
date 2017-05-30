@@ -65,8 +65,13 @@ class CloneRepositories extends Base
                 . $this->_params['org'] . '/' . $package . '.git';
         }
 
+        // Additional args
+        $args = empty($this->_params['clone']) ? '' : $this->_params['clone'];
+
         // Clone
-        $results = $this->_callGit("clone $source $target", $this->_params['git_base']);
+        $results = $this->_callGit(
+            "clone $args $source $target", $this->_params['git_base']
+        );
 
         // Git seems to output certain status to stderr, so don't assume failure
         // if this is non-empty.

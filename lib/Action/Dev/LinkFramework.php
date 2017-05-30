@@ -74,7 +74,6 @@ class LinkFramework extends \Horde\GitTools\Action\Base
 
         // $key = package name, $val is repo base.
         foreach ($pkg_list as $key => $val) {
-            $this->_dependencies->getOutput()->info('Installing package ' . $key);
             if (!file_exists($val . '/.horde.yml')) {
                 continue;
             }
@@ -82,6 +81,8 @@ class LinkFramework extends \Horde\GitTools\Action\Base
             if (empty($yaml['type']) || $yaml['type'] != 'library') {
                 continue;
             }
+            $this->_dependencies->getOutput()->info('Installing package ' . $key);
+
             // Get list of files
             $pear = $pkg_ob->getPearPackage($val . '/package.xml');
             $file_list = $pear->getInstallationFileList();

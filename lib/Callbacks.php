@@ -28,7 +28,6 @@ class Callbacks
      */
     public static function linkHordeRole(Event $event)
     {
-        var_dump(dirname(__FILE__) . '/../vendor/pear-pear.horde.org/Horde_Role/PEAR/Installer/Role/Horde.php');
         symlink(
             dirname(__FILE__) . '/../vendor/pear-pear.horde.org/Horde_Role/PEAR/Installer/Role/Horde.php',
             dirname(__FILE__) . '/../vendor/pear/pear/PEAR/Installer/Role/Horde.php'

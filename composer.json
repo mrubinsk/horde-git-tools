@@ -52,5 +52,9 @@
     },
     "config": {
         "optimize-autoloader": true
+    },
+    "scripts": {
+        "post-install-cmd": "Horde\\GitTools\\Callbacks::linkHordeRole",
+        "post-update-cmd": "Horde\\GitTools\\Callbacks::linkHordeRole"
     }
 }

@@ -40,11 +40,6 @@ horde-git-tools dev install
 # Providing the --verbose flag will output full response from GitHub.
 horde-git-tools --verbose git list
 
-# The above will look for a .horde.yml file in the repository root to be
-# considered. To ignore this check, add the --ignore-yml flag. Mostly for
-# testing/development purposes.
-horde-git-tools --ignore-yml git list
-
 # Attempt to checkout a specific branch on all repositories.
 horde-git-tools git checkout FRAMEWORK_5_2
 

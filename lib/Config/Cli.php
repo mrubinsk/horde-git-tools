@@ -97,9 +97,10 @@ class Cli extends \Components_Config_Base
         $parser->addOption(
             new Horde_Argv_Option(
                 '',
-                '--git_base',
+                '--git-base',
                 array(
                     'action' => 'store',
+                    'dest'   => 'git_base',
                     'help'   => 'Path the base directory containing git checkouts.',
                 )
             )

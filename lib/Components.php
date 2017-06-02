@@ -15,6 +15,7 @@ namespace Horde\GitTools;
 
 use Horde_Argv_Parser;
 use Horde_Cli_Modular;
+use Components_Dependencies_Injector;
 
 /**
  * The Components:: class is the entry point for the various component actions
@@ -41,7 +42,7 @@ class Components extends \Components
      */
     public static function main(array $parameters = array())
     {
-        $dependencies = new Components\Dependencies\Injector();
+        $dependencies = new Components_Dependencies_Injector();
         $modular = self::_prepareModular($dependencies, $parameters);
         $parser = $modular->createParser();
         $dependencies->setParser($parser);
@@ -81,7 +82,7 @@ class Components extends \Components
     {
         $config = new \Components_Configs();
         $config->addConfigurationType(
-            new Components\Config\Cli(
+            new Config\Cli(
                 $parser
             )
         );

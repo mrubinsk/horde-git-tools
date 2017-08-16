@@ -2,7 +2,7 @@ Horde-Git-Tools
 ========================================
 
 POC/WIP toolchain for dealing with the upcoming split repository structure of
-[Horde](https://github.com/horde/horde),
+[Horde](https://github.com/horde/horde)
 
 Installation
 ------------
@@ -14,6 +14,8 @@ git clone --depth 1 https://github.com/horde/horde.git horde-git
 git clone https://github.com/mrubinsk/horde-git-tools.git horde-git-tools
 cd horde-git-tools
 composer.phar install
+# Review bin/conf.php.dist and set values accordingly.
+cp config/conf.php.dist config/conf.php
 ```
 Usage
 -----
@@ -22,9 +24,7 @@ Current usage. Subject to change until code is finalized. Also see the
 --help text.
 
 ```sh
-# Review bin/conf.php.dist and set values accordingly.
-cp config/conf.php.dist config/conf.php
-cd horde-git-tools/bin
+# The horde-git-tools command can be found at the horde-git-tools/bin directory.
 
 # Options can also be given on command line. See usage for information.
 horde-git-tools --help

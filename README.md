@@ -14,8 +14,8 @@ git clone --depth 1 https://github.com/horde/horde.git horde-git
 git clone https://github.com/mrubinsk/horde-git-tools.git horde-git-tools
 cd horde-git-tools
 composer.phar install
-# Review bin/conf.php.dist and set values accordingly.
 cp config/conf.php.dist config/conf.php
+# Review config/conf.php and set values accordingly.
 ```
 Usage
 -----
